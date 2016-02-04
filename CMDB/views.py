@@ -1,0 +1,10 @@
+from django.shortcuts import render
+from django.http import HttpResponse
+from CMDB.models import *
+from datetime import datetime
+
+# Create your views here.
+def test(request) :
+    hosts = Hosts.objects.all()
+    return render(request, 'test.html', {'hosts': hosts})
+
