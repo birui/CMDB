@@ -1,26 +1,22 @@
 <!--在test.html文件夹下添加-->
 <!DOCTYPE html>
 <html>
-	    <head>
-			        <title>Just test template</title>
-					        <style>
+    <head>
+        <title>Just test template</title>
+        <style>
             body {
-				<--       background-color: red; --!>
-								               }
-			            em {
-							                color: LightSeaGreen;
-												            }
-						        </style>
-								    </head>
-									    <body>
-											        <h1>Coohua CMDB</h1>
-													<p>
-                           {%for host_list in hosts%}
-														{{ host_list.hostname}} {{host_list.lip  }} <br>
+               background-color: ;
+            }
+            em {
+                color: LightSeaGreen;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Hello World!</h1>
+        {% for hosts_list in hosts %}
+        <strong>{{ hosts_list.instance_id }}----{{ hosts_list.hostname }} <br></strong>
+        {% endfor %}
 
-													 {%endfor%}
-
-
-													</p>
-															    </body>
+    </body>
 </html>

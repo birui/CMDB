@@ -133,3 +133,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+    '/Users/admin/python/ENV2.7/coohua_CMDB/coohua_CMDB/static',
+]
