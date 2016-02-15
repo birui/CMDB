@@ -12,11 +12,34 @@
             }
         </style>
     </head>
+    
     <body>
-        <h1>Hello World!</h1>
-        {% for hosts_list in hosts %}
-        <strong>{{ hosts_list.instance_id }}----{{ hosts_list.hostname }} <br></strong>
+      {% load pagination_tags %}
+
+        <h1>CooHua CMDB</h1>
+<!-- 列表  -->
+        <table border="1" align="center" bordercolor="#E76BFF" height="225px"cellpadding="1px" cellspacing="0px" width="400px" background=red>
+
+        {% for hosts in hosts_list %}
+        <tr> <td> {{ hosts.hostname }} </td>  <td> {{ hosts.instance_id }} </td> <td> {{ hosts.lip }} {{ hosts.wip }}</td>  <td> {{ hosts.config }} </td>  <td> {{ hosts.service_model }} </td> <td> {{ hosts.server }} </td> <td> {{ hosts.status }} </td>  <td> {{ hosts.cost }} </td>  <td> {{ hosts.remark }} </td> <tr>
         {% endfor %}
 
+       </table>
+
+<!-- 分页 -->
+      {% if hosts_list.object_list and hosts_list.paginator.num_pages > 1 %}
+            <div>
+                <ul class="pager">
+                {% if hosts_list.has_previous %}
+                  <li><a href="?page={{ hosts_list.previous_page_number }}">上一页</a></li>
+                {% endif %}
+
+                {% if hosts_list.has_next %}
+                  <li><a href="?page={{ hosts_list.next_page_number }}">下一页</a></li>
+                {% endif %}
+                </ul>
+            </div>
+               {% endif %}
     </body>
+
 </html>
