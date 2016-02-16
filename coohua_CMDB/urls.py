@@ -23,4 +23,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^test/$', test),
     url(r'^boot/$', boot),
+    # url(r'^search-form/$', search_form),
+    url(r'^search/$', search),
 ]
