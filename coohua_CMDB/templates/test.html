@@ -80,18 +80,30 @@
 
 <!-- 分页 -->
   {% if hosts_list.object_list and hosts_list.paginator.num_pages > 1 %}
+
         <div>
             <ul class="pager">
+            <!-- 是否有前一页  has_previous -->
             {% if hosts_list.has_previous %}
               <li><a href="?page={{ hosts_list.previous_page_number }}">上一页</a></li>
             {% endif %}
+           <!-- 页码 -->
+            {% for p in hosts_list.paginator.page_range %}
+            {% ifequal p hosts_list.number %}
+            <span> {{p}} </span>
+            {% else %}
+            <a href="?page={{p}}" title="第{{p}}页"> {{ p }} </a>
+            {% endifequal %}
+            {% endfor %}
 
             {% if hosts_list.has_next %}
-              <li><a href="?page={{ hosts_list.next_page_number }}">下一页</a></li>
+             <li><a href="?page={{ hosts_list.next_page_number }}">下一页</a></li>
             {% endif %}
             </ul>
         </div>
+
            {% endif %}
+          第 {{ hosts_list.number }} 页 共 {{ hosts_list.paginator.num_pages }} 页  {{ hosts_list.paginator.count }} 条
            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
            <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
            <!-- Include all compiled plugins (below), or include individual files as needed -->
