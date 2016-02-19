@@ -28,7 +28,7 @@ class Hosts(models.Model):
     server = models.ManyToManyField(Server,blank=True)
     environment = models.CharField(max_length=20)
     status = models.CharField(max_length=20)
-    cost = models.IntegerField(blank=True)
+    cost = models.FloatField(blank=True)
     remark = models.CharField(max_length=250,blank=True)
     def __unicode__(self):
         return self.hostname

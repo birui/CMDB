@@ -46,3 +46,27 @@ def search(request):
     else:
 
         return render_to_response('test.html', {'error': error})
+def index_1(request):
+    hosts = Hosts.objects.all() #查出所有hosts表的数据
+    services = Services.objects.all() #服务模块总量
+    paginator = Paginator(hosts, 50) #每页显示50个,分页器,实例化一个分页对象
+    page = request.GET.get('page') #html传递参数page
+    try :
+        hosts_list = paginator.page(page) #当前需要显示的页
+    except PageNotAnInteger : # 如果页码不是个整数
+        hosts_list = paginator.page(1)  # 取第一页的记录
+    except EmptyPage : # 如果页码太大，没有相应的记录
+        hosts_list = paginator.paginator(paginator.num_pages) # 取最后一页的记录
+    return render(request, 'index_1.html', {'hosts_list' : hosts_list,'services':services})
+
+def report(request):
+    hosts = Hosts.objects.all()
+    services = Services.objects.all()
+    return render(request,'report.html',{'hosts':hosts,'services':services})
+
+def services(request):
+    services = Services.objects.all()
+    return render(request,'services.html',{'services':services})
+
+
+    

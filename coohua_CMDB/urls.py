@@ -25,4 +25,7 @@ urlpatterns = [
     url(r'^boot/$', boot),
     # url(r'^search-form/$', search_form),
     url(r'^search/$', search),
+    url(r'^index/$', index_1),
+    url(r'^report/$', report),
+    url(r'^services/$', services),
 ]

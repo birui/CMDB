@@ -1,0 +1,159 @@
+{% load staticfiles %}
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="widtd=device-widtd, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>CooHua CMDB</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view tde page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="//cdn.bootcss.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<div class="tabbable" id="tabs-66489">
+				<ul class="nav nav-tabs">
+					<li class="active">
+						<a href="#panel-841418" data-toggle="tab">主机列表</a>
+					</li>
+					<li>
+						<a href="#panel-738048" data-toggle="tab">系统状态</a>
+					</li>
+				</ul>
+				<div class="tab-content">
+					<div class="tab-pane active" id="panel-841418">
+						<p>
+			{% load pagination_tags %}
+
+        <h1>CooHua CMDB</h1>
+<!--  search -->
+{% if error %}
+<p style="color: red;">Please submit a search term.</p>**
+{% endif %}
+<!--  
+<form action="/search/" method="get">
+ 提交数据变量名称q 
+<input type="text" name="q"> 
+<input type="submit" value="Search">
+ -->
+ <div style="padding: 10px 10px 10px;">
+   <form class="bs-example bs-example-form" role="form" action="/search/" method="get" >
+      <div class="row">
+      <!-- 控制输入框长度 -->
+         <div class="col-sm-2"> 
+            <div class="input-group">
+               <input type="text" class="form-control" name="q" >
+               <span class="input-group-btn">
+                  <button class="btn btn-default" type="submit">
+                     Go!
+                  </button>
+               </span>
+            </div><!-- /input-group -->
+         </div><!-- /.col-lg-6 -->
+      </div><!-- /.row -->
+   </form>
+</div>
+
+        
+<!-- 列表  -->
+
+<p>Found {{ hosts_list|length }} host{{ hosts_list|pluralize }}.</p>
+
+			<table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>主机名</th>
+            <th>实例名</th>
+            <th>ip</th>
+            <th>配置</th>
+            <th>业务</th>
+<!--             <th>服务</th> -->
+            <th>地址</th>
+            <th>费用</th>
+            <th>备注</th>
+
+          </tr>
+        <tbody>
+        {% for hosts in hosts_list %}
+
+        <tr> 
+        <td> {{ hosts.hostname }} </td>  
+        <td> {{ hosts.instance_id }} </td> 
+        <td> {{ hosts.lip }} {{ hosts.wip }}</td>  
+        <td> {{ hosts.config }} </td>  
+        <td> {{ hosts.service_model }} </td> 
+       
+<!--         {% for server in hosts.server.all %} 
+        <td> {{ server }} </td> 
+        {% endfor %}
+ -->
+        {% if hosts.data_center = 1 %}
+        <td> 青岛 </td>
+        {% endif %}  
+
+        <td> {{ hosts.cost }} </td>  
+        <td> {{ hosts.remark }} </td> 
+        </tr>
+
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+<!-- 分页 -->
+  {% if hosts_list.object_list and hosts_list.paginator.num_pages > 1 %}
+
+        <div>
+            <ul class="pager">
+            <!-- 是否有前一页  has_previous -->
+            {% if hosts_list.has_previous %}
+              <li><a href="?page={{ hosts_list.previous_page_number }}">上一页</a></li>
+            {% endif %}
+           <!-- 页码 -->
+            {% for p in hosts_list.paginator.page_range %}
+            {% ifequal p hosts_list.number %}
+            <span> {{p}} </span>
+            {% else %}
+            <a href="?page={{p}}" title="第{{p}}页"> {{ p }} </a>
+            {% endifequal %}
+            {% endfor %}
+
+            {% if hosts_list.has_next %}
+             <li><a href="?page={{ hosts_list.next_page_number }}">下一页</a></li>
+            {% endif %}
+            </ul>
+        </div>
+
+           {% endif %}
+          第 {{ hosts_list.number }} 页 共 {{ hosts_list.paginator.num_pages }} 页  {{ hosts_list.paginator.count }} 条
+						</p>
+					</div>
+					<div class="tab-pane" id="panel-738048">
+						<p>
+						主机:{{ hosts_list.paginator.count }} 个 <br>
+						模块:{{services|length}} 个
+
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+           <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+           <script src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+           <!-- Include all compiled plugins (below), or include individual files as needed -->
+           <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

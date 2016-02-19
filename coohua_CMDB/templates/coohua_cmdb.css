@@ -1,0 +1,31 @@
+.top{
+     width: auto;
+     height: 40px;
+     border: silver solid 1px;
+}
+
+.two{
+     width:  auto;
+     float: left;
+     height: 2000px;
+     border: silver solid 1px;    
+}
+
+.left-1{
+     width:  150px;
+     height: 2000px;
+     float: left;
+     font-size: 13px;
+     border: silver solid 1px;
+     background-color: #247b35;
+     
+}
+
+.right-1{
+     width:  auto;
+     height: auto;
+     float: left;
+     margin-left: 5px;
+     border: silver solid 1px;
+     background-color: #f5f5f5;
+}
