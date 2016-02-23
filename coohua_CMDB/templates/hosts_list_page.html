@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>hosts_list </h2>
+    <ul>
+    	{% for hosts in object_list %}
+    	    <li>
+    	    {% hosts.name %}
+    	    </li>
+    	 {% endfor %}
+    </ul>
+{% endblock %}

@@ -6,6 +6,7 @@ from CMDB.models import *
 from datetime import datetime
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
+
 # Create your views here.
 # def test(request) :
 #     hosts = Hosts.objects.all() #查出所有hosts表的数据
@@ -68,5 +69,7 @@ def services(request):
     services = Services.objects.all()
     return render(request,'services.html',{'services':services})
 
+def domain(request):
+    domain = Domain.objects.all()
+    return render(request,'domain.html',{'domain':domain})
 
-    

@@ -32,6 +32,8 @@ class Hosts(models.Model):
     remark = models.CharField(max_length=250,blank=True)
     def __unicode__(self):
         return self.hostname
+    class Meta:
+        ordering = ['hostname']
 
 class Brothers(models.Model):
     name = models.CharField(max_length=20)
@@ -49,6 +51,29 @@ class History(models.Model):
     user = models.ForeignKey(Brothers)
     host = models.ForeignKey(Hosts)
     remark = models.CharField(max_length=250)
+
+class Domain(models.Model):
+    date_time = models.DateTimeField(auto_now_add = True)
+    usename = models.CharField(max_length=20,blank=True)
+    domain = models.CharField(max_length=100)
+    remark = models.CharField(max_length=250,blank=True)
+    service_model = models.ForeignKey(Services,blank=True)
+    def __unicode__(self):
+        return self.domain
+
+class CalendarEvent(models.Model):
+    title = models.CharField(blank=True, max_length=200)
+    start = models.DateTimeField()
+    end = models.DateTimeField()
+    all_day = models.BooleanField(default=False)
+    class Meta:
+        verbose_name = ('Event')
+        verbose_name_plural = ('Events')
+
+    def __unicode__(self):
+        return self.title
+
+
 
 
 
