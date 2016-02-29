@@ -42,6 +42,7 @@ class Brothers(models.Model):
     email = models.EmailField()
     phone = models.CharField(max_length=20,blank=True)
     service = models.ManyToManyField(Services)
+    #pic = models.ImageField(upload_to = 'uploadimages')
     def __unicode__(self):
         return self.name
 

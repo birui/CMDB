@@ -1,10 +1,12 @@
 #coding=utf-8
+import os
 from django.shortcuts import render,render_to_response
 from django.template import loader,Context
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from CMDB.models import *
 from datetime import datetime
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
+from django.contrib import auth
 
 
 # Create your views here.
@@ -72,4 +74,24 @@ def services(request):
 def domain(request):
     domain = Domain.objects.all()
     return render(request,'domain.html',{'domain':domain})
+def fu(request):
+    return render_to_response('fu.html') 
+def even(request):
+    return render_to_response('even.html') 
+
+#basepath=os.getcwd()+'\\dockerApp\\app\\templates\\';
+def homepage(request):
+    response=render_to_response("index.html");
+    return response
+
+def account_login(request):
+    username = request.POST.get('username','')
+    password = request.POST.get('password','')
+    user = auth.authenticate(username=username,password=password)
+    print username,password
+    if user is not None:
+        auth.login(request,user)
+        return HttpResponseRedirect("/test/")
+    else:
+        return render_to_response('index.html',{'login_err':'wrong username or password!'})
 
