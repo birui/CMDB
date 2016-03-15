@@ -7,13 +7,21 @@ from CMDB.models import *
 from datetime import datetime
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.contrib import auth
+import json
+from django.core import serializers
+import urllib2
+from django.http import JsonResponse
+
+zabbix_url="http://115.28.203.116/zabbix/api_jsonrpc.php"
+api_pass='CooHua007'
+auth_data={ 'jsonrpc':'2.0','method':'user.login','params':{'user':'Admin','password':api_pass},'id':1}
 
 
 # Create your views here.
 # def test(request) :
 #     hosts = Hosts.objects.all() #查出所有hosts表的数据
 #     return render(request, 'test.html', {'hosts': hosts})
-def test(request):
+def hostlist(request):
     hosts = Hosts.objects.all() #查出所有hosts表的数据
     paginator = Paginator(hosts, 50) #每页显示50个,分页器,实例化一个分页对象
     page = request.GET.get('page') #html传递参数page
@@ -88,10 +96,51 @@ def account_login(request):
     username = request.POST.get('username','')
     password = request.POST.get('password','')
     user = auth.authenticate(username=username,password=password)
-    print username,password
+    #print username,password
     if user is not None:
         auth.login(request,user)
         return HttpResponseRedirect("/test/")
     else:
         return render_to_response('index.html',{'login_err':'wrong username or password!'})
+def data(request):
+    hosts = serializers.serialize("json", Hosts.objects.all())
+    return HttpResponse(hosts, content_type='application/json')
+
+def table(request):
+    #hosts = Hosts.objects.all() 
+    #return render_to_response("table.html")
+    #host_js = json.dumps(hosts)
+    #print(type(hosts))
+    #hosts = serializers.serialize("json", Hosts.objects.all())
+    #return render(request, 'table.html', {'hosts_list' : hosts })
+    return render_to_response('table.html')
+
+#auth function验证登陆
+def zabbix_api(request):
+    request=urllib2.Request(zabbix_url,json.dumps(auth_data))
+    request.add_header('Content-Type','application/json')
+    response=urllib2.urlopen(request)
+    var1=json.loads(response.read())
+    
+
+def ajax_list(request):
+    hostname = request.GET['hostname2'] #获取提交过来的数据
+    item = serializers.serialize("json", iterms.objects.all().filter(hostname=hostname)) #json格式输出
+    return HttpResponse(item) 
+     
+def test1(request):
+    return render(request,'test.html')
+
+def add(request):
+    a = request.GET['a']
+    b = request.GET['b']
+    a = int(a)
+    b = int(b)
+    return HttpResponse(str(a+b))
+
+
+
+
+
+
 

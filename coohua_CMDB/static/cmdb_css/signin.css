@@ -14,10 +14,10 @@ body {
   margin-bottom: 10px;
 }
 .form-signin .checkbox {
-  font-weight: normal;
+  font-weight: auto;
 }
 .form-signin .form-control {
-  position: relative;
+  position: auto;
   height: auto;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;

@@ -1,7 +1,30 @@
-
 {% extends "base.html" %}
 
 {% block content %}
+
+{% load staticfiles %}
+
+
+<link href="{% static 'cmdb_css/reveal.css' %}" rel="stylesheet">
+<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
+ --> 
+<script type="text/javascript" src="{% static 'cmdb_css/jquery.reveal.js' %}"  ></script>
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<style type="text/css">
+body { font-family: "HelveticaNeue", "Helvetica-Neue", "Helvetica", "Arial", sans-serif; }
+.big-link { display: block; margin-top: 10px; text-align: center; font-size: 10px; color: #06f; }
+</style>
+
+
+<script>
+  $(document).ready(function(){
+    $(".monit").click(function(){
+      alert("hostname:" + $(this).attr("data-localName") );
+    });
+  });
+</script>
+
 
 <div class="table-responsive" >
           {% load pagination_tags %}
@@ -22,13 +45,14 @@
             <th>地址</th>
             <th>费用</th>
             <th>备注</th>
+            <th>操作</th>
 
           </tr>
         <tbody>
         {% for hosts in hosts_list %}
 
         <tr> 
-        <td> {{ hosts.hostname }} </td>  
+        <td id="hostname"> {{ hosts.hostname }} </td>  
 <!--         <td> {{ hosts.instance_id }} </td>  -->
         <td> {{ hosts.lip }} <br> {{ hosts.wip }}</td>  
         <td> {{ hosts.config }} </td>  
@@ -44,12 +68,21 @@
 
         <td> {{ hosts.cost }} </td>  
         <td> {{ hosts.remark }} </td> 
+        <td> 
+        <button data-localName="{{ hosts.hostname }}" class="monit"  id="kk">管理</button> 
+        <a href="#"  data-test="{{ hosts.hostname }}" data-reveal-id="myModal"> 监控 </a> 
+        <a href="">推送</a></td>
         </tr>
 
         {% endfor %}
 
       </tbody>
     </table>
+
+
+
+
+
 
 <!-- 分页 -->
   {% if hosts_list.object_list and hosts_list.paginator.num_pages > 1 %}
