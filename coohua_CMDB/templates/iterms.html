@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+<script>
+  $(document).ready(function(){
+    $(".iterm").click(function(){
+      //alert("iterm:" + $(this).attr("iterm-name") );
+      var itemid = $(this).attr("iterm-name");
+      var _index = $(this).parents('tr').index();//index() 方法返回指定元素相对于其他指定元素的 index 位置。
+      //alert (_index)
+      getcpu(itemid,_index);
+
+    });
+    $(".iterm").trigger('click');//自动加载；trigger() 方法触发被选元素的指定事件类型
+  });
+
+    function getcpu(itermid,_index){
+      $.get('/zabbix_get/',{'itemid':itermid},function(data){
+        //alert("cpu使用率:" + data);
+     $(".cpuload").eq(_index).html("<p>"+data+"<p>"); //显示data在class=cpuload且相对<tr>的位置是index
+      });
+    }
+</script>
+
+
+<table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>主机</th>
+            <th>iterms</th>
+            <th>使用率</th>
+<!--             <th>时间</th>
+            <th>备注</th> -->
+          </tr>
+        <tbody>
+        共 {{ iterm|length }} 个
+        {% for iterm1 in iterm %}
+
+        <tr> 
+        <td> {{ iterm1.hostname }} </td>  
+        <td  iterm-name="{{ iterm1.cpu_itemid }}" class="iterm"  > {{ iterm1.cpu_itemid }} </td>
+<!--         <td> {{ iterms.service_model }} </td> 
+        <td> {{ iterms.date_time }} </td> --> 
+        <td class="cpuload"  >  </td>   
+        </tr>
+
+        {% endfor %}
+
+      </tbody>
+</table>
+
+
+
+    
+
+
+
+
+{% endblock %}

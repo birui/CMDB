@@ -26,7 +26,8 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <script src="//v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script>
-     <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
+    {% block css  %} {% endblock %}
 
   </head>
     <body>
@@ -60,7 +61,7 @@
             <li><a href="/hostlist/">Dashboard</a></li>
             <li><a href="/admin/">管理</a></li>
             <li><a href="/fu/">值班</a></li>
-            <li><a href="#">Help</a></li>
+           
           </ul>
           <form class="navbar-form navbar-right" action="/search/" method="get" >
             <input type="text" class="form-control" placeholder="Search..." name="q">
@@ -79,6 +80,7 @@
             <li><a href="/report/">报告</a></li>
             <li><a href="/services/">模块</a></li>
             <li><a href="/domain/">域名</a></li>
+            <li><a href="/table/">使用率</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href=""></a></li>
@@ -104,11 +106,13 @@
         </div>
 
            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-           <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+           <!-- <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
            <!-- Include all compiled plugins (below), or include individual files as needed -->
-           <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+           <!-- <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script> -->
 
 
 
   </body>
 </html>
+
+

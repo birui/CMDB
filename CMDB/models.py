@@ -77,12 +77,14 @@ class CalendarEvent(models.Model):
 class iterms(models.Model):
     hostid = models.IntegerField()
     hostname = models.CharField(blank=True, max_length=200)
-    cpu_itemid = models.FloatField(blank=True)
+    cpu_itemid = models.IntegerField(blank=True)
+    cpu_idle = models.FloatField(null=True)
     cpu_graphs_itemsid = models.IntegerField(blank=True)
     eth0_graphs_itemsid = models.IntegerField(blank=True)
     eth1_graphs_itemsid = models.IntegerField(blank=True) 
     def __unicode__(self):
-       return str(self.cpu_itemid) #返回的数据
+       return str(self.hostname) #返回的数据
+       # return self.hostname
 
         
 

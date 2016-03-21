@@ -28,7 +28,7 @@
         cpu_graphs_itemsid = data[0].fields.cpu_graphs_itemsid;
         eth1_graphs_itemsid = data[0].fields.eth1_graphs_itemsid;
         //alert(hostname)
-       $("#hostname1").html( "<img src=http://115.28.203.116/zabbix/chart2.php?graphid="+cpu_graphs_itemsid+"&period=23234&width=800& /> <br> <img src=http://115.28.203.116/zabbix/chart2.php?graphid="+eth1_graphs_itemsid+"&period=23234&width=800& />");
+       $("#hostname1").html( "<img src=http://115.28.203.116/zabbix/chart2.php?graphid="+cpu_graphs_itemsid+"&period=23234&width=800& /> ");
       });
     }
 

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bootstrap基础入门</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="with=device-width,initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="/Users/admin/python/ENV2.7/coohua_CMDB/coohua_CMDB/static/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/Users/admin/python/ENV2.7/coohua_CMDB/coohua_CMDB/static/bootstrap/js/bootstrap.min.js">
+	<link rel="stylesheet" type="text/css" href="/Users/admin/python/ENV2.7/coohua_CMDB/coohua_CMDB/static/bootstrap/js/jquery.min.js">
+</head>
+<body style="padding: 50px;background-color: #ccc;">
+<div class="container" style="padding: 50px;background-color: #fff;">
+<form class="form-horizontal">
+<!-- form-horizontal 启用栅格排列 下面就能用栅格了 表单里面不用row -->
+	<div class="form-group">
+	<!-- 通过for和id都是username绑定，placeholder效果提示语背景 -->
+		    <label for="username" class="col-md-2 control-label">用户名:</label>
+	     	
+	     	<div class="col-md-10">
+		        <input type="text" id="username" class="form-control" placeholder="请输入用户名">
+		    </div>
+	</div>
+    <div class="form-group">
+        <label for="password" class="col-md-2 control-label" >密码:</label>
+        
+        <div class="col-md-10">
+		    <input type="password" id="password" class="form-control" placeholder="请输入你的密码">
+	    </div>	    
+    </div>
+    <div class="form-group">
+    	<label class="col-md-2 control-label">上传图片:</label>
+    	<div class="col-md-10">
+    	    <input type="file">
+    	    <p class="help-block">上传的图片类型只能是:.jpg .gif .png</p>
+    	</div>
+    </div>
+    <div class="form-group ">
+    	<label class="col-md-2 control-label">兴趣爱好:</label>
+    	<div class="col-md-10">
+  
+    	    <label class="checkbox-inline"><input type="checkbox">画画</label>
+    	    <label class="checkbox-inline"><input type="checkbox">音乐</label>
+    	    <label class="checkbox-inline"><input type="checkbox">体育</label>
+    	    <label class="checkbox-inline"><input type="checkbox">唱歌</label>
+    	</div> 	
+    	
+    </div>
+    <div class="form-group"> 
+        <label class="col-md-2 control-label">学历:</label>
+            <div class="col-md-10">
+    	        <label class="radio-inline"><input name="optionsRadios"  type="radio">高中</label>
+    	        <label class="radio-inline"><input name="optionsRadios"  type="radio">大专</label>
+    	        <label class="radio-inline"><input name="optionsRadios"  type="radio">本科</label>
+    	        <label class="radio-inline"><input name="optionsRadios"  type="radio">研究生</label>
+            </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">个人简介:</label>
+        <div class="col-md-10">
+            <textarea rows="5" class="form-control" placeholder="请输入你的信息:"></textarea>
+        </div>
+    	
+    </div>    
+    <!-- col-md-offset-2 偏移两列 -->
+<div class="col-md-10 col-md-offset-2" >
+    <button type="button" class="btn btn-danger btn-lg">提交表单</button>
+</div>
+  
+</form>
+</div>
+
+</body>
+</html>

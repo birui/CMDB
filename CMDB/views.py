@@ -11,11 +11,8 @@ import json
 from django.core import serializers
 import urllib2
 from django.http import JsonResponse
-
-zabbix_url="http://115.28.203.116/zabbix/api_jsonrpc.php"
-api_pass='CooHua007'
-auth_data={ 'jsonrpc':'2.0','method':'user.login','params':{'user':'Admin','password':api_pass},'id':1}
-
+import subprocess
+import zabbix_api
 
 # Create your views here.
 # def test(request) :
@@ -82,6 +79,7 @@ def services(request):
 def domain(request):
     domain = Domain.objects.all()
     return render(request,'domain.html',{'domain':domain})
+
 def fu(request):
     return render_to_response('fu.html') 
 def even(request):
@@ -107,36 +105,52 @@ def data(request):
     return HttpResponse(hosts, content_type='application/json')
 
 def table(request):
-    #hosts = Hosts.objects.all() 
-    #return render_to_response("table.html")
-    #host_js = json.dumps(hosts)
-    #print(type(hosts))
-    #hosts = serializers.serialize("json", Hosts.objects.all())
-    #return render(request, 'table.html', {'hosts_list' : hosts })
     return render_to_response('table.html')
 
-#auth function验证登陆
-def zabbix_api(request):
-    request=urllib2.Request(zabbix_url,json.dumps(auth_data))
-    request.add_header('Content-Type','application/json')
-    response=urllib2.urlopen(request)
-    var1=json.loads(response.read())
-    
+def json_host(request):
+    return render_to_response('json_host_list.txt')
 
 def ajax_list(request):
     hostname = request.GET['hostname2'] #获取提交过来的数据
     item = serializers.serialize("json", iterms.objects.all().filter(hostname=hostname)) #json格式输出
     return HttpResponse(item) 
      
-def test1(request):
-    return render(request,'test.html')
 
-def add(request):
-    a = request.GET['a']
-    b = request.GET['b']
-    a = int(a)
-    b = int(b)
-    return HttpResponse(str(a+b))
+def zabbix_get(request):
+    itemid = request.GET['itemid']
+    cmd = zabbix_api.get_history(itemid)
+    return HttpResponse(min(cmd))
+
+def ratio(request):
+    iterm = iterms.objects.all()
+    return render(request,'iterms.html',{'iterm':iterm})
+
+def item(request):
+    response = {}
+    iterm = iterms.objects.all()
+    for i in iterm:
+        response[i.hostname] = i.cpu_itemid  #拿到想要的数据库字段并放入字典
+    for k , v  in response.items():
+        cmd = zabbix_api.get_history(v)
+        try: 
+            print k,v,min(cmd)
+            p = iterms.objects.get(hostname=k) #写入数据库的步骤
+            p.cpu_idle = min(cmd)
+            # p.cpu_idle = 1
+            p.save()   #保存到数据库
+    
+        except:
+            print k
+            print "=================Error============="
+    return HttpResponse('OK') #return 必须写在for外面不然循环会停止
+
+    
+    
+
+
+
+
+
 
 
 
