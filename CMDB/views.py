@@ -104,8 +104,8 @@ def data(request):
     hosts = serializers.serialize("json", Hosts.objects.all())
     return HttpResponse(hosts, content_type='application/json')
 
-def table(request):
-    return render_to_response('table.html')
+def hosts(request):
+    return render_to_response('hosts.html')
 
 def json_host(request):
     return render_to_response('json_host_list.txt')
@@ -125,29 +125,36 @@ def ratio(request):
     iterm = iterms.objects.all()
     return render(request,'iterms.html',{'iterm':iterm})
 
-def item(request):
-    response = {}
-    iterm = iterms.objects.all()
-    for i in iterm:
-        response[i.hostname] = i.cpu_itemid  #拿到想要的数据库字段并放入字典
-    for k , v  in response.items():
-        cmd = zabbix_api.get_history(v)
-        try: 
-            print k,v,min(cmd)
-            p = iterms.objects.get(hostname=k) #写入数据库的步骤
-            p.cpu_idle = min(cmd)
-            # p.cpu_idle = 1
-            p.save()   #保存到数据库
-    
-        except:
-            print k
-            print "=================Error============="
-    return HttpResponse('OK') #return 必须写在for外面不然循环会停止
+# def item(request):
+#     iterm = iterms.objects.all()
+
+#     for i in iterm:
+#         loc_hostid = i.hostid
+#         id_value = { 'cpu_idle':i.cpu_itemid, 'cpu_load':i.cpu_load_itemsid,'eth0_in':i.eth0_in_itemsid,'eth0_out':i.eth0_out_itemsid,'eth1_in':i.eth1_in_itemsid,'eth1_out':i.eth1_out_itemsid,'memory_available':i.memory_available_itemsid,'memory_total':i.memory_total_itemsid }
+#         #print type(id_value)
+#         for k , v in id_value.items():
+#             # print "Key is %s, value is %s" % (k, v)
+#             cmd = zabbix_api.get_history(v)
+#             try:
+#                 print k,v,min(cmd)
+#                 # p = iterms.objects.get(hostname=loc_hostid) #写入数据库的步骤
+#                 # p.k = min(cmd)
+#                 # p.cpu_idle = 1
+#                 # p.save()   #保存到数据库
+#             except:
+#                 print 'null'
+           
+#     return HttpResponse(id_value) #return 必须写在for外面不然循环会停止
+def item_data(request):
+    items = serializers.serialize("json", iterms.objects.all())
+    return HttpResponse(items, content_type='application/json')
+
+def items(request):
+    return render_to_response('items_list.html')
+
 
     
     
-
-
 
 
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python2.7
 #coding=utf-8
+#通过传入的itemid来获取数据
 import urllib2
 import json
 zabbix_url="http://115.28.203.116/zabbix/api_jsonrpc.php"
@@ -22,7 +23,7 @@ def get_history(itemid):
         "method":"history.get",
         "params":{
             "output":"extend",
-            "history":0, #0 - float; ; 
+            "history":3, #0 - float; 3 - numeric unsigned; 
             "itemids":itemid,
             "limit":10
         },

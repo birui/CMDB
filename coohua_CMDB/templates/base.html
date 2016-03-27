@@ -26,7 +26,9 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <script src="//v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
+    <!-- <script type="text/javascript" src="{% static 'cmdb_css/jquery-1.6.min.js' %}"></script> -->
+        <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
     {% block css  %} {% endblock %}
 
   </head>
@@ -76,11 +78,11 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="/hostlist/">主机 <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="/hosts/">主机 <span class="sr-only">(current)</span></a></li>
             <li><a href="/report/">报告</a></li>
             <li><a href="/services/">模块</a></li>
             <li><a href="/domain/">域名</a></li>
-            <li><a href="/table/">使用率</a></li>
+            <li><a href="/items/">使用率</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href=""></a></li>

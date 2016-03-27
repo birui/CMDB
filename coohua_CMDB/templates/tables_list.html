@@ -24,11 +24,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- DataTables CSS -->
-    <!-- <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css"> -->
+    <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.7/css/jquery.dataTables.css">
     <!-- jQuery -->
-    <!-- <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script> -->
+    <script type="text/javascript" charset="utf8" src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
     <!-- DataTables -->
-    <!-- <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script> -->
+    <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.7/js/jquery.dataTables.js"></script>
     <script src="//v3.bootcss.com/assets/js/ie-emulation-modes-warning.js"></script>
     
   </head>
@@ -69,6 +69,10 @@
   $(document).ready( function () {
     $('#table_id').dataTable({
     "processing": true, 
+    "scrollX": true,
+    "scrollY": true,
+    "iDisplayLength":50,
+
     "ajax": {
       "url": "/data/",
       "type": "POST",

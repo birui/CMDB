@@ -1,0 +1,145 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block css  %}
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'cmdb_css/jquery.dataTables.css' %}">
+    <!-- jQuery -->
+    <!-- <script type="text/javascript" charset="utf8" src="{% static 'cmdb_css/jquery-1.10.2.min.js' %}"></script> -->
+
+    <!-- DataTables -->
+    <script type="text/javascript" charset="utf8" src="{% static 'cmdb_css/jquery.dataTables.js' %}"></script>
+
+
+    <link href="{% static 'cmdb_css/reveal.css' %}" rel="stylesheet">
+
+
+    <style type="text/css">
+              th, td { white-space: nowrap; }
+              div.dataTables_wrapper {
+                width: 1200px;
+                margin: 0 auto;
+              }
+          
+
+    </style>
+
+
+ {% endblock %}
+
+ 
+ {% block content %}
+
+
+ <table id="table_id" class="display" cellspacing="0" width="100%">
+        <thead>
+          <tr>
+            <th>主机名</th>
+            <th>cpu使用率</th>
+            <th>负载</th>
+            <th>内存可用(G)</th>
+            <th>内存总数</th>
+            <th>eth0出口</th>
+            <th>eth0入口</th>
+            <th>eth1出口</th>
+            <th>eth1入口</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>主机名</th>
+            <th>cpu使用率</th>
+            <th>负载</th>
+            <th>内存可用</th>
+            <th>内存总数</th>
+            <th>eth0出口</th>
+            <th>eth0入口</th>
+            <th>eth1出口</th>
+            <th>eth1入口</th>
+          </tr>
+        </tfoot>
+    </table>
+
+
+
+
+<script type="text/javascript">
+
+  $(document).ready( function () {
+    window.table = $('#table_id').DataTable({
+    "processing": true, 
+    "sScrollX": "100%",
+    "sScrollXInner": "110%",
+    "bScrollCollapse": true,
+    "iDisplayLength":50,
+    "ajax": {
+      "url": "/item_data/",
+      "type": "POST",
+      "dataSrc": "",
+    },
+ 
+  "columns": [
+          { "data": "fields.hostname"},
+          { "data": "fields.cpu_idle",render:function(data,type,row,meta){
+            var cpu_data = 100 - data;
+            return "<div style='background-color:#3cc051;width:"+cpu_data+"% ;'> "+ cpu_data.toFixed(2) +"%</div>";} },
+          { "data": "fields.cpu_load" },
+          { "data": "fields.memory_available",render:function(data,type,row,meta){
+            var memory = data/1024/1024/1024;
+            return  "<div style='background-color:#3cc051;width:"+memory+"% ;'> "+ memory.toFixed(1) +"</div>";
+          }},
+          { "data": "fields.memory_total",render:function(data,type,row,meta){
+            var memory = data/1024/1024/1024 ;
+            return  "<div> "+ memory.toFixed(1) +"</div>";
+          }},
+          { "data": "fields.eth0_out",render:function(data,type,row,meta){
+            var eth0_out = data/1024/1024 ;
+            return  "<div> "+ eth0_out.toFixed(1) +"</div>";
+          }},
+          { "data": "fields.eth0_in" ,render:function(data,type,row,meta){
+            var eth0_in = data/1024/1024 ;
+            return  "<div> "+ eth0_in.toFixed(1) +"</div>";
+          }},
+          { "data": "fields.eth1_in" ,render:function(data,type,row,meta){
+            var eth1_in = data/1024/1024 ;
+            return  "<div> "+ eth1_in.toFixed(1) +"</div>";
+          }},
+          { "data": "fields.eth1_out" ,render:function(data,type,row,meta){
+            var eth1_out = data/1024/1024 ;
+            return  "<div> "+ eth1_out.toFixed(1) +"</div>";
+          }},
+      ],
+  });
+
+
+// cpu_idle,
+// cpu_load,
+// eth0_in,
+// eth0_out,
+// eth1_in,
+// eth1_out,
+// memory_available,
+// memory_total
+    
+// $('#table_id').on( 'click', 'a', function () {
+//     var data = table.row( $(this).parents('tr') ).data();//取出了所有这个列的所有数据
+//     // console.log(data)
+//     // alert(" hostname is: " + data.fields.hostname);//过滤出hostname数据
+//     $('td.sorting_1').css("background-color","red");
+// });
+
+// $('#table_id').trigger("click");
+    
+});
+
+</script>
+
+<script type="text/javascript" src="{% static 'cmdb_css/jquery.reveal_2.js' %}"  ></script>
+
+
+{% endblock %}
+
+
+
