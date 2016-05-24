@@ -152,9 +152,17 @@ def item_data(request):
 def items(request):
     return render_to_response('items_list.html')
 
+def online(request):
+    return render_to_response('online.html')
+def online_app(request):
+    version = request.GET['version']
+    modelname = request.GET['modelname']
+    cmd = "/Users/admin/python/ENV2.7/coohua_CMDB/scripts/playbooks/cooansible-api.sh "
+    status = subprocess.check_output(cmd + modelname + " " + version ,shell=True)
+    
+    return HttpResponse(status)
 
-    
-    
+
 
 
 

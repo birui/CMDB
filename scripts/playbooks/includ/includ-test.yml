@@ -1,0 +1,4 @@
+- name: ls /tmp/
+  shell: ls /tmp/
+- name: ensure apache is at the latest version  
+  shell: echo 'hello,hi'

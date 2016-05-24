@@ -1,0 +1,9 @@
+---
+- hosts: IP
+  # remote_user: root
+  roles:
+    - asp
+
+
+
+    

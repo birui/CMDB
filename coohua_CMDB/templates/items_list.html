@@ -5,13 +5,17 @@
 {% block css  %}
 
     <!-- DataTables CSS -->
-    <link rel="stylesheet" type="text/css" href="{% static 'cmdb_css/jquery.dataTables.css' %}">
+    <!-- <link rel="stylesheet" type="text/css" href="{% static 'cmdb_css/jquery.dataTables.css' %}"> -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css">
+
     <!-- jQuery -->
     <!-- <script type="text/javascript" charset="utf8" src="{% static 'cmdb_css/jquery-1.10.2.min.js' %}"></script> -->
 
     <!-- DataTables -->
-    <script type="text/javascript" charset="utf8" src="{% static 'cmdb_css/jquery.dataTables.js' %}"></script>
+    <!-- <script type="text/javascript" charset="utf8" src="{% static 'cmdb_css/jquery.dataTables.js' %}"></script> -->
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
 
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
 
     <link href="{% static 'cmdb_css/reveal.css' %}" rel="stylesheet">
 
@@ -33,18 +37,20 @@
  {% block content %}
 
 
- <table id="table_id" class="display" cellspacing="0" width="100%">
+ <!-- <table id="table_id" class="display" cellspacing="0" width="100%"> -->
+  <table id="table_id" class="table table-striped table-bordered" cellspacing="0" width="100%">
+
         <thead>
           <tr>
             <th>主机名</th>
             <th>cpu使用率</th>
             <th>负载</th>
-            <th>内存可用(G)</th>
+            <th>内存使用率</th>
             <th>内存总数</th>
             <th>eth0出口</th>
             <th>eth0入口</th>
-            <th>eth1出口</th>
             <th>eth1入口</th>
+            <th>eth1出口</th>
           </tr>
         </thead>
         <tfoot>
@@ -52,12 +58,12 @@
             <th>主机名</th>
             <th>cpu使用率</th>
             <th>负载</th>
-            <th>内存可用</th>
+            <th>内存使用率</th>
             <th>内存总数</th>
             <th>eth0出口</th>
             <th>eth0入口</th>
-            <th>eth1出口</th>
             <th>eth1入口</th>
+            <th>eth1出口</th>
           </tr>
         </tfoot>
     </table>
@@ -84,11 +90,16 @@
           { "data": "fields.hostname"},
           { "data": "fields.cpu_idle",render:function(data,type,row,meta){
             var cpu_data = 100 - data;
-            return "<div style='background-color:#3cc051;width:"+cpu_data+"% ;'> "+ cpu_data.toFixed(2) +"%</div>";} },
-          { "data": "fields.cpu_load" },
+            return "<div style='background-color:#428bca;width:"+cpu_data+"% ;'> "+ cpu_data.toFixed(2) +"%</div>";} },
+          { "data": "fields.cpu_load",render:function(data,type,row,meta){ 
+          return  "<div> "+ data.toFixed(1) +"</div>";}},
+
           { "data": "fields.memory_available",render:function(data,type,row,meta){
-            var memory = data/1024/1024/1024;
-            return  "<div style='background-color:#3cc051;width:"+memory+"% ;'> "+ memory.toFixed(1) +"</div>";
+            // var memory = data/1024/1024/1024;
+            var usememory = row.fields.memory_total - data;
+            var memory = usememory/1024/1024/1024;
+            var bili = usememory/row.fields.memory_total*100
+            return  "<div style='background-color:#BA6CEA;width:"+bili+"% ;'> "+ bili.toFixed(1) +"%</div>";
           }},
           { "data": "fields.memory_total",render:function(data,type,row,meta){
             var memory = data/1024/1024/1024 ;
@@ -103,11 +114,11 @@
             return  "<div> "+ eth0_in.toFixed(1) +"</div>";
           }},
           { "data": "fields.eth1_in" ,render:function(data,type,row,meta){
-            var eth1_in = data/1024/1024 ;
+            var eth1_in = data/1024/1024;
             return  "<div> "+ eth1_in.toFixed(1) +"</div>";
           }},
           { "data": "fields.eth1_out" ,render:function(data,type,row,meta){
-            var eth1_out = data/1024/1024 ;
+            var eth1_out = data/1024/1024;
             return  "<div> "+ eth1_out.toFixed(1) +"</div>";
           }},
       ],
