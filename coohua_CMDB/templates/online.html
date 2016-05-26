@@ -40,7 +40,7 @@
 <div class="row" style='margin-top:10px'>
   <div class="col-lg-6 col-md-offset-2" > <p> 描述：</p> </div>
 
-  <div class="col-lg-6 col-md-offset-2" > <textarea class="form-control" rows="3"></textarea> </div>
+  <div id="describe" class="col-lg-6 col-md-offset-2" > <textarea class="form-control" rows="3"></textarea> </div>
  
  </div>
 
@@ -50,11 +50,11 @@
   	</div>
 </div>
 
-<div class="row " style='margin-top:100px'> </div>
+<div class="row" style='margin-top:100px'> </div>
 
 <div   class="col-lg-6 col-md-offset-2 ">  
-<p> <textarea id="result" style="width: 900px ;border: 0 none; outline-style: none">   </textarea>   </p>
-
+<!-- <p> <textarea id="result" style="width: 900px ;border: 0 none; outline-style: none">   </textarea>   </p> -->
+<p> <pre id="result" style="width: 900px ;border: 0 none; outline-style: none;display: none">   </pre>   </p>
 </div>
 
 <script type="text/javascript">
@@ -69,8 +69,8 @@ $(document).ready(function(){
     	var modelname = $("#dLabel").text();
     	var version = $("#ver").val();
     	$.get("/online_app/",{'modelname':modelname, 'version':version},function(data){
-    		$('#result').attr('rows',data.length)
-    		$('#result').html(data)
+    		$('#result').html(data);
+    		$('#result').show();
     		//alert(data.length)
     	 });
       });
