@@ -30,7 +30,7 @@ urlpatterns = [
     url(r'^zabbix_get/$',zabbix_get),
     url(r'^ratio/$',ratio),
     url(r'^items/$',items),
-    url(r'^online/$',online),
+    url(r'^online/$',online_web),
     url(r'^online_app/$',online_app),
     url(r'^json_host/$',json_host),
     url(r'^item_data/$',item_data),

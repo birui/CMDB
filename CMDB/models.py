@@ -101,7 +101,17 @@ class iterms(models.Model):
        return str(self.hostname) #返回的数据
        # return self.hostname
 
-        
+class online(models.Model):
+    models_name = models.CharField(blank=True,max_length=20)
+    version = models.FloatField(null=True)
+    describe = models.CharField(blank=True,max_length=250)
+    date_time = models.DateTimeField(auto_now_add = True)
+
+    # def __unicode__(self):
+    #    return str(self.models_name)
+
+
+
 
 
 
