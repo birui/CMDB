@@ -1,5 +1,5 @@
 #coding=utf-8
-import os
+import os,sys
 from django.shortcuts import render,render_to_response
 from django.template import loader,Context
 from django.http import HttpResponse,HttpResponseRedirect
@@ -13,6 +13,8 @@ import urllib2
 from django.http import JsonResponse
 import subprocess
 import zabbix_api
+reload(sys)
+sys.setdefaultencoding( "utf-8" )
 
 # Create your views here.
 # def test(request) :
@@ -168,6 +170,18 @@ def online_app(request):
     cmd = "/Users/admin/python/ENV2.7/coohua_CMDB/scripts/playbooks/cooansible-api.sh "
     status = subprocess.check_output(cmd + modelname + " " + version ,shell=True)
     
+    mailbox = [
+    'birui@coohua.com',
+    'zhubaofeng@coohua.com',
+    ]
+    
+    subject = '%s %s 上线' % (modelname,version) 
+
+    for i in mailbox:
+        print i
+        mail_cmd = "/Users/admin/python/ENV2.7/coohua_CMDB/scripts/mail.py '%s' '%s' '%s' " % (i,subject,describe)
+        os.system(mail_cmd)
+
     return HttpResponse(status)
 
 
