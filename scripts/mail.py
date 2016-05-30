@@ -56,7 +56,7 @@ def main():
     to=sys.argv[1]
     subject=sys.argv[2]
     content=sys.argv[3]
-    sendqqmail('##','#','##',to,subject,content)
+    sendqqmail('monitor@coohua.com','QAZwsx123','monitor@coohua.com',to,subject,content)
 
 if __name__ == "__main__":
     main()

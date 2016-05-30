@@ -1,1 +1,4 @@
-.pyc
+*.pyc
+*.swp
+settings.py
+
