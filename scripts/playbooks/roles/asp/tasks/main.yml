@@ -1,4 +1,0 @@
----
-- name: copy file
-  copy: src=zgcyy.zip dest=/tmp/
-    owner=root group=root mode=077

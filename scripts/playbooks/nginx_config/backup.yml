@@ -1,5 +1,0 @@
----
-- hosts: test
-  user: root
-  roles:
-  - old
