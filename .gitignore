@@ -1,4 +1,9 @@
 *.pyc
 *.swp
+*.zip
+*.rar
+*.via
+*.tmp
+*.err
 settings.py
-mail.py
+/scripts/mail.py
