@@ -6,5 +6,6 @@
 *.tmp
 *.err
 *.ini
+*.tar
 settings.py
 scripts/*
