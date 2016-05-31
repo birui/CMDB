@@ -6,4 +6,4 @@
 *.tmp
 *.err
 settings.py
-scripts/mail.py
+scripts
