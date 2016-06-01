@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row" style='margin-top:100px'>
+	<div class="col-lg-4 col-md-offset-2" >
+		<p> 模块：</p>
+	</div>
+  <div class="col-lg-6 col-md-offset-2 ">
+    <div class="input-group">
+      <div class="input-group-btn" id="selectObj">
+        <button id="dLabel" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">选择模块 <span class="caret"></span></button>
+        <ul class="dropdown-menu" aria-labelledby="dLabel">
+          <li><a href="#" value="asp">asp</a></li>
+          <li><a href="#" value="altair">altair</a></li>
+          <li><a href="#" value="crm">crm</a></li>
+          <li role="separator" class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+     
+    </div><!-- /input-group -->
+
+  </div><!-- /.col-lg-6 -->
+  
+  
+</div>
+
+
+<div class="row" style='margin-top:10px'>
+<div class="col-lg-4 col-md-offset-2" >
+<p> 过滤：</p>
+</div>
+<div class="col-lg-6 col-md-offset-2" >
+ <input type="text" class="form-control" aria-label="..." id="ver">
+ </div>
+</div>
+
+
+<div class="row" style='margin-top:10px'> 
+	<div class="col-lg-6 col-md-offset-2" >
+    	<button type="button" class="btn btn-danger btn-default" id="model">提交上线</button>
+  	</div>
+</div>
+
+<div class="row" style='margin-top:100px'> </div>
+
+<div   class="col-lg-6 col-md-offset-2 ">  
+<!-- <p> <textarea id="result" style="width: 900px ;border: 0 none; outline-style: none">   </textarea>   </p> -->
+<p> <pre id="result" style="width: 900px ;border: 0 none; outline-style: none;display: none">   </pre>   </p>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+ $('.dropdown-menu li').on('click',function(){
+        $('#dLabel').text($(this).text());
+    });
+  });
+
+    $("#model").click(function(){
+    	var modelname = $("#dLabel").text();
+    	var version = $("#ver").val();
+    	$.post("/showlog_app/",{'modelname':modelname, 'version':version,},function(data){
+    		$('#result').html(data);
+    		$('#result').show(); //改变display: none
+    		//alert(data.length)
+    	 });
+      });
+
+
+</script>
+
+
+{% endblock %}
+

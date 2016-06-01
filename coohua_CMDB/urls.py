@@ -11,6 +11,7 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
+    # url(r'^ueditor/',include('DjangoUeditor.urls' )),
     url(r'^$',homepage),
     url(r'^admin/', admin.site.urls),
     url(r'^hostlist/$', hostlist),
@@ -34,6 +35,8 @@ urlpatterns = [
     url(r'^online_app/$',online_app),
     url(r'^json_host/$',json_host),
     url(r'^item_data/$',item_data),
+    url(r'^showlog/$',showlog_web),
+    url(r'^showlog_app/$',showlog_app)
     
     #url(r'^add/$',add),
     #url(r'^test1/$',test1),

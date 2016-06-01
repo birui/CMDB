@@ -184,6 +184,19 @@ def online_app(request):
 
     return HttpResponse(status)
 
+def showlog_web(request):
+    return render_to_response('showlog.html')
+
+def showlog_app(request):
+    modelname = request.POST['modelname']
+    filters_segment= request.POST['version']
+    cmd = "/Users/admin/python/ENV2.7/coohua_CMDB/scripts/playbooks/show_log.sh"
+    status = subprocess.check_output(cmd + " " + modelname ,shell=True)
+    return HttpResponse(status)
+
+
+   
+
 
 
 
