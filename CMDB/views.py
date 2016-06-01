@@ -167,7 +167,7 @@ def online_app(request):
     u1 = online(models_name=modelname ,version=version ,describe=describe )
     u1.save()
 
-    cmd = "/Users/admin/python/ENV2.7/coohua_CMDB/scripts/playbooks/cooansible-api.sh "
+    cmd = "scripts/playbooks/cooansible-api.sh "
     status = subprocess.check_output(cmd + modelname + " " + version ,shell=True)
     
     mailbox = [
@@ -179,7 +179,7 @@ def online_app(request):
 
     for i in mailbox:
         print i
-        mail_cmd = "/Users/admin/python/ENV2.7/coohua_CMDB/scripts/mail.py '%s' '%s' '%s' " % (i,subject,describe)
+        mail_cmd = "scripts/mail.py '%s' '%s' '%s' " % (i,subject,describe)
         os.system(mail_cmd)
 
     return HttpResponse(status)
@@ -190,7 +190,7 @@ def showlog_web(request):
 def showlog_app(request):
     modelname = request.POST['modelname']
     filters_segment= request.POST['version']
-    cmd = "/Users/admin/python/ENV2.7/coohua_CMDB/scripts/playbooks/show_log.sh"
+    cmd = "scripts/playbooks/show_log.sh"
     status = subprocess.check_output(cmd + " " + modelname ,shell=True)
     return HttpResponse(status)
 
