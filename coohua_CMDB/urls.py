@@ -36,7 +36,11 @@ urlpatterns = [
     url(r'^json_host/$',json_host),
     url(r'^item_data/$',item_data),
     url(r'^showlog/$',showlog_web),
-    url(r'^showlog_app/$',showlog_app)
+    url(r'^showlog_app/$',showlog_app),
+    url(r'^supervisor/$',supervisor),
+    url(r'^control/$',control),
+    #url(r'^control/(?P<server>[a-z0-9\.]+)/(?P<process>[a-z:_-]+)/(?P<action>[a-z]+)/$',control),
+    #url(r'^query/$',query),
     
     #url(r'^add/$',add),
     #url(r'^test1/$',test1),

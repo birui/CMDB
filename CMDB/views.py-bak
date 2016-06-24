@@ -15,9 +15,7 @@ import subprocess
 import zabbix_api
 from django.core.urlresolvers import reverse
 import simplejson
-# from CMDB.backends.server import Server #如果导入不成功touch __init__.py
-from CMDB.backends.backend import Backend
-sup_backend = Backend()
+from CMDB.backends.server import Server #如果导入不成功touch __init__.py
 
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
@@ -150,8 +148,7 @@ def online_app(request):
     modelname = request.POST['modelname']
     describe = request.POST['describe']
     
-    # print "%s , %s, %s" %(version,modelname,describe)
-    #存入数据库
+    print "%s , %s, %s" %(version,modelname,describe)
     u1 = online(models_name=modelname ,version=version ,describe=describe )
     u1.save()
 
@@ -184,11 +181,10 @@ def showlog_app(request):
 
 def supervisor(request):
     
-    # print test.server_list
-
-
+    test = Server('http://user:123@192.168.11.11:9001')
+    
     try:
-        sup_backend.refresh()
+        test.refresh()
     except Exception, e:
 
         default_err = { 'err':{'statename':'error','description':'error','name':'error'}, }
@@ -196,21 +192,22 @@ def supervisor(request):
             'servers_list' : default_err,
             })
     else:
-    #将所有机器的supervisor控制的程序列表传给模板，字典格式    
+        
         return render_to_response('supervisor/supervisor.html',{
-            'servers_list' : sup_backend.server_list,
+            'servers_list' : test.dic,
             })
 
 
 def control(request):
-    sup_backend.refresh()
+    test = Server('http://user:123@192.168.11.11:9001')
+    test.refresh()
     process_name = request.GET['name']
     action = request.GET['action']
-    print action
-    print process_name
+    # print action
+    # print process_name
     if action not in ('start', 'stop', 'restart'):
         raise Http404
-    getattr(sup_backend,'action')(process_name,action) #test实例里面的action方法对process_name进行操作
+    getattr(test,action)(process_name) #test实例里面的action方法对process_name进行操作
     return HttpResponse(action) # TODO url reverse
 
 

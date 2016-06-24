@@ -9,9 +9,10 @@
  Listener for data-reveal-id attributes
 ----------------------------*/
 
- 
+ //a啥意思？
+    //获取hostname
     $(document).on('click', 'a[data-reveal-id]',function(e) {
-        e.preventDefault();
+        e.preventDefault(); //该方法将通知 Web 浏览器不要执行与事件关联的默认动作
         var modalLocation = $(this).attr('data-reveal-id');
         $('#'+modalLocation).reveal($(this).data());
         // $("#hostname1").html($(this).attr('data-test'));
