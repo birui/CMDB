@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet">
 <div class="row" style='margin-top:100px'>
 	<div class="col-lg-4 col-md-offset-2" >
 		<p> 模块：</p>
@@ -26,6 +26,15 @@
   
 </div>
 
+<div class="row devis_lists" style='margin-top:10px'>
+<div class="col-lg-4 col-md-offset-2" >
+<p> 服务器组：</p>
+</div>
+<div class="col-lg-6 col-md-offset-2" >
+  <div id='devis_lists_text' ></div>
+ </div>
+</div>
+
 
 <div class="row" style='margin-top:10px'>
 <div class="col-lg-4 col-md-offset-2" >
@@ -47,6 +56,7 @@
 <div class="row" style='margin-top:10px'> 
 	<div class="col-lg-6 col-md-offset-2" >
     	<button type="button" class="btn btn-danger btn-default" id="model">提交上线</button>
+      
   	</div>
 </div>
 
@@ -60,7 +70,44 @@
 <script type="text/javascript">
 $(document).ready(function(){
  $('.dropdown-menu li').on('click',function(){
-        $('#dLabel').text($(this).text());
+        var modelname = $(this).text();
+        $('#dLabel').text(modelname);
+        $.get("/ajax_online/",{'modelname1':modelname},function(data){
+          var _hostnameArr = [];
+          
+          var _htmlsubdom = '';
+          
+          data = $.parseJSON(data); //拿到后台传过来的数据data
+
+          
+          //console.log(data) 
+          for(var i=0;i<data.length;i++){
+            _hostnameArr.push({hostname:data[i]['fields'].hostname,lip:data[i]['fields'].lip});
+          }
+          for(var j=0;j<_hostnameArr.length;j++){ //算行
+            if(j%6 == 0){   //6个元素一行
+              _htmlsubdom+='<div class="row">';
+              
+            }
+              _htmlsubdom += '<div class="col-md-2">'+
+                          '<i class="icon-laptop icon-2x i_lip" style="color:#0864b3"; data-lname="'+_hostnameArr[j].hostname+'" data-lip="'+_hostnameArr[j].lip+'"></i>'+
+                          '<p>'+_hostnameArr[j].hostname+'</p></div>';
+            if(j%6 == 5){  //最后一行
+              _htmlsubdom+='</div>';
+            }
+
+          }
+          if(_hostnameArr.length%6 != 5){
+            _htmlsubdom+='</div>';
+          }
+          $('#devis_lists_text').html(_htmlsubdom);
+       });
+    });
+
+    //click
+    $('#devis_lists_text').on('click','.i_lip',function(){
+      
+      $(this).parents('.col-md-2').remove();
     });
   });
 
@@ -69,8 +116,17 @@ $(document).ready(function(){
     	var modelname = $("#dLabel").text();
     	var version = $("#ver").val();
     	var describe = $("#describe").val();
+      var liplists = '',hostnamestr = '';
+      $('.i_lip').each(function(){
+        liplists+=$(this).attr('data-lip')+',';
+        hostnamestr+=$(this).attr('data-lname')+',';
+      });
+      liplists = liplists.substring(0,liplists.length-1);
+      hostnamestr = hostnamestr.substring(0,hostnamestr.length-1);
+      
+      
 
-    	$.post("/online_app/",{'modelname':modelname, 'version':version, 'describe':describe},function(data){
+    	$.post("/online_app/",{ 'modelname':modelname, 'liplists':liplists, 'hostname':hostnamestr,'version':version, 'describe':describe },function(data){
     		$('#result').html(data);
     		$('#result').show(); //改变display: none
     		//alert(data.length)

@@ -8,6 +8,8 @@ from datetime import datetime
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.contrib import auth
 import json
+import re
+import time
 from django.core import serializers
 import urllib2
 from django.http import JsonResponse
@@ -17,6 +19,10 @@ from django.core.urlresolvers import reverse
 import simplejson
 # from CMDB.backends.server import Server #如果导入不成功touch __init__.py
 from CMDB.backends.backend import Backend
+from CMDB.redis_conn import redis_comm
+from xmlrpclib import ServerProxy
+from CMDB.scripts.playbooks.ansicmd import *
+
 sup_backend = Backend()
 
 reload(sys)
@@ -146,31 +152,83 @@ def online_web(request):
 
 def online_app(request):
     # online = online.objects.all()
-    version = request.POST['version']
     modelname = request.POST['modelname']
-    describe = request.POST['describe']
+    version   = request.POST['version']
+    liplists  = request.POST['liplists']
+    describe  = request.POST['describe']
+    hostname  = request.POST['hostname']
+
+    # print liplists
     
+    e = re.compile(r',')
+    host_name = e.split(hostname)
+    i = ''
+
+#循环获取hostname，一次操作，停服务，下载包，调动本地部署程序。
+    for i in host_name:
+        rediscomm = redis_comm(i,modelname)
+        ip = rediscomm.getip()
+        #1、去权重
+        rediscomm.drop_host()
+        #2、停服务，【supervisor的服务名称必须是hostname】
+        time.sleep(4)
+        try:
+            svr=ServerProxy("http://user:123@%s:9001" %(ip))
+        except Exception, e:
+            print "supervisor no run"
+        #print svr.supervisor.getAllProcessInfo()
+        #svr.supervisor.stopProcess(host_name)
+
+        #3、调动本地部署程序**本机脚本未完成，【本地脚本：①记录老版本②备份老版本 ③回滚】
+        print ip
+        runcmd = playansible('%s' %(ip),'uptime')
+        runcmd.runcmd()
+
+        #4、下载新包
+        #wget "http://10.163.251.17:8102/%s/%s/%s-%s.war" %(modelname,version,modelname,version)
+        #如果是asp模块下的就要加一层目录。
+
+        runcmd = playansible('%s' %(ip),'wget -O /app/coohua/asp/webapps/alteir.war http://121.42.11.38:8120/altair/1.1/altair-1.1.war')
+        runcmd.runcmd()
+        print "runcmd------------------------------>"
+        #5、启动服务器
+        try:
+            svr=ServerProxy("http://user:123@%s:9001" %(ip))
+        except Exception, e:
+            print "supervisor no run"
+        #print svr.supervisor.getAllProcessInfo()
+        #svr.supervisor.startProcess(host_name)
+        #6、恢复权重，先要判断supervisor状态是否启动。
+
+        rediscomm.add_host()
+
+
+        
+# test = redis_comm('nginx-crm001' ,'crm','192.168.11.11')
+# test.drop_host()
+
+
     # print "%s , %s, %s" %(version,modelname,describe)
     #存入数据库
-    u1 = online(models_name=modelname ,version=version ,describe=describe )
-    u1.save()
+    # u1 = online(models_name=modelname ,version=version ,describe=describe )
+    # u1.save()
 
-    cmd = "scripts/playbooks/cooansible-api.sh "
-    status = subprocess.check_output(cmd + modelname + " " + version ,shell=True)
+    # cmd = "scripts/playbooks/cooansible-api.sh "
+    # status = subprocess.check_output(cmd + modelname + " " + version ,shell=True)
     
-    mailbox = [
-    'birui@coohua.com',
-    'zhubaofeng@coohua.com',
-    ]
+    # mailbox = [
+    # 'birui@coohua.com',
+    # 'zhubaofeng@coohua.com',
+    # ]
     
-    subject = '%s %s 上线' % (modelname,version) 
+    # subject = '%s %s 上线' % (modelname,version) 
 
-    for i in mailbox:
-        print i
-        mail_cmd = "scripts/mail.py '%s' '%s' '%s' " % (i,subject,describe)
-        os.system(mail_cmd)
-
-    return HttpResponse(status)
+    # for i in mailbox:
+    #     print i
+    #     mail_cmd = "scripts/mail.py '%s' '%s' '%s' " % (i,subject,describe)
+    #     os.system(mail_cmd)
+    return HttpResponse(i)
+    
 
 def showlog_web(request):
     return render_to_response('showlog.html')
@@ -201,7 +259,6 @@ def supervisor(request):
             'servers_list' : sup_backend.server_list,
             })
 
-
 def control(request):
     sup_backend.refresh()
     process_name = request.GET['name']
@@ -214,7 +271,13 @@ def control(request):
     return HttpResponse(action) # TODO url reverse
 
 
+def ajax_online(request):
+    # pass
+    modelname1 = request.GET['modelname1'] #获取提交过来的数据
+    servers = serializers.serialize("json", Hosts.objects.all().filter(service_model=modelname1)) #json格式输出
+    return HttpResponse(servers)
 
+     
 
 
 

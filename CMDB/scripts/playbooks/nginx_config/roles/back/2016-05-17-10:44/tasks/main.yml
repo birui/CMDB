@@ -1,0 +1,4 @@
+---
+- name: copy conf file
+  copy: src=nginx.conf dest=/etc/nginx/nginx.conf  backup=yes owner=root group=root mode=0644
+  notify: restart nginx
