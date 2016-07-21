@@ -1,3 +1,0 @@
----
-- name: restart nginx
-  shell: /etc/init.d/nginx reload

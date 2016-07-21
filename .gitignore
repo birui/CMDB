@@ -11,3 +11,4 @@ settings.py
 mail.py
 zabbix_api.py
 ansicmd.py
+CMDB/scripts/*
