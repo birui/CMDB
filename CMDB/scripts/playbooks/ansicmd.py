@@ -32,6 +32,7 @@ class playansible(object):
         self.host = host
         self.order = order
 
+
     def runcmd(self):
         Options = namedtuple('Options', ['connection','module_path', 'forks', 'remote_user',
                 'private_key_file', 'ssh_common_args', 'ssh_extra_args', 'sftp_extra_args',
@@ -77,11 +78,15 @@ class playansible(object):
             if tqm is not None:
                 tqm.cleanup()
 
+
+
         print "===================== UP =========================>>"
+
         for host, result in callback.host_ok.items():
-            print '{} ==>> {}'.format(host, result._result['stdout'])
+            return '{} ==>> {}'.format(host, result._result['stdout'])
 
         # print "xxxxxxxxxxxxxxxxxxxxx FAILED  xxxxxxxxxxxxxxxxxxxx!!"
+
         # for host, result in callback.host_failed.items():
         #     print '{} ==>> {}'.format(host, result._result['msg'])
 
@@ -94,5 +99,5 @@ class playansible(object):
 # if __name__ == '__main__':
 #     main()
 
-# runansible = playansible('192.168.11.11','ls')
+# runansible = playansible('192.168.11.11','/app/coohua/publish/altair/get.sh 1.1')
 # runansible.runcmd()

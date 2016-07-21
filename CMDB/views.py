@@ -164,48 +164,60 @@ def online_app(request):
     host_name = e.split(hostname)
     i = ''
 
+    eip = re.compile(r',')
+    ip_list = eip.split(liplists)
+    j = ''
+
 #循环获取hostname，一次操作，停服务，下载包，调动本地部署程序。
-    for i in host_name:
-        rediscomm = redis_comm(i,modelname)
-        ip = rediscomm.getip()
+    # for i in host_name:
+    #     rediscomm = redis_comm(i,modelname)
+    #     ip = rediscomm.getip()
+        #=============openresty==============================
         #1、去权重
-        rediscomm.drop_host()
+        # rediscomm.drop_host()
         #2、停服务，【supervisor的服务名称必须是hostname】
-        time.sleep(4)
-        try:
-            svr=ServerProxy("http://user:123@%s:9001" %(ip))
-        except Exception, e:
-            print "supervisor no run"
+        # time.sleep(4)
+        # try:
+        #     svr=ServerProxy("http://user:123@%s:9001" %(ip))
+        # except Exception, e:
+        #     print "supervisor no run"
         #print svr.supervisor.getAllProcessInfo()
         #svr.supervisor.stopProcess(host_name)
 
         #3、调动本地部署程序**本机脚本未完成，【本地脚本：①记录老版本②备份老版本 ③回滚】
-        print ip
-        runcmd = playansible('%s' %(ip),'uptime')
-        runcmd.runcmd()
+        # print ip
+        # runcmd = playansible('%s' %(ip),'uptime')
+        # runcmd.runcmd()
 
         #4、下载新包
         #wget "http://10.163.251.17:8102/%s/%s/%s-%s.war" %(modelname,version,modelname,version)
         #如果是asp模块下的就要加一层目录。
 
-        runcmd = playansible('%s' %(ip),'wget -O /app/coohua/asp/webapps/alteir.war http://121.42.11.38:8120/altair/1.1/altair-1.1.war')
-        runcmd.runcmd()
-        print "runcmd------------------------------>"
+        # runcmd = playansible('%s' %(ip),'wget -O /app/coohua/asp/webapps/alteir.war http://121.42.11.38:8120/altair/1.1/altair-1.1.war')
+        # runcmd.runcmd()
+        # print "runcmd------------------------------>"
         #5、启动服务器
-        try:
-            svr=ServerProxy("http://user:123@%s:9001" %(ip))
-        except Exception, e:
-            print "supervisor no run"
+        # try:
+        #     svr=ServerProxy("http://user:123@%s:9001" %(ip))
+        # except Exception, e:
+        #     print "supervisor no run"
         #print svr.supervisor.getAllProcessInfo()
         #svr.supervisor.startProcess(host_name)
         #6、恢复权重，先要判断supervisor状态是否启动。
 
-        rediscomm.add_host()
+        # rediscomm.add_host()
+        #==================end===========================
+    status = []
 
+    for ip in ip_list:
+        #print ip
+        cmd = '/app/coohua/publish/%s/altair_pub_client.sh %s' %(modelname,version)
+        #print cmd
+        runcmd = playansible('%s' %(ip),cmd)
+        sta=runcmd.runcmd()
+        status.append(sta)
 
-        
-# test = redis_comm('nginx-crm001' ,'crm','192.168.11.11')
-# test.drop_host()
+        time.sleep(5)
 
 
     # print "%s , %s, %s" %(version,modelname,describe)
@@ -227,7 +239,7 @@ def online_app(request):
     #     print i
     #     mail_cmd = "scripts/mail.py '%s' '%s' '%s' " % (i,subject,describe)
     #     os.system(mail_cmd)
-    return HttpResponse(i)
+    return HttpResponse(status)
     
 
 def showlog_web(request):
