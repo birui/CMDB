@@ -1,4 +1,5 @@
 #from django.conf.urls import url
+import settings  
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
 from CMDB.views import *
