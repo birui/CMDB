@@ -8,4 +8,5 @@
 *.ini
 *.tar
 settings.py
-CMDB/scripts/*
+mail.py
+zabbix_api.py
