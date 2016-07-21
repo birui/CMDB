@@ -211,7 +211,7 @@ def online_app(request):
 
     for ip in ip_list:
         #print ip
-        cmd = '/app/coohua/publish/%s/altair_pub_client.sh %s' %(modelname,version)
+        cmd = '/app/coohua/publish/%s/deploy.sh %s' %(modelname,version)
         #print cmd
         runcmd = playansible('%s' %(ip),cmd)
         sta=runcmd.runcmd()
