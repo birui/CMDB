@@ -161,7 +161,7 @@ def online_app(request):
     # print liplists
     
     e = re.compile(r',')
-    host_name = e.split(hostname)
+    host_list = e.split(hostname)
     i = ''
 
     eip = re.compile(r',')
@@ -209,11 +209,11 @@ def online_app(request):
         #==================end===========================
     status = []
 
-    for ip in ip_list:
+    for host in host_list:
         #print ip
         cmd = '/app/coohua/publish/%s/deploy.sh %s' %(modelname,version)
         #print cmd
-        runcmd = playansible('%s' %(ip),cmd)
+        runcmd = playansible('%s' %(host),cmd)
         sta=runcmd.runcmd()
         status.append(sta)
 
