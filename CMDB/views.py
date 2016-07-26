@@ -76,7 +76,7 @@ def search(request):
         return render_to_response('test.html', {'error': error})
 def index_1(request):
     hosts = Hosts.objects.all() #查出所有hosts表的数据
-    services = Services.objects.all() #服务模块总量
+    Modelname = Modelname.objects.all() #服务模块总量
     paginator = Paginator(hosts, 50) #每页显示50个,分页器,实例化一个分页对象
     page = request.GET.get('page') #html传递参数page
     try :
@@ -85,12 +85,16 @@ def index_1(request):
         hosts_list = paginator.page(1)  # 取第一页的记录
     except EmptyPage : # 如果页码太大，没有相应的记录
         hosts_list = paginator.paginator(paginator.num_pages) # 取最后一页的记录
-    return render(request, 'index_1.html', {'hosts_list' : hosts_list,'services':services})
+    return render(request, 'index_1.html', {'hosts_list' : hosts_list,'Modelname':Modelname})
 
 def report(request):
     hosts = Hosts.objects.all()
-    services = Services.objects.all()
+    services = Modelname.objects.all()
     return render(request,'report.html',{'hosts':hosts,'services':services})
+
+def modelname(request):
+    modelname = Modelname.objects.all()
+    return render(request,'services.html',{'services':modelname})
 
 def services(request):
     services = Services.objects.all()
@@ -153,6 +157,14 @@ def items(request):
 def online_web(request):
     return render_to_response('online.html')
 
+def ajax_online(request):
+    # pass
+    modelname1 = request.GET['modelname1'] #获取提交过来的数据
+    servers = serializers.serialize("json", Hosts.objects.all().filter(Modelname__name=modelname1)) #json格式输出
+    # print servers
+    return HttpResponse(servers)
+
+
 def online_app(request):
     # online = online.objects.all()
     modelname = request.POST['modelname']
@@ -160,6 +172,8 @@ def online_app(request):
     liplists  = request.POST['liplists']
     describe  = request.POST['describe']
     hostname  = request.POST['hostname']
+
+    # print modelname,version,liplists,describe,hostname
 
     # print liplists
     
@@ -217,13 +231,15 @@ def online_app(request):
         f.write(host)
         f.flush()
         f.close()
-        #print ip
-        cmd = '/app/coohua/publish/%s/deploy.sh %s' %(modelname,version)
-        #print cmd
+        # print host
+        # print modelname
+        # print version
+        cmd = '/app/coohua/publish/deploy/deploy.sh %s' %(version)
+        print cmd
         runcmd = playansible('%s' %(host),cmd)
         sta=runcmd.runcmd()
         status.append(sta)
-        time.sleep(5) 
+        time.sleep(5)
 
 
     # print "%s , %s, %s" %(version,modelname,describe)
@@ -298,13 +314,6 @@ def control(request):
         raise Http404
     getattr(sup_backend,'action')(process_name,action) #test实例里面的action方法对process_name进行操作
     return HttpResponse(action) # TODO url reverse
-
-
-def ajax_online(request):
-    # pass
-    modelname1 = request.GET['modelname1'] #获取提交过来的数据
-    servers = serializers.serialize("json", Hosts.objects.all().filter(service_model=modelname1)) #json格式输出
-    return HttpResponse(servers)
 
 class test_view(ListView):
     a = 1

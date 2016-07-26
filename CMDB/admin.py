@@ -25,13 +25,20 @@ class OlineAdmin(admin.ModelAdmin):
     # 指定要搜索的字段
     search_fields = ('models_name','date_time',)
 
+class HostAdmin(admin.ModelAdmin):
+    #显示字段
+    list_display = ('hostname', 'lip','remark')
+    #指定列表过滤器,页面右边
+    list_filter = ('hostname',)
+    # 指定要搜索的字段
+    search_fields = ('hostname','lip',)
 
 #admin里面显示哪些表：
 admin.site.register(Brothers)
 admin.site.register(History)
-admin.site.register(Hosts)
+admin.site.register(Hosts,HostAdmin)
 admin.site.register(Server,ServerAdmin)
-admin.site.register(Services,ServicesAdmin)
+admin.site.register(Modelname,ServicesAdmin)
 admin.site.register(Domain)
 admin.site.register(iterms)
 admin.site.register(online,OlineAdmin)

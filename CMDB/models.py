@@ -11,7 +11,7 @@ from DjangoUeditor.models import UEditorField
 #              settings={},command=None,event_handler=myEventHander(),blank=True)
 
 
-class Services(models.Model):
+class Modelname(models.Model):
     name = models.CharField(max_length=70)
     lead = models.CharField(max_length=50)
     remark = models.CharField(max_length=250)
@@ -31,8 +31,8 @@ class Hosts(models.Model):
     config = models.CharField(max_length=250)
     #1青岛,2杭州,3北京
     data_center = models.IntegerField()
-    # service_model = models.ForeignKey(Services,blank=True)
-    service_model = models.CharField(max_length=15,blank=True)
+    # service_model = models.ForeignKey(Modelname,blank=True)
+    Modelname = models.ManyToManyField(Modelname,blank=True)
     server = models.ManyToManyField(Server,blank=True)
     environment = models.CharField(max_length=20)
     status = models.CharField(max_length=20)
@@ -49,7 +49,7 @@ class Brothers(models.Model):
     department = models.IntegerField()
     email = models.EmailField()
     phone = models.CharField(max_length=20,blank=True)
-    service = models.ManyToManyField(Services)
+    service = models.ManyToManyField(Modelname)
     #pic = models.ImageField(upload_to = 'uploadimages')
     def __unicode__(self):
         return self.name
@@ -66,7 +66,7 @@ class Domain(models.Model):
     usename = models.CharField(max_length=20,blank=True)
     domain = models.CharField(max_length=100)
     remark = models.CharField(max_length=250,blank=True)
-    service_model = models.ForeignKey(Services,blank=True)
+    service_model = models.ForeignKey(Modelname,blank=True)
     def __unicode__(self):
         return self.domain
 

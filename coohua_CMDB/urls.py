@@ -21,7 +21,7 @@ urlpatterns = [
     url(r'^search/$', search),
     url(r'^index/$', index_1),
     url(r'^report/$', report),
-    url(r'^services/$', services),
+    url(r'^modelname/$', modelname),
     url(r'^domain/$', domain),
     url(r'^fu/$',fu),
     url(r'^even/$',even),
