@@ -2,6 +2,33 @@
 
 {% block content %}
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet">
+<style type="text/css">
+  .breath_light {
+        opacity: 1;
+      
+        animation-name: breath;                         /* 动画名称 */
+        animation-duration: 3s;                         /* 动画时长3秒 */
+        animation-timing-function: ease-in-out;         /* 动画速度曲线：以低速开始和结束 */
+        animation-iteration-count: infinite;            /* 播放次数：无限 */
+        -webkit-animation-name: breath;                 /* 动画名称 */
+        -webkit-animation-duration: 3s;                 /* 动画时长3秒 */
+        -webkit-animation-timing-function: ease-in-out; /* 动画速度曲线：以低速开始和结束 */
+        -webkit-animation-iteration-count: infinite;    /* 播放次数：无限 */
+    }
+     
+    @keyframes breath {
+        from { opacity: 0.5; color: green }                          /* 动画开始时的不透明度 */
+        50%  { opacity:   1; color:red;}                          /* 动画50% 时的不透明度 */
+        to   { opacity: 0.5; color: green}                          /* 动画结束时的不透明度 */    
+    }
+     
+    @-webkit-keyframes breath {
+        from { opacity: 0.5; color: green }                          /* 动画开始时的不透明度 */
+        50%  { opacity:   1; color:red;}                          /* 动画50% 时的不透明度 */
+        to   { opacity: 0.5; color: green}                          /* 动画结束时的不透明度 */ 
+    }
+
+</style>
 <div class="row" style='margin-top:100px'>
 	<div class="col-lg-4 col-md-offset-2" >
 		<p> 模块：</p>
@@ -126,11 +153,34 @@ $(document).ready(function(){
       hostnamestr = hostnamestr.substring(0,hostnamestr.length-1);
       
       
+      var timer = null;
+      timer = setInterval(function(){
+        $.post("/fre_host/",null,function(data){
+          // console.log(data)
+          if(data){
+
+              $('#devis_lists_text .col-md-2').find('p').css('color','#0864b3').removeClass('breath_light');
+              $('#devis_lists_text .col-md-2').find('i').css('color','#0864b3').removeClass('breath_light');
+
+              $('#devis_lists_text .col-md-2 i[data-lname="' +data+ '"]').css('color','red').addClass('breath_light');
+              $('#devis_lists_text .col-md-2 i[data-lname="' +data+ '"]').next().css('color','red').addClass('breath_light');
+          }else{
+            alert('error')
+          }
+        
+       });
+      },500);
 
     	$.post("/online_app/",{ 'modelname':modelname, 'liplists':liplists, 'hostname':hostnamestr,'version':version, 'describe':describe },function(data){
     		$('#result').html(data);
     		$('#result').show(); //改变display: none
     		//alert(data.length)
+        clearInterval(timer);
+        //
+        $('#devis_lists_text .col-md-2').find('p').css('color','#0864b3').removeClass('breath_light');
+        $('#devis_lists_text .col-md-2').find('i').css('color','#0864b3').removeClass('breath_light');
+        alert("恭喜你上线成功！！！") 
+
     	 });
       });
 

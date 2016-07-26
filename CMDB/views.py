@@ -22,6 +22,9 @@ from CMDB.backends.backend import Backend
 from CMDB.redis_conn import redis_comm
 from xmlrpclib import ServerProxy
 from CMDB.scripts.playbooks.ansicmd import *
+from django.views.generic import ListView
+from django.views.generic import View
+
 
 sup_backend = Backend()
 
@@ -210,18 +213,21 @@ def online_app(request):
     status = []
 
     for host in host_list:
+        f = file('tmp.txt','w+')
+        f.write(host)
+        f.flush()
+        f.close()
         #print ip
         cmd = '/app/coohua/publish/%s/deploy.sh %s' %(modelname,version)
         #print cmd
         runcmd = playansible('%s' %(host),cmd)
         sta=runcmd.runcmd()
         status.append(sta)
-
-        time.sleep(5)
+        time.sleep(5) 
 
 
     # print "%s , %s, %s" %(version,modelname,describe)
-    #存入数据库
+    ##存入数据库
     # u1 = online(models_name=modelname ,version=version ,describe=describe )
     # u1.save()
 
@@ -240,7 +246,18 @@ def online_app(request):
     #     mail_cmd = "scripts/mail.py '%s' '%s' '%s' " % (i,subject,describe)
     #     os.system(mail_cmd)
     return HttpResponse(status)
-    
+
+def fre_host(request):
+    line_name = []
+    f = file('tmp.txt','r')
+    c = f.readlines()
+    # print c
+    for line in  c:
+        line_name.append(line)
+    f.close()
+
+    return HttpResponse(line_name)
+
 
 def showlog_web(request):
     return render_to_response('showlog.html')
@@ -289,8 +306,40 @@ def ajax_online(request):
     servers = serializers.serialize("json", Hosts.objects.all().filter(service_model=modelname1)) #json格式输出
     return HttpResponse(servers)
 
-     
+class test_view(ListView):
+    a = 1
+    b = 2
+    def get(self,request):
+        return HttpResponse(self.a)
 
+# def inf(request):
+#     line_name = []
+
+#     f = file('tmp.txt','w+')
+#     f.write('c')
+#     f.flush()
+#     f.close()
+
+#     f = file('tmp.txt','r')
+#     c = f.readlines()
+#     print c
+#     for line in  c:
+#         line_name.append(line)
+#     f.close()
+#     return HttpResponse(line_name)
+
+
+
+
+
+
+
+
+
+    
+
+
+        
 
 
 

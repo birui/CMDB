@@ -41,6 +41,10 @@ urlpatterns = [
     url(r'^supervisor/$',supervisor),
     url(r'^control/$',control),
     url(r'^ajax_online/$',ajax_online),
+    url(r'^list/$', test_view.as_view()),
+    url(r'^fre_host/$', fre_host),
+
+
     # url(r'^col/$',online_app.col),
     #url(r'^control/(?P<server>[a-z0-9\.]+)/(?P<process>[a-z:_-]+)/(?P<action>[a-z]+)/$',control),
     #url(r'^query/$',query),

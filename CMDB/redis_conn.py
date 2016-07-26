@@ -9,8 +9,8 @@ class redis_comm(object):
 	def __init__(self, host_name ,modelname):
 		self.host_name = host_name
 		self.modelname = modelname
-		print self.host_name
-		print self.modelname
+		# print self.host_name
+		# print self.modelname
 	
 	def getip(self):
 		a=r.hgetall(self.host_name)
