@@ -237,6 +237,7 @@ def online_app(request):
         cmd = '/app/coohua/publish/deploy/deploy.sh %s' %(version)
         print cmd
         runcmd = playansible('%s' %(host),cmd)
+        print runcmd
         sta=runcmd.runcmd()
         status.append(sta)
         time.sleep(5)

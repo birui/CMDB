@@ -31,7 +31,6 @@ class Hosts(models.Model):
     config = models.CharField(max_length=250)
     #1青岛,2杭州,3北京
     data_center = models.IntegerField()
-    # service_model = models.ForeignKey(Modelname,blank=True)
     Modelname = models.ManyToManyField(Modelname,blank=True)
     server = models.ManyToManyField(Server,blank=True)
     environment = models.CharField(max_length=20)
