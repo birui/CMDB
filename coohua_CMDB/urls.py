@@ -43,6 +43,7 @@ urlpatterns = [
     url(r'^ajax_online/$',ajax_online),
     url(r'^list/$', test_view.as_view()),
     url(r'^fre_host/$', fre_host),
+    url(r'^fre_log/$', fre_log),
 
 
     # url(r'^col/$',online_app.col),

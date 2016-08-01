@@ -226,6 +226,8 @@ def online_app(request):
         #==================end===========================
     status = []
 
+    file('tmp_log.txt','w')
+    
     for host in host_list:
         f = file('tmp.txt','w+')
         f.write(host)
@@ -234,11 +236,17 @@ def online_app(request):
         # print host
         # print modelname
         # print version
-        cmd = '/app/coohua/publish/deploy/deploy.sh %s' %(version)
-        print cmd
+        cmd = '/app/coohua/publish/deploy/deploy.sh deploy %s' %(version)
+        #print cmd
         runcmd = playansible('%s' %(host),cmd)
-        print runcmd
+        #print runcmd
         sta=runcmd.runcmd()
+        print sta
+        f = file('tmp_log.txt','w+')
+        f.write(sta)
+        f.flush()
+        f.close()
+
         status.append(sta)
         time.sleep(5)
 
@@ -274,6 +282,17 @@ def fre_host(request):
     f.close()
 
     return HttpResponse(line_name)
+
+def fre_log(request):
+    line_log = []
+    f = file('tmp_log.txt','r')
+    c = f.readlines()
+    # print c
+    for line in  c:
+        line_log.append(line)
+    f.close()
+
+    return HttpResponse(line_log)
 
 
 def showlog_web(request):

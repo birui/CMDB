@@ -168,6 +168,19 @@ $(document).ready(function(){
           }
         
        });
+
+        $.post("/fre_log/",null,function(data){
+          // console.log(data)
+          if(data){
+
+              //var _text = $('#result').text();
+              $('#result').html(data).show();
+          }else{
+            
+          }
+        
+       });
+
       },500);
 
     	$.post("/online_app/",{ 'modelname':modelname, 'liplists':liplists, 'hostname':hostnamestr,'version':version, 'describe':describe },function(data){
@@ -178,6 +191,7 @@ $(document).ready(function(){
         //
         $('#devis_lists_text .col-md-2').find('p').css('color','#0864b3').removeClass('breath_light');
         $('#devis_lists_text .col-md-2').find('i').css('color','#0864b3').removeClass('breath_light');
+
         alert("恭喜你上线成功！！！") 
 
     	 });
