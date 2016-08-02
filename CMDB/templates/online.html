@@ -29,75 +29,149 @@
     }
 
 </style>
-<div class="row" style='margin-top:100px'>
-	<div class="col-lg-4 col-md-offset-2" >
-		<p> 模块：</p>
-	</div>
-  <div class="col-lg-6 col-md-offset-2 ">
-    <div class="input-group">
-      <div class="input-group-btn" id="selectObj">
-        <button id="dLabel" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">选择模块 <span class="caret"></span></button>
-        <ul class="dropdown-menu" aria-labelledby="dLabel">
-          <li><a href="#" value="Asp">Asp</a></li>
-          <li><a href="#" value="Altair">Altair</a></li>
-          <li><a href="#" value="Crm">Crm</a></li>
-          <li><a href="#" value="Acc">Acc</a></li>
-          <li role="separator" class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </div><!-- /btn-group -->
-     
-    </div><!-- /input-group -->
 
-  </div><!-- /.col-lg-6 -->
-  
-  
-</div>
+<ul class="nav nav-tabs" role="tablist" id='myTabs'>
+    <li role="presentation" class="active"><a href="#online" aria-controls="online" role="tab" data-toggle="tab">上线</a></li>
+    <li role="presentation"><a href="#rollback" aria-controls="rollback" role="tab" data-toggle="tab">回滚</a></li>
+</ul>
 
-<div class="row devis_lists" style='margin-top:10px'>
-<div class="col-lg-4 col-md-offset-2" >
-<p> 服务器组：</p>
-</div>
-<div class="col-lg-6 col-md-offset-2" >
-  <div id='devis_lists_text' ></div>
- </div>
-</div>
+<div class="tab-content">
+<!-- 上线部分 -->
+    <div role="tabpanel" class="tab-pane active" id="online">
+
+        <div class="row" style='margin-top:100px'>
+
+        <div class="col-lg-4 col-md-offset-2" >
+          <p> 模块：</p>
+        </div>
+        <div class="col-lg-6 col-md-offset-2 ">
+          <div class="input-group">
+            <div class="input-group-btn" id="selectObj">
+              <button id="dLabel" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">选择模块 <span class="caret"></span></button>
+              <ul class="dropdown-menu online-menu" aria-labelledby="dLabel">
+                <li><a href="#" value="Asp">Asp</a></li>
+                <li><a href="#" value="Altair">Altair</a></li>
+                <li><a href="#" value="Crm">Crm</a></li>
+                <li><a href="#" value="Acc">Acc</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </div><!-- /btn-group -->
+           
+          </div><!-- /input-group -->
+
+        </div><!-- /.col-lg-6 -->
+        
+        
+      </div>
+
+      <div class="row devis_lists" style='margin-top:10px'>
+        <div class="col-lg-4 col-md-offset-2" >
+          <p> 服务器组：</p>
+          </div>
+            <div class="col-lg-6 col-md-offset-2" >
+            <div id='devis_lists_text' ></div>
+         </div>
+      </div>
 
 
-<div class="row" style='margin-top:10px'>
-<div class="col-lg-4 col-md-offset-2" >
-<p> 版本号：</p>
-</div>
-<div class="col-lg-6 col-md-offset-2" >
- <input type="text" class="form-control" aria-label="..." id="ver">
- </div>
-</div>
+      <div class="row" style='margin-top:10px'>
+        <div class="col-lg-4 col-md-offset-2" >
+        <p> 版本号：</p>
+      </div>
+      <div class="col-lg-6 col-md-offset-2" >
+        <input type="text" class="form-control" aria-label="..." id="ver">
+        </div>
+      </div>
 
-<!-- 描述 -->
-<div class="row" style='margin-top:10px'>
-  <div class="col-lg-6 col-md-offset-2" > <p> 描述：</p> </div>
+      <!-- 描述 -->
+      <div class="row" style='margin-top:10px'>
+        <div class="col-lg-6 col-md-offset-2" > <p> 描述：</p> </div>
 
-  <div class="col-lg-6 col-md-offset-2" > <textarea id="describe" class="form-control" rows="3"></textarea> </div>
- 
- </div>
+        <div class="col-lg-6 col-md-offset-2" > <textarea id="describe" class="form-control" rows="3"></textarea> </div>
+       
+       </div>
 
-<div class="row" style='margin-top:10px'> 
-	<div class="col-lg-6 col-md-offset-2" >
-    	<button type="button" class="btn btn-danger btn-default" id="model">提交上线</button>
+      <div class="row" style='margin-top:10px'> 
+        <div class="col-lg-6 col-md-offset-2" >
+            <button type="button" class="btn btn-danger btn-default btn-online-back" data-back=''>提交上线</button>
+            
+          </div>
+      </div>
+
+      <div class="row" style='margin-top:100px'> </div>
+
+      <div   class="col-lg-6 col-md-offset-2 ">  
+      <!-- <p> <textarea id="result" style="width: 900px ;border: 0 none; outline-style: none">   </textarea>   </p> -->
+      <p> <pre id="result" style="width: 900px ;border: 0 none; outline-style: none;display: none">   </pre>   </p>
+      </div>
+
+
+
       
-  	</div>
+  </div>
+
+<!-- 回滚 部分 -->
+  <div role="tabpanel" class="tab-pane" id="rollback">
+
+      <div class="row" style='margin-top:100px'>
+
+        <div class="col-lg-4 col-md-offset-2" >
+          <p> 模块：</p>
+        </div>
+        <div class="col-lg-6 col-md-offset-2 ">
+          <div class="input-group">
+            <div class="input-group-btn" >
+              <button id="callbackLabel" type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">选择模块 <span class="caret"></span></button>
+              <ul class="dropdown-menu rollback-menu" aria-labelledby="callbackLabel">
+                <li><a href="#" value="Asp">Asp</a></li>
+                <li><a href="#" value="Altair">Altair</a></li>
+                <li><a href="#" value="Crm">Crm</a></li>
+                <li><a href="#" value="Acc">Acc</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+            </div><!-- /btn-group -->
+           
+          </div><!-- /input-group -->
+
+        </div><!-- /.col-lg-6 -->
+        
+        
+      </div>
+
+      <div class="row devis_lists" style='margin-top:10px'>
+        <div class="col-lg-4 col-md-offset-2" >
+          <p> 服务器组：</p>
+          </div>
+            <div class="col-lg-6 col-md-offset-2" >
+            <div id='devis_lists_text-callback' ></div>
+         </div>
+      </div>
+
+      <div class="row" style='margin-top:10px'> 
+        <div class="col-lg-6 col-md-offset-2" >
+            
+            <button type="button" class="btn btn-danger btn-default btn-online-back" data-back='true'>提交回滚</button>
+            
+        </div>
+      </div>
+      <div class="row" style='margin-top:100px'> </div>
+
+      <div   class="col-lg-6 col-md-offset-2 ">  
+      <!-- <p> <textarea id="result" style="width: 900px ;border: 0 none; outline-style: none">   </textarea>   </p> -->
+      <p> <pre id="result_back" style="width: 900px ;border: 0 none; outline-style: none;display: none">   </pre>   </p>
+      </div>
+
+  </div>
 </div>
 
-<div class="row" style='margin-top:100px'> </div>
 
-<div   class="col-lg-6 col-md-offset-2 ">  
-<!-- <p> <textarea id="result" style="width: 900px ;border: 0 none; outline-style: none">   </textarea>   </p> -->
-<p> <pre id="result" style="width: 900px ;border: 0 none; outline-style: none;display: none">   </pre>   </p>
-</div>
+
 
 <script type="text/javascript">
 $(document).ready(function(){
- $('.dropdown-menu li').on('click',function(){
+ $('.online-menu li').on('click',function(){
         var modelname = $(this).text();
         $('#dLabel').text(modelname);
         $.get("/ajax_online/",{'modelname1':modelname},function(data){
@@ -131,6 +205,42 @@ $(document).ready(function(){
        });
     });
 
+
+//rollback callback
+ $('.rollback-menu li').on('click',function(){
+        var modelname = $(this).text();
+        $('#callbackLabel').text(modelname);
+        $.get("/ajax_online/",{'modelname1':modelname},function(data){
+          var _hostnameArr = [];
+          
+          var _htmlsubdom = '';
+          
+          data = $.parseJSON(data); //拿到后台传过来的数据data
+
+          //console.log(data) 
+          for(var i=0;i<data.length;i++){
+            _hostnameArr.push({hostname:data[i]['fields'].hostname,lip:data[i]['fields'].lip});
+          }
+          for(var j=0;j<_hostnameArr.length;j++){ //算行
+            if(j%6 == 0){   //6个元素一行
+              _htmlsubdom+='<div class="row">';
+              
+            }
+              _htmlsubdom += '<div class="col-md-2">'+
+                          '<i class="icon-laptop icon-2x i_lip" style="color:#0864b3"; data-lname="'+_hostnameArr[j].hostname+'" data-lip="'+_hostnameArr[j].lip+'"></i>'+
+                          '<p>'+_hostnameArr[j].hostname+'</p></div>';
+            if(j%6 == 5){  //最后一行
+              _htmlsubdom+='</div>';
+            }
+
+          }
+          if(_hostnameArr.length%6 != 5){
+            _htmlsubdom+='</div>';
+          }
+          $('#devis_lists_text-callback').html(_htmlsubdom);
+       });
+    });
+
     //click
     $('#devis_lists_text').on('click','.i_lip',function(){
       
@@ -139,7 +249,9 @@ $(document).ready(function(){
   });
 
 
-    $("#model").click(function(){
+    $(".btn-online-back").click(function(){
+      var _rollback = Boolean($(this).attr('data-back'));
+      console.log(_rollback)
     	var modelname = $("#dLabel").text();
     	var version = $("#ver").val();
     	var describe = $("#describe").val();
@@ -158,11 +270,22 @@ $(document).ready(function(){
           // console.log(data)
           if(data){
 
-              $('#devis_lists_text .col-md-2').find('p').css('color','#0864b3').removeClass('breath_light');
-              $('#devis_lists_text .col-md-2').find('i').css('color','#0864b3').removeClass('breath_light');
+              if(_rollback){
+                $('#devis_lists_text-callback .col-md-2').find('p').css('color','#0864b3').removeClass('breath_light');
+                $('#devis_lists_text-callback .col-md-2').find('i').css('color','#0864b3').removeClass('breath_light');
 
-              $('#devis_lists_text .col-md-2 i[data-lname="' +data+ '"]').css('color','red').addClass('breath_light');
-              $('#devis_lists_text .col-md-2 i[data-lname="' +data+ '"]').next().css('color','red').addClass('breath_light');
+                $('#devis_lists_text-callback .col-md-2 i[data-lname="' +data+ '"]').css('color','red').addClass('breath_light');
+                $('#devis_lists_text-callback .col-md-2 i[data-lname="' +data+ '"]').next().css('color','red').addClass('breath_light');
+              }else{
+                $('#devis_lists_text .col-md-2').find('p').css('color','#0864b3').removeClass('breath_light');
+                $('#devis_lists_text .col-md-2').find('i').css('color','#0864b3').removeClass('breath_light');
+
+                $('#devis_lists_text .col-md-2 i[data-lname="' +data+ '"]').css('color','red').addClass('breath_light');
+                $('#devis_lists_text .col-md-2 i[data-lname="' +data+ '"]').next().css('color','red').addClass('breath_light');
+              }
+              
+
+
           }else{
             alert('error')
           }
@@ -174,7 +297,12 @@ $(document).ready(function(){
           if(data){
 
               //var _text = $('#result').text();
-              $('#result').html(data).show();
+              if(_rollback){
+                $('#result_back').html(data).show();
+              }else{
+                $('#result').html(data).show();
+              }
+              
           }else{
             
           }
@@ -182,19 +310,46 @@ $(document).ready(function(){
        });
 
       },500);
-
-    	$.post("/online_app/",{ 'modelname':modelname, 'liplists':liplists, 'hostname':hostnamestr,'version':version, 'describe':describe },function(data){
-    		$('#result').html(data);
-    		$('#result').show(); //改变display: none
+      var _param  = { 'mode':'deploy',
+                      'modelname':modelname, 
+                      'liplists':liplists, 
+                      'hostname':hostnamestr,
+                      'version':version, 
+                      'describe':describe 
+                    };
+      if(_rollback){//back
+        _param = null;
+        _param = {    'mode':'rollback',
+                      'modelname':modelname,
+                      'liplists':liplists, 
+                      'hostname':hostnamestr,
+                      'version':null,
+                      'describe':null
+                    };
+      }
+    	$.post("/online_app/",_param,function(data){
+        
+    		
     		//alert(data.length)
         clearInterval(timer);
         //
+        $('#devis_lists_text-callback .col-md-2').find('p').css('color','#0864b3').removeClass('breath_light');
+        $('#devis_lists_text-callback .col-md-2').find('i').css('color','#0864b3').removeClass('breath_light');
         $('#devis_lists_text .col-md-2').find('p').css('color','#0864b3').removeClass('breath_light');
         $('#devis_lists_text .col-md-2').find('i').css('color','#0864b3').removeClass('breath_light');
-
-        alert("恭喜你上线成功！！！") 
+        if(_rollback){//back
+          $('#result_back').html(data);
+          $('#result_back').show(); //改变display: none
+          alert("恭喜你回滚成功！！！");
+        }else{
+          $('#result').html(data);
+          $('#result').show(); //改变display: none
+          alert("恭喜你上线成功！！！")
+        }
+         
 
     	 });
+        
       });
 
 

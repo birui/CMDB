@@ -1,5 +1,1 @@
-nginx-crm002 ==>> Stop altair web server
-Remove previous altair package.
-正在起动服务...... [1]正在起动服务...... [2]正在起动服务...... [3]正在起动服务...... [4]正在起动服务...... [5]Tomcat started.
-coohua    4461 64.0  9.1 1164800 55392 pts/1   Sl+  09:16   0:01 /usr/bin/java -Djava.util.logging.config.file=/app/coohua/altair/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.endorsed.dirs=/app/coohua/altair/endorsed -classpath /app/coohua/altair/bin/bootstrap.jar:/app/coohua/altair/bin/tomcat-juli.jar -Dcatalina.base=/app/coohua/altair -Dcatalina.home=/app/coohua/altair -Djava.io.tmpdir=/app/coohua/altair/temp org.apache.catalina.startup.Bootstrap start
- 
+nginx-crm002 ==>> last module dir is not exist

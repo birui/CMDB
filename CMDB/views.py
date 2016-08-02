@@ -167,6 +167,7 @@ def ajax_online(request):
 
 def online_app(request):
     # online = online.objects.all()
+    mode = request.POST['mode']
     modelname = request.POST['modelname']
     version   = request.POST['version']
     liplists  = request.POST['liplists']
@@ -236,12 +237,18 @@ def online_app(request):
         # print host
         # print modelname
         # print version
-        cmd = '/app/coohua/publish/deploy/deploy.sh deploy %s' %(version)
-        #print cmd
+        if mode == 'deploy':
+            cmd = '/app/coohua/publish/deploy/deploy.sh %s %s' %(mode,version)
+        elif mode == 'rollback':
+            cmd = '/app/coohua/publish/deploy/deploy.sh %s' %(mode)
+        else:
+            print 'ERROR NO ARGUMENT！！'
+
+        print cmd
         runcmd = playansible('%s' %(host),cmd)
         #print runcmd
         sta=runcmd.runcmd()
-        print sta
+        # print sta
         f = file('tmp_log.txt','w+')
         f.write(sta)
         f.flush()
