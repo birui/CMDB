@@ -12,4 +12,3 @@ mail.py
 zabbix_api.py
 ansicmd.py
 CMDB/scripts/*
-CMDB/static/admin/*
