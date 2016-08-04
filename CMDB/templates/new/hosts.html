@@ -1,0 +1,143 @@
+{% extends "new/base.html" %}
+
+{% load staticfiles %}
+
+{% block css  %}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+    <link href="{% static 'cmdb_css/reveal.css' %}" rel="stylesheet">
+    <style type="text/css">
+              th, td { white-space: nowrap; }
+              /*div.dataTables_wrapper {
+                width: 1200px;
+                margin: 0 auto;
+              }*/
+              .dataTables_processing{
+                line-height: 30px;
+                height: auto;
+              }
+    </style>
+{% endblock %}
+
+  
+ {% block content %}
+<!-- 弹出框 -->
+<!-- <div id="myModal" class="reveal-modal ">  
+      <form method="get" action="/ajax_list/" >
+        <input type="hidden" name="hostname2" id="hostname2" value="">  </input>  
+      </form>
+      <h1 id="hostname1" ></h1>
+      <p></p>
+      <a class="close-reveal-modal">×</a>
+</div> -->
+<div id="myModal" class="modal fade bs-example-modal-lg"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document" style="width:960px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">监控</h4>
+      </div>
+      <div class="modal-body">
+        <h1 id="hostname1" ></h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- <table id="table_id" class="display" cellspacing="0" width="100%"> -->
+ <table id="table_id" class="table table-striped table-bordered" cellspacing="0" width="100%">
+
+        <thead>
+          <tr>
+            <th>主机名</th>
+            <th>内网ip</th>
+            <th>外网ip</th>
+            <th>配置</th>
+            <th>服务</th>
+            <th>地址</th>
+            <th>费用</th>
+            <th>操作</th>
+            <th>备注</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <th>主机名</th>
+            <th>内网ip</th>
+            <th>外网ip</th>
+            <th>配置</th>
+            <th>服务</th>
+            <th>地址</th>
+            <th>费用</th>
+            <th>操作</th>
+            <th>备注</th>
+          </tr>
+        </tfoot>
+    </table>
+
+{% endblock %}
+
+
+{% block js  %}
+<script type="text/javascript" src=" {% static 'admin/vendors/datatables.net/js/jquery.dataTables.min.js' %} "></script>
+<script type="text/javascript" src="{% static 'admin/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+<!-- <script type="text/javascript" src="{% static 'cmdb_css/jquery.reveal_2.js' %}"  ></script> -->
+<script type="text/javascript">
+
+  $(document).ready( function () {
+    window.table = $('#table_id').DataTable({
+    "processing": true, 
+    "sScrollX": "100%",
+    "sScrollXInner": "110%",
+    "bScrollCollapse": true,
+    "iDisplayLength":50,
+    "ajax": {
+      "url": "/data/",
+      "type": "POST",
+      "dataSrc": "",
+    },
+ 
+  "columns": [
+          { "data": "fields.hostname"},
+          { "data": "fields.lip" },
+          { "data": "fields.wip" },
+          { "data": "fields.config" },
+          { "data": "fields.server"},
+          { "data": "fields.data_center"},
+          { "data": "fields.cost" },
+          {"defaultContent": '<a href="javascrip:;"  class="check-btn" style="color:#5bc0de"> 监控 </a>' },
+          { "data": "fields.remark" },
+      ],
+  });
+    
+    // $('#table_id').on( 'click', 'a', function () {
+    //     var data = table.row( $(this).parents('tr') ).data();//取出了所有这个列的所有数据
+    //     // console.log(data)
+    //     // alert(" hostname is: " + data.fields.hostname);//过滤出hostname数据
+    //     $('td.sorting_1').css("background-color","red");
+    // });
+
+    // $('#table_id').trigger("click"); 
+    $('#table_id').on('click','.check-btn',function(){
+        var _tr = $(this).parents('tr'),
+            hostname2 = _tr.find('td:eq(0)').text();
+        $.getJSON('/ajax_list/',{'hostname2':hostname2},function(data){
+        //var jsonobj=$.parseJSON('{"model": "CMDB.iterms", "pk": 53, "fields": {"hostid": 10125, "hostname": "nginx-asp006", "cpu_itemid": 24891.0, "cpu_graphs_itemsid": 845, "eth0_graphs_itemsid": 1015, "eth1_graphs_itemsid": 1016}}');
+       // alert(data);
+        hostname = data[0].fields.hostname;
+        cpu_graphs_itemsid = data[0].fields.cpu_graphs_itemsid;
+        eth1_graphs_itemsid = data[0].fields.eth1_graphs_itemsid;
+        //alert(hostname)
+       $("#hostname1").html( "<img src=http://115.28.203.116/zabbix/chart2.php?graphid="+cpu_graphs_itemsid+"&period=23234&width=800& /> ");
+       $('#myModal').modal('show');
+      });
+    });
+    
+});
+
+</script>
+
+
+{% endblock %}
+
+
+

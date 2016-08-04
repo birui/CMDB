@@ -1,0 +1,185 @@
+{% extends "new/base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+
+<div class="container">
+<div class="row top_tiles">
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="icon"><i class="fa fa-linux"></i></div>
+      <div class="count">{{ hosts|length }}</div>
+      <h3>服务器总数</h3>
+      <p>Total server.</p>
+    </div>
+  </div>
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="icon"><i class="fa fa-cubes"></i></div>
+      <div class="count">{{services|length}}</div>
+      <h3>业务模块</h3>
+      <p>Business module.</p>
+    </div>
+  </div>
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="icon"><i class="fa fa-database"></i></div>
+      <div class="count">4</div>
+      <h3>数据中心</h3>
+      <p>Data center.</p>
+    </div>
+  </div>
+  <div class="animated flipInY col-lg-3 col-md-3 col-sm-6 col-xs-12">
+    <div class="tile-stats">
+      <div class="icon"><i class="fa fa-users"></i></div>
+      <div class="count">20</div>
+      <h3>用户</h3>
+      <p>Total User.</p>
+    </div>
+  </div>
+</div>
+<div class="row">
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Radar <small>Sessions</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content"><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px;"></iframe>
+                    <canvas id="canvasRadar" height="528" width="1058" style="width: 529px; height: 264px;"></canvas>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Donut Graph <small>Sessions</small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                      </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content"><iframe class="chartjs-hidden-iframe" style="width: 100%; display: block; border: 0px; height: 0px; margin: 0px; position: absolute; left: 0px; right: 0px; top: 0px; bottom: 0px;"></iframe>
+                    <canvas id="canvasDoughnut" height="528" width="1058" style="width: 529px; height: 264px;"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+</div>
+{% endblock %}
+
+{% block js %}
+
+<script type="text/javascript" src="{% static 'admin/vendors/Chart.js/dist/Chart.js' %}"> </script>
+
+<script>
+      Chart.defaults.global.legend = {
+        enabled: false
+      };
+
+      // Line chart
+      
+
+      
+
+      // Doughnut chart
+      var ctx = document.getElementById("canvasDoughnut");
+      var data = {
+        labels: [
+          "Dark Grey",
+          "Purple Color",
+          "Gray Color",
+          "Green Color",
+          "Blue Color"
+        ],
+        datasets: [{
+          data: [120, 50, 140, 180, 100],
+          backgroundColor: [
+            "#455C73",
+            "#9B59B6",
+            "#BDC3C7",
+            "#26B99A",
+            "#3498DB"
+          ],
+          hoverBackgroundColor: [
+            "#34495E",
+            "#B370CF",
+            "#CFD4D8",
+            "#36CAAB",
+            "#49A9EA"
+          ]
+
+        }]
+      };
+
+      var canvasDoughnut = new Chart(ctx, {
+        type: 'doughnut',
+        tooltipFillColor: "rgba(51, 51, 51, 0.55)",
+        data: data
+      });
+
+      // Radar chart
+      var ctx = document.getElementById("canvasRadar");
+      var data = {
+        labels: ["Eating", "Drinking", "Sleeping", "Designing", "Coding", "Cycling", "Running"],
+        datasets: [{
+          label: "My First dataset",
+          backgroundColor: "rgba(3, 88, 106, 0.2)",
+          borderColor: "rgba(3, 88, 106, 0.80)",
+          pointBorderColor: "rgba(3, 88, 106, 0.80)",
+          pointBackgroundColor: "rgba(3, 88, 106, 0.80)",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(220,220,220,1)",
+          data: [65, 59, 90, 81, 56, 55, 40]
+        }, {
+          label: "My Second dataset",
+          backgroundColor: "rgba(38, 185, 154, 0.2)",
+          borderColor: "rgba(38, 185, 154, 0.85)",
+          pointColor: "rgba(38, 185, 154, 0.85)",
+          pointStrokeColor: "#fff",
+          pointHighlightFill: "#fff",
+          pointHighlightStroke: "rgba(151,187,205,1)",
+          data: [28, 48, 40, 19, 96, 27, 100]
+        }]
+      };
+
+      var canvasRadar = new Chart(ctx, {
+        type: 'radar',
+        data: data,
+      });
+
+      // Pie chart
+      
+    </script>
+
+{% endblock %}
+

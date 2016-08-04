@@ -35,6 +35,50 @@ sys.setdefaultencoding( "utf-8" )
 # def test(request) :
 #     hosts = Hosts.objects.all() #查出所有hosts表的数据
 #     return render(request, 'test.html', {'hosts': hosts})
+#======new=======
+def new(request):
+    return render_to_response('new/base.html')
+
+def new_hosts(request):
+    return render(request,'new/hosts.html',{'pagename':'服务器列表'})
+
+def  new_online_web(request):
+    return render(request,'new/online.html',{'pagename':'代码上线'})
+
+def new_modelname(request):
+    modelname = Modelname.objects.all()
+    return render(request,'new/services.html',{'services':modelname,'pagename':'业务模块'})
+
+def new_domain(request):
+    domain = Domain.objects.all()
+    return render(request,'new/domain.html',{'domain':domain})
+
+def new_items(request):
+    return render_to_response('new/items_list.html')
+
+def new_supervisor(request):
+    
+    # print test.server_list
+
+    try:
+        sup_backend.refresh()
+    except Exception, e:
+
+        default_err = { 'err':{'statename':'error','description':'error','name':'error'}, }
+        return render_to_response('new/supervisor.html',{
+            'servers_list' : default_err,
+            })
+    else:
+    #将所有机器的supervisor控制的程序列表传给模板，字典格式    
+        return render_to_response('new/supervisor.html',{
+            'servers_list' : sup_backend.server_list,
+            })
+
+def new_report(request):
+    hosts = Hosts.objects.all()
+    services = Modelname.objects.all()
+    return render(request,'new/report.html',{'hosts':hosts,'services':services})
+#=========end new=======
 def hosts(request):
     return render_to_response('hosts.html')
 
@@ -255,6 +299,7 @@ def online_app(request):
         f.close()
 
         status.append(sta)
+
         time.sleep(5)
 
 

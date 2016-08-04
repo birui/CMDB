@@ -1,0 +1,37 @@
+{% extends "new/base.html" %}
+
+{% block content %}
+
+
+<table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>域名</th>
+            <th>用户</th>
+            <th>模块</th>
+            <th>时间</th>
+            <th>备注</th>
+          </tr>
+        <tbody>
+        共 {{ domain|length }} 个
+        {% for domain1 in domain %}
+
+        <tr> 
+        <td> {{ domain1.domain }} </td>  
+        <td> {{ domain1.usename }} </td>
+        <td> {{ domain1.service_model }} </td> 
+        <td> {{ domain1.date_time }} </td> 
+        <td> {{ domain1.remark }} </td>  
+        </tr>
+
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+
+
+
+
+
+{% endblock %}

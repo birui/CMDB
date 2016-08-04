@@ -1,0 +1,33 @@
+{% extends "new/base.html" %}
+
+{% block content %}
+
+
+<table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>模块名</th>
+            <th>负责人</th>
+            <th>备注</th>
+          </tr>
+        <tbody>
+        共 {{ services|length }} 个
+        {% for service in services %}
+
+        <tr> 
+        <td> {{ service.name }} </td>  
+        <td> {{ service.lead }} </td> 
+        <td> {{ service.remark }} </td>  
+        </tr>
+
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+
+
+
+
+
+{% endblock %}

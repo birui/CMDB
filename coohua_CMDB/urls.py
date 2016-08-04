@@ -44,6 +44,15 @@ urlpatterns = [
     url(r'^list/$', test_view.as_view()),
     url(r'^fre_host/$', fre_host),
     url(r'^fre_log/$', fre_log),
+    url(r'^new/$', new),
+    url(r'^new_hosts/$', new_hosts),
+    url(r'^new_online/$', new_online_web),
+    url(r'^new_modelname/$', new_modelname),
+    url(r'^new_domain/$', new_domain),
+    url(r'^new_items/$',new_items),
+    url(r'^new_supervisor/$',new_supervisor),
+    url(r'^new_report/$', new_report),
+
 
 
     # url(r'^col/$',online_app.col),
