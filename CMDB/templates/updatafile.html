@@ -1,0 +1,16 @@
+{% extends "new/base.html" %}
+{% load staticfiles %}
+{% block content %}
+
+<div>
+<form action="/updatefile/" method="post">
+
+<textarea rows="40" cols="150" name='filecent'>{{ fileHandler1 }}</textarea>
+
+<br>
+
+<input type="submit" value="test" name="">
+
+</form>
+</div>
+{% endblock %}

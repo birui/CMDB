@@ -1,10 +1,10 @@
 #coding=utf-8
-
 from __future__ import unicode_literals
-
 from django.db import models
-
 from DjangoUeditor.models import UEditorField
+from django.conf import settings
+from django import forms
+
 # class Blog(models.Model):
 #     Name=models.CharField(max_length=100,blank=True)
 #     Content=UEditorField(u'内容   ',width=600, height=300, toolbars="full", imagePath="", filePath="", upload_settings={"imageMaxSize":1204000},
@@ -117,11 +117,21 @@ class online(models.Model):
     # def __unicode__(self):
     #    return str(self.models_name)
 
+class config(models.Model):
+    name = models.CharField(blank=True,max_length=50,null=True)
+    models_name = models.CharField(blank=True,max_length=50)
+    path = models.CharField(blank=True,max_length=100)
+    describe = models.CharField(blank=True,max_length=250)
+    date_time = models.DateTimeField(auto_now_add=True,)
+    remote_user = models.CharField(blank=True, max_length=50)
+    playbook_path = models.CharField(blank=True, max_length=250)
+    # def __unicode__(self):
+    #     return self.models_name
+    # class Meta:
+    #     ordering = ['models_name']
 
 
 
 
 
 
-
-# Create your models here.

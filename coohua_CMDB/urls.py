@@ -52,8 +52,13 @@ urlpatterns = [
     url(r'^new_items/$',new_items),
     url(r'^new_supervisor/$',new_supervisor),
     url(r'^new_report/$', new_report),
-
-
+    url(r'^openFile/$', openFile),
+    url(r'^updatefile/$', updatefile),
+    url(r'^config_manage/$', config_manage),
+    url(r'^config_data/$', config_data),
+    url(r'^config_update/$', config_update),
+    url(r'^ajax_config/$', ajax_config),
+    url(r'^config_syn/$', config_syn),
 
     # url(r'^col/$',online_app.col),
     #url(r'^control/(?P<server>[a-z0-9\.]+)/(?P<process>[a-z:_-]+)/(?P<action>[a-z]+)/$',control),

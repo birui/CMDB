@@ -1,0 +1,53 @@
+{% extends "new/base.html" %}
+{% load staticfiles %}
+{% block css %}
+{% endblock %}
+{% block content %}
+
+    <style>
+        textarea {
+            width: 100%;
+        }
+    </style>
+    <div>
+        <input type="button" value="Edit" name="" id='edit-btn' class="btn btn-primary">
+        <br/>
+        <form action="/updatefile/" method="post">
+
+            <textarea class="form-control textarea" readonly style="width:80%;" rows="40" cols="150" id='filecent'
+                      name='filecent'>{{ fileHandler1 }}</textarea>
+
+            <br/>
+            <br/>
+
+            <input type="submit" value="Submit" name="" class="btn btn-success">
+
+            <input type="button" value="Cannel" name="" class="btn btn-default">
+
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('#edit-btn').on('click', function () {
+            $('#filecent').prop('readonly', false);
+        });
+        $('.btn-default').on('click', function () {
+            window.location.reload();
+        });
+
+        //$(".textarea").setTextareaCount();
+    </script>
+
+    <script src=" {% static 'cmdb_css/auto-line-number.js' %} "></script>
+    <script type="text/javascript">
+        $(".textarea").setTextareaCount({
+            width: "30px",
+            bgColor: "#ccc",
+            color: "#666",
+            display: "block"
+        });
+    </script>
+
+{% endblock %}

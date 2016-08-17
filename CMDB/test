@@ -1,0 +1,7 @@
+[
+{"model": "CMDB.config",
+"pk": 1,
+"fields": {"name": "asp",
+       "models_name": "asp", "path": "CMDB/scripts/playbooks/nginx_config/roles/new/files/nginx.conf", "describe": "asp\u7684nginx \u914d\u7f6e\u6587\u4ef6", "date_time": "2016-08-05T07:06:25.703Z", "remote_user": "root", "playbook_path": "nginx_config"}
+}
+]

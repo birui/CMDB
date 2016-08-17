@@ -33,6 +33,13 @@ class HostAdmin(admin.ModelAdmin):
     # 指定要搜索的字段
     search_fields = ('hostname','lip',)
 
+class configAdmin(admin.ModelAdmin):
+    #显示字段
+    list_display = ('name', 'models_name','path','date_time','describe','remote_user','playbook_path')
+    #指定列表过滤器,页面右边
+    list_filter = ('models_name',)
+    # 指定要搜索的字段
+    search_fields = ('models_name','name',)
 #admin里面显示哪些表：
 admin.site.register(Brothers)
 admin.site.register(History)
@@ -42,3 +49,4 @@ admin.site.register(Modelname,ServicesAdmin)
 admin.site.register(Domain)
 admin.site.register(iterms)
 admin.site.register(online,OlineAdmin)
+admin.site.register(config,configAdmin)
