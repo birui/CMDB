@@ -10,7 +10,9 @@
         }
     </style>
     <div>
-        <input type="button" value="Edit" name="" id='edit-btn' class="btn btn-primary">
+        <input type="button" value="备份" name="" id='syn-btn' class="btn btn-primary">
+        <input type="button" value="编辑" name="" id='edit-btn' class="btn btn-primary">
+
         <br/>
         <form action="/updatefile/" method="post">
 
@@ -20,9 +22,9 @@
             <br/>
             <br/>
 
-            <input type="submit" value="Submit" name="" class="btn btn-success">
+            <input type="submit" value="提交" name="" id="submit-btn" class="btn btn-success">
 
-            <input type="button" value="Cannel" name="" class="btn btn-default">
+            <input type="submit" value="取消" name="" class="btn btn-default">
 
         </form>
     </div>
@@ -42,11 +44,34 @@
 
     <script src=" {% static 'cmdb_css/auto-line-number.js' %} "></script>
     <script type="text/javascript">
+        //编辑器窗口
         $(".textarea").setTextareaCount({
             width: "30px",
             bgColor: "#ccc",
             color: "#666",
             display: "block"
+        });
+
+        // 获取地址栏参数
+        function GetQueryString(name)
+        {
+            var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+            var r = window.location.search.substr(1).match(reg);
+            if(r!=null)return  unescape(r[2]); return '';
+        }
+
+        //同步配置文件
+        $('#syn-btn').on('click',function(){
+            var _model_name = GetQueryString('model_name');
+             $.ajax({
+             type: "GET",
+             url: "/backup_config",
+             data: {model_name:_model_name},
+             dataType: "json",
+             success: function(data){
+                 alert('同步成功!')
+             }
+            });
         });
     </script>
 

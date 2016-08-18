@@ -102,8 +102,9 @@
 $('#table_id').on('click','.fa-edit',function(){
     var _tr = $(this).parents('tr');
     var _path = _tr.find('td:eq(2)').text();
+    var _model_name = _tr.find('td:eq(1)').text();
     var _host = window.location.host;
-    window.location.href = 'http://'+_host+'/openFile?path='+_path;
+    window.location.href = 'http://'+_host+'/openFile?path='+_path+'&model_name='+_model_name;
     //window.location.href = 'http://www.baidu.com';
 });
 

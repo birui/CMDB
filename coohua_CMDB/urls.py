@@ -59,6 +59,7 @@ urlpatterns = [
     url(r'^config_update/$', config_update),
     url(r'^ajax_config/$', ajax_config),
     url(r'^config_syn/$', config_syn),
+    url(r'^backup_config/$', backup_config),
 
     # url(r'^col/$',online_app.col),
     #url(r'^control/(?P<server>[a-z0-9\.]+)/(?P<process>[a-z:_-]+)/(?P<action>[a-z]+)/$',control),

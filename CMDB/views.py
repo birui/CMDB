@@ -116,23 +116,27 @@ def config_syn(request):
     liplists = request.POST['liplists']
     describe = request.POST['describe']
     hostname = request.POST['hostname']
-    jsondata = serializers.serialize("json", config.objects.all().filter( models_name=modelname))
-    listdata=json.loads(jsondata)
+    jsondata = serializers.serialize("json", config.objects.all().filter(models_name=modelname))
+    listdata = json.loads(jsondata)
     playbook_path = listdata[0]['fields']['playbook_path']
     remote_user = listdata[0]['fields']['remote_user']
 
-    print playbook_path
-    print remote_user
+    if mode == 'deploy':
 
-    # status = []
+        # 改之前同步到old备份,而不是现在
 
-    #调用playbook方法,实现配置文件同步。
-    test = anplaybook('%s/update.yml' %(playbook_path), remote_user, modelname)
+        runplay = anplaybook('%s/update.yml' % (playbook_path), remote_user, modelname)
+    elif mode == 'rollback':
+        # 如果是回滚不用同步
+        runplay = anplaybook('%s/backup.yml' % (playbook_path), remote_user, modelname)
+    else:
+        print 'ERROR NO ARGUMENT！！'
+
     # print test
-    status = test.runplaybook
+    status1 = runplay.runplaybook
     # status.append()
     # time.sleep(5)
-    return HttpResponse(status)
+    return HttpResponse(status1)
 
 
 # =========end new=======
@@ -483,9 +487,23 @@ class test_view(View):
 
 def openFile(request):
     path = request.GET.get('path')
+    model_name = request.GET.get('model_name')
+    g_model_name = request.session.get('g_model_name')
+    g_model_name = model_name
+    request.session['g_model_name'] = g_model_name
+
     num = request.session.get('num')
     num = path
     request.session['num'] = num
+
+    # jsondata = serializers.serialize("json", config.objects.all().filter(models_name=model_name))
+    # listdata = json.loads(jsondata)
+    # playbook_path = listdata[0]['fields']['playbook_path']
+    #
+    # cmd = 'rsync -av  CMDB/scripts/playbooks/%s/roles/new/ CMDB/scripts/playbooks/%s/roles/old/' % (
+    #     playbook_path, playbook_path)
+    # # 调用playbook方法,实现配置文件同步。
+    # status = subprocess.check_output(cmd, shell=True)
 
     # path of file
     line_name = []
@@ -499,15 +517,30 @@ def openFile(request):
 
 def updatefile(request):
     num = request.session.get('num')
+    g_model_name = request.session.get('g_model_name')
 
     filecent = request.POST['filecent']
     f = file(num, 'w+')
     f.write(filecent)
     f.flush()
     f.close()
-    return HttpResponseRedirect('/openFile?path=%s' % (num))
+    return HttpResponseRedirect('/openFile?path=%s&model_name=%s' % (num,g_model_name))
 
 
 def getopen():
     page = request.GET.get('page')
     pass
+
+
+def backup_config(request):
+    model_name = request.GET.get('model_name')
+    jsondata = serializers.serialize("json", config.objects.all().filter(models_name=model_name))
+    listdata = json.loads(jsondata)
+    playbook_path = listdata[0]['fields']['playbook_path']
+
+    cmd = 'rsync -av  CMDB/scripts/playbooks/%s/roles/new/ CMDB/scripts/playbooks/%s/roles/old/' % (
+        playbook_path, playbook_path)
+    # 调用playbook方法,实现配置文件同步。
+    status = subprocess.check_output(cmd, shell=True)
+    return render_to_response('new/updatafile.html')
+
