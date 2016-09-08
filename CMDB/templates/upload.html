@@ -1,0 +1,26 @@
+{% load staticfiles %}
+{% block css %}
+    <link href="{% static 'admin/vendors/bootstrap/dist/css/bootstrap-multiselect.css' %}" rel="stylesheet">
+    <!-- <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet"> -->
+    <link href="{% static 'admin/vendors/dropzone/dist/min/dropzone.min.css' %}" rel="stylesheet">
+    <link href="{% static 'admin/build/css/custom.min.css' %}" rel="stylesheet">
+
+
+{% endblock %}
+
+<form action="/upload/" method="post" enctype="multipart/form-data" class="dropzone" id="dropzone">
+    {% csrf_token %}
+    <div class="fallback">
+        <input name="file" type="file" multiple/>
+    </div>
+{#    <button>sub</button>#}
+</form>
+
+
+{% block js %}
+    <script src="{% static 'admin/vendors/bootstrap/dist/js/bootstrap-multiselect.js' %}"></script>
+    <script src="{% static 'admin/vendors/dropzone/dist/min/dropzone.min.js' %}"></script>
+    <script src="{% static 'admin/build/js/custom.min.js' %}"></script>
+
+{% endblock %}
+

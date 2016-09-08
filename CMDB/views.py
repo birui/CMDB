@@ -26,6 +26,14 @@ from CMDB.scripts.playbooks.ansiplaybook import *
 from django.views.generic import ListView
 from django.views.generic import View
 from django.core.files import File
+from django import forms
+from .forms import *
+# from somewhere import handle_uploaded_file
+from django.template import RequestContext
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect
+from django.core.files.storage import FileSystemStorage
+
 
 sup_backend = Backend()
 
@@ -137,6 +145,55 @@ def config_syn(request):
     # status.append()
     # time.sleep(5)
     return HttpResponse(status1)
+
+
+def mulfile(request):
+    if request.method == 'POST':
+        # un = request.POST.get('username')
+        hostname = request.POST.get('hostname')
+        f = request.POST.get('filename')  # 'uploadfile'与提交表单中input名一致，多个文件参见getlist()
+        print f
+        print hostname
+        filename = '/'.join('/upload/', f)  # 存放内容的目标文件路径
+        print filename
+        with open(filename, 'a+') as keys:
+            for chunk in f.chunks():  # chunks()方法将文件切分成为块(<=2.5M)的迭代对象
+                keys.write(chunk)
+
+    return render(request, 'new/mulfile.html', {'pagename': '文件分发'})
+
+
+def mulcomm(request):
+    return render(request, 'new/mulcomm.html', {'pagename': '批量命令'})
+
+
+def mulshell(request):
+    return render(request, 'new/mulshell.html', {'pagename': '批量脚本'})
+
+
+def get_modelname(request):
+    hostlist = []
+    modelname = Modelname.objects.all()
+
+    for i in modelname:
+        hostname_list = {}
+        hosts = []
+        iname = i.name  # Modelname表里面的name字段
+
+        get_hostlist = Hosts.objects.all().filter(Modelname=i)
+        if get_hostlist:
+            hostname_list['groupName'] = iname
+
+            for j in get_hostlist:
+                if j:
+                    hosts.append(j.hostname)
+                    # hostname_list['lists'] = j.hostname #hosts表里的hostname字段
+
+            hostname_list['lists'] = hosts
+
+            hostlist.append(hostname_list)  # 组合成字典
+
+    return HttpResponse(json.dumps(hostlist), content_type='application/json')
 
 
 # =========end new=======
@@ -524,7 +581,7 @@ def updatefile(request):
     f.write(filecent)
     f.flush()
     f.close()
-    return HttpResponseRedirect('/openFile?path=%s&model_name=%s' % (num,g_model_name))
+    return HttpResponseRedirect('/openFile?path=%s&model_name=%s' % (num, g_model_name))
 
 
 def getopen():
@@ -544,3 +601,25 @@ def backup_config(request):
     status = subprocess.check_output(cmd, shell=True)
     return render_to_response('new/updatafile.html')
 
+def list(request):
+    # Handle file upload
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            newdoc = Document(docfile=request.FILES['docfile'])
+            newdoc.save()
+
+            # Redirect to the document list after POST
+            return HttpResponseRedirect(reverse('list'))
+    else:
+        form = DocumentForm()  # A empty, unbound form
+
+    # Load documents for the list page
+    documents = Document.objects.all()
+
+    # Render list page with the documents and the form
+    return render(
+        request,
+        'upload2.html',
+        {'documents': documents, 'form': form}
+    )

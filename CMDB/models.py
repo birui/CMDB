@@ -130,8 +130,17 @@ class config(models.Model):
     # class Meta:
     #     ordering = ['models_name']
 
+class Document(models.Model):
+    docfile = models.FileField(upload_to='documents/%Y/%m/%d')
 
+class UploadFile(models.Model):
+	file = models.FileField(upload_to='files/%Y/%m/%d')
 
+#上传作品表:作品名称，用户名
+class Upload(models.Model):
+    #注意这里的用户名是FileField类型
+    name = models.FileField(upload_to = './upload/')
+    username = models.CharField(max_length = 20)
 
-
-
+    def __str__(self):
+        return self.name

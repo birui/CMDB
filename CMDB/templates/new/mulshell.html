@@ -1,0 +1,135 @@
+{% extends "new/base.html" %}
+{% load staticfiles %}
+{% block css %}
+    <link href="{% static 'admin/vendors/bootstrap/dist/css/bootstrap-multiselect.css' %}" rel="stylesheet">
+    <!-- <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet"> -->
+    <link href="{% static 'admin/vendors/dropzone/dist/min/dropzone.min.css' %}" rel="stylesheet">
+    <link href="{% static 'admin/build/css/custom.min.css' %}" rel="stylesheet">
+
+
+{% endblock %}
+
+{% block content %}
+    <select id="example-enableCollapsibleOptGroups-enableClickableOptGroups" class="online-menu" multiple="multiple"
+            style="display:none">
+    </select>
+
+    <div class="x_content">
+        <div id="devis_lists_text"></div>
+        <br/>
+        <p>Drag multiple files to the box below for multi upload or click to select files. This is for demonstration
+            purposes only, the files are not uploaded to any server.</p>
+        <form method="post" action="/mulfile/" class="dropzone" enctype="multipart/form-data">
+        </form>
+        <br/>
+        <button class="btn btn-danger btn-default btn-file-submit">Submit</button>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'admin/vendors/bootstrap/dist/js/bootstrap-multiselect.js' %}"></script>
+    <script src="{% static 'admin/vendors/dropzone/dist/min/dropzone.min.js' %}"></script>
+    <script src="{% static 'admin/build/js/custom.min.js' %}"></script>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            function ajaxSelectM() {
+                $.get("/get_modelname/", null, function (data) {
+                    var _tr = '', _td = '', groupNameArr = [], listsArr = [];
+                    {#                    console.log(data)#}
+                    for (var i = 0; i < data.length; i++) {
+                        groupNameArr.push(data[i].groupName);
+                        listsArr.push(data[i].lists);
+                    }
+                    ;
+                    for (var j = 0; j < groupNameArr.length; j++) {
+                        _tr = '<optgroup label="' + groupNameArr[j] + '">';
+                        for (var k = 0; k < listsArr[j].length; k++) {
+                            _td += '<option value="' + listsArr[j][k] + '">' + listsArr[j][k] + '</option>';
+                        }
+                        var _str = _tr + _td + '</optgroup>';
+                        $('.online-menu').append(_str);
+                        _tr = '', _td = '';
+                    }
+                    {#                    console.log(groupNameArr);#}
+                    {#                    console.log(listsArr)#}
+                    {#                    for (var i = 0; i < data.length; i++) {#}
+                    {#                        _tr += '<option value="' + data[i].fields.hostname + '">' + data[i].fields.hostname + '</option>';#}
+                    {#                    }#}
+                    {#                    $('.online-menu optgroup').eq(_index).append(_tr);#}
+                    //通过multiselect显示下拉列表
+                    $('#example-enableCollapsibleOptGroups-enableClickableOptGroups').multiselect({
+                        enableClickableOptGroups: true,
+                        enableCollapsibleOptGroups: true,
+                        numberDisplayed: 20,
+                        buttonWidth: '400px',
+                        onChange: function (option, checked) {
+                            console.log()
+                            var _hostnameArr = getSelected();
+
+                            var _htmlsubdom = '';
+
+                            for (var j = 0; j < _hostnameArr.length; j++) { //算行
+                                if (j % 6 == 0) {   //6个元素一行
+                                    _htmlsubdom += '<div class="row">';
+
+                                }
+                                _htmlsubdom += '<div class="col-md-2">' +
+                                        '<i class="glyphicon glyphicon-tasks i_lip btn-lg" style="color:#0864b3"; data-lname="' + _hostnameArr[j] + '" data-lip="' + _hostnameArr[j] + '"></i>' +
+                                        '<p>' + _hostnameArr[j] + '</p></div>';
+                                if (j % 6 == 5) {  //最后一行
+                                    _htmlsubdom += '</div>';
+                                }
+
+                            }
+                            if (_hostnameArr.length % 6 != 5) {
+                                _htmlsubdom += '</div>';
+                            }
+                            $('#devis_lists_text').html(_htmlsubdom);
+                        }
+                    }).show();
+                });
+            };
+
+
+            ajaxSelectM();
+            //ajaxSelectM('altair', 1);
+
+            var getSelected = function () {
+                var selectValueStr = [];
+                $("#example-enableCollapsibleOptGroups-enableClickableOptGroups option:selected").each(function () {
+                    selectValueStr.push($(this).val());
+                });
+                return selectValueStr;
+            };
+
+            //将hostanme和filename提交给后台
+
+            $('.btn-file-submit').on('click', function () {
+                var _hostNameArr = getSelected(), hostnamestr = '', filenameStr = '';
+
+                $('.dz-filename').each(function () {
+                    filenameStr += $(this).text() + ',';
+                });
+                filenameStr = filenameStr.substring(0, filenameStr.length - 1);
+                for (var i = 0; i < _hostNameArr.length; i++) {
+                    hostnamestr += _hostNameArr[i] + ',';
+                }
+                hostnamestr = hostnamestr.substring(0, hostnamestr.length - 1);
+                var _param = {
+                    'hostname': hostnamestr,
+                    'filename': filenameStr
+                };
+                $.get("/xxxxxxx/", _param, function (data) {
+
+                });
+            });
+
+        });
+    </script>
+
+
+{% endblock %}
+
