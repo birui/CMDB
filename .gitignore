@@ -13,3 +13,5 @@ zabbix_api.py
 ansicmd.py
 CMDB/scripts/*
 tmp.txt
+media/*
+CMDB/migrations/*

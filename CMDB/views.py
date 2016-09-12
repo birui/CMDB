@@ -444,23 +444,20 @@ def online_app(request):
 
     # print "%s , %s, %s" %(version,modelname,describe)
     ##存入数据库
-    # u1 = online(models_name=modelname ,version=version ,describe=describe )
-    # u1.save()
+    u1 = online(models_name=modelname ,version=version ,describe=describe )
+    u1.save()
 
-    # cmd = "scripts/playbooks/cooansible-api.sh "
-    # status = subprocess.check_output(cmd + modelname + " " + version ,shell=True)
+    mailbox = [
+    'birui@coohua.com',
+    'zhubaofeng@coohua.com',
+    ]
 
-    # mailbox = [
-    # 'birui@coohua.com',
-    # 'zhubaofeng@coohua.com',
-    # ]
+    subject = '%s %s 上线' % (modelname,version)
 
-    # subject = '%s %s 上线' % (modelname,version) 
-
-    # for i in mailbox:
-    #     print i
-    #     mail_cmd = "scripts/mail.py '%s' '%s' '%s' " % (i,subject,describe)
-    #     os.system(mail_cmd)
+    for i in mailbox:
+        print i
+        mail_cmd = "scripts/mail.py '%s' '%s' '%s' " % (i,subject,describe)
+        os.system(mail_cmd)
     return HttpResponse(status)
 
 
