@@ -119,6 +119,7 @@ def ajax_config(request):
 
 def config_syn(request):
     mode = request.POST['mode']  # 执行模块
+    name = request.POST['name']
     modelname = request.POST['modelname']  # 业务模块
     version = request.POST['version']
     liplists = request.POST['liplists']
@@ -128,20 +129,27 @@ def config_syn(request):
     listdata = json.loads(jsondata)
     playbook_path = listdata[0]['fields']['playbook_path']
     remote_user = listdata[0]['fields']['remote_user']
+    path = listdata[0]['fields']['path']
 
     if mode == 'deploy':
 
         # 改之前同步到old备份,而不是现在
+        cmd = 'cd %s; ansible-playbook %s/update.yml' %(playbook_path,name)
+        print cmd
 
-        runplay = anplaybook('%s/update.yml' % (playbook_path), remote_user, modelname)
+        #runplay = anplaybook('%s/update.yml' % (playbook_path), remote_user, modelname)
+
+
     elif mode == 'rollback':
         # 如果是回滚不用同步
-        runplay = anplaybook('%s/backup.yml' % (playbook_path), remote_user, modelname)
+        # runplay = anplaybook('%s/backup.yml' % (playbook_path), remote_user, modelname)
+        cmd = 'cd %s; ansible-playbook %s/backup.yml' %(playbook_path,name)
+
     else:
         print 'ERROR NO ARGUMENT！！'
 
     # print test
-    status1 = runplay.runplaybook
+    status1 = subprocess.check_output(cmd, shell=True)
     # status.append()
     # time.sleep(5)
     return HttpResponse(status1)
@@ -458,7 +466,7 @@ def online_app(request):
 
     for i in mailbox:
         print i
-        mail_cmd = "scripts/mail.py '%s' '%s' '%s' " % (i,subject,describe)
+        mail_cmd = "CMDB/scripts/mail.py '%s' '%s' '%s' " % (i,subject,describe)
         os.system(mail_cmd)
     return HttpResponse(status)
 

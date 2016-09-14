@@ -111,8 +111,9 @@ $('#table_id').on('click','.fa-edit',function(){
 $('#table_id').on('click','.fa-external-link-square',function(){
     var _tr = $(this).parents('tr');
     var _model = _tr.find('td:eq(1)').text();
+    var _name = _tr.find('td:eq(0)').text();
     var _host = window.location.host;
-    window.location.href = 'http://'+_host+'/config_update?path='+_model;
+    window.location.href = 'http://'+_host+'/config_update?path='+_model+'&name='+_name;
 
     // $("#hostname2").html( "哈哈哈");
     // $('#myModal2').modal('show');

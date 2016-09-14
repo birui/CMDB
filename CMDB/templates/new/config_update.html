@@ -1,338 +1,239 @@
 {% extends "new/base.html" %}
 {% load staticfiles %}
-{% block css  %}
+{% block css %}
 
-<!-- <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet"> -->
-<style type="text/css">
-  .breath_light {
-        opacity: 1;
-
-        animation-name: breath;                         /* 动画名称 */
-        animation-duration: 3s;                         /* 动画时长3秒 */
-        animation-timing-function: ease-in-out;         /* 动画速度曲线：以低速开始和结束 */
-        animation-iteration-count: infinite;            /* 播放次数：无限 */
-        -webkit-animation-name: breath;                 /* 动画名称 */
-        -webkit-animation-duration: 3s;                 /* 动画时长3秒 */
-        -webkit-animation-timing-function: ease-in-out; /* 动画速度曲线：以低速开始和结束 */
-        -webkit-animation-iteration-count: infinite;    /* 播放次数：无限 */
-    }
-
-    @keyframes breath {
-        from { opacity: 0.5; color: green }                          /* 动画开始时的不透明度 */
-        50%  { opacity:   1; color:red;}                          /* 动画50% 时的不透明度 */
-        to   { opacity: 0.5; color: green}                          /* 动画结束时的不透明度 */
-    }
-
-    @-webkit-keyframes breath {
-        from { opacity: 0.5; color: green }                          /* 动画开始时的不透明度 */
-        50%  { opacity:   1; color:red;}                          /* 动画50% 时的不透明度 */
-        to   { opacity: 0.5; color: green}                          /* 动画结束时的不透明度 */
-    }
-
-</style>
+    <!-- <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet"> -->
 
 {% endblock %}
 
 {% block content %}
 
-<ul class="nav nav-tabs" role="tablist" id='myTabs'>
-    <li role="presentation" class="active"><a href="#online" aria-controls="online" role="tab" data-toggle="tab">同步</a></li>
-    <li role="presentation"><a href="#rollback" aria-controls="rollback" role="tab" data-toggle="tab">回滚</a></li>
-</ul>
+    <ul class="nav nav-tabs" role="tablist" id='myTabs'>
+        <li role="presentation" class="active"><a href="#online" aria-controls="online" role="tab"
+                                                  data-toggle="tab">同步</a></li>
+        <li role="presentation"><a href="#rollback" aria-controls="rollback" role="tab" data-toggle="tab">回滚</a></li>
+    </ul>
 
-<div class="tab-content">
-<!-- 上线部分 -->
-    <div role="tabpanel" class="tab-pane active" id="online">
+    <div class="tab-content">
+        <!-- 上线部分 -->
+        <div role="tabpanel" class="tab-pane active" id="online">
 
-        <div class="row" style='margin-top:20px'>
+            <div class="row" style='margin-top:20px'>
 
-        <div class="col-lg-1" >
-          <p> 模块：</p>
-        </div>
-        <div class="col-lg-6 ">
-          <p id="dLabel" style='width:100%'></p>
+                <div class="col-lg-1">
+                    <p> 名称：</p>
+                </div>
+                <div class="col-lg-6 ">
+                    <p id="dLabel" style='width:100%'></p>
 
-        </div><!-- /.col-lg-6 -->
-
-
-      </div>
-
-      <div class="row devis_lists" style='margin-top:10px'>
-        <div class="col-lg-1" >
-          <p> 服务器组：</p>
-          </div>
-            <div class="col-lg-6" >
-            <div id='devis_lists_text' ></div>
-         </div>
-      </div>
-
-      <!-- 描述 -->
-      <div class="row" style='margin-top:10px'>
-        <div class="col-lg-1" > <p> 描述：</p> </div>
-
-        <div class="col-lg-6" > <textarea id="describe" class="form-control" rows="3"></textarea> </div>
-
-       </div>
-
-      <div class="row" style='margin-top:10px'>
-        <div class="col-lg-6" >
-            <button type="button" class="btn btn-danger btn-default btn-online-back" data-back=''>提交同步</button>
-
-          </div>
-      </div>
-
-      <div class="row" style='margin-top:100px'> </div>
-
-      <div   class="col-lg-6 ">
-      <!-- <p> <textarea id="result" style="width: 900px ;border: 0 none; outline-style: none">   </textarea>   </p> -->
-      <p> <pre id="result" style="width: 900px ;border: 0 none; outline-style: none;display: none">   </pre>   </p>
-      </div>
+                </div><!-- /.col-lg-6 -->
 
 
+            </div>
 
+            <div class="row devis_lists" style='margin-top:10px'>
+                <div class="col-lg-1">
+                    <p> 模块：</p>
+                </div>
+                <div class="col-lg-6">
+                    <div id='devis_lists_text'></div>
+                </div>
+            </div>
 
-  </div>
+            <!-- 描述 -->
+            <div class="row" style='margin-top:10px'>
+                <div class="col-lg-1"><p> 描述：</p></div>
 
-<!-- 回滚 部分 -->
-  <div role="tabpanel" class="tab-pane" id="rollback">
+                <div class="col-lg-6"><textarea id="describe" class="form-control" rows="3"></textarea></div>
 
-      <div class="row" style='margin-top:20px'>
+            </div>
 
-        <div class="col-lg-1" >
-          <p> 模块：</p>
-        </div>
-        <div class="col-lg-6 ">
-          <p id="callbackLabel"></p>
+            <div class="row" style='margin-top:10px'>
+                <div class="col-lg-6">
+                    <button type="button" class="btn btn-danger btn-default btn-online-back" data-back=''>提交同步</button>
 
-        </div><!-- /.col-lg-6 -->
+                </div>
+            </div>
 
+            <div class="row" style='margin-top:100px'></div>
 
-      </div>
+            <div class="col-lg-6 ">
+                <!-- <p> <textarea id="result" style="width: 900px ;border: 0 none; outline-style: none">   </textarea>   </p> -->
+                <p>
+                <pre id="result" style="width: 900px ;border: 0 none; outline-style: none;display: none">   </pre>
+                </p>
+            </div>
 
-      <div class="row devis_lists" style='margin-top:10px'>
-        <div class="col-lg-1" >
-          <p> 服务器组：</p>
-          </div>
-            <div class="col-lg-6" >
-            <div id='devis_lists_text-callback' ></div>
-         </div>
-      </div>
-
-      <div class="row" style='margin-top:10px'>
-        <div class="col-lg-6" >
-
-            <button type="button" class="btn btn-danger btn-default btn-online-back" data-back='true'>提交回滚</button>
 
         </div>
-      </div>
-      <div class="row" style='margin-top:100px'> </div>
 
-      <div   class="col-lg-6 ">
-      <!-- <p> <textarea id="result" style="width: 900px ;border: 0 none; outline-style: none">   </textarea>   </p> -->
-      <p> <pre id="result_back" style="width: 900px ;border: 0 none; outline-style: none;display: none">   </pre>   </p>
-      </div>
+        <!-- 回滚 部分 -->
+        <div role="tabpanel" class="tab-pane" id="rollback">
 
-  </div>
-</div>
+            <div class="row" style='margin-top:20px'>
+
+                <div class="col-lg-1">
+                    <p> 名称：</p>
+                </div>
+                <div class="col-lg-6 ">
+                    <p id="callbackLabel"></p>
+
+                </div><!-- /.col-lg-6 -->
+
+
+            </div>
+
+            <div class="row devis_lists" style='margin-top:10px'>
+                <div class="col-lg-1">
+                    <p> 模块：</p>
+                </div>
+                <div class="col-lg-6">
+                    <div id='devis_lists_text-callback'></div>
+                </div>
+            </div>
+
+            <div class="row" style='margin-top:10px'>
+                <div class="col-lg-6">
+
+                    <button type="button" class="btn btn-danger btn-default btn-online-back" data-back='true'>提交回滚
+                    </button>
+
+                </div>
+            </div>
+            <div class="row" style='margin-top:100px'></div>
+
+            <div class="col-lg-6 ">
+                <!-- <p> <textarea id="result" style="width: 900px ;border: 0 none; outline-style: none">   </textarea>   </p> -->
+                <p>
+                <pre id="result_back" style="width: 900px ;border: 0 none; outline-style: none;display: none">   </pre>
+                </p>
+            </div>
+
+        </div>
+    </div>
 
 {% endblock %}
 
-{% block js  %}
-<script type="text/javascript">
-//
-function ajaxFn(json,obj){
-  $.get("/ajax_config/",json,function(data){
-          var _hostnameArr = [];
+{% block js %}
+    <script type="text/javascript">
 
-          var _htmlsubdom = '';
+        //通过浏览器地址栏获取提交参数
+        function pathFn() {
+            var _path = window.location.search;
+            if (_path) {
 
-          data = $.parseJSON(data); //拿到后台传过来的数据data
+                _path = _path.substring(1);
+                var _pathArr = _path.split('&');
 
-          //console.log(data)
-          for(var i=0;i<data.length;i++){
-            _hostnameArr.push({hostname:data[i]['fields'].hostname,lip:data[i]['fields'].lip});
-          }
-          for(var j=0;j<_hostnameArr.length;j++){ //算行
-            if(j%6 == 0){   //6个元素一行
-              _htmlsubdom+='<div class="row">';
+                var _modname = _pathArr[0].split('=')
+                var _name = _pathArr[1].split('=')
+                var _marr = [_modname[1],_name[1]]
 
+{#                console.log(_marr);#}
+                return _marr
+            } else {
+                return [];
             }
-              _htmlsubdom += '<div class="col-md-2">'+
-                          '<i class="glyphicon glyphicon-tasks i_lip btn-lg" style="color:#0864b3"; data-lname="'+_hostnameArr[j].hostname+'" data-lip="'+_hostnameArr[j].lip+'"></i>'+
-                          '<p>'+_hostnameArr[j].hostname+'</p></div>';
-            if(j%6 == 5){  //最后一行
-              _htmlsubdom+='</div>';
-            }
-
-          }
-          if(_hostnameArr.length%6 != 5){
-            _htmlsubdom+='</div>';
-          }
-          $('#'+obj).html(_htmlsubdom);
-       });
-};
-//通过浏览器地址栏获取提交参数
-function pathFn(){
-  var _path = window.location.search;
-  if(_path){
-    _path = _path.substring(1);
-    var _pathArr = _path.split('=');
-    return _pathArr
-  }else{
-    return [];
-  }
-};
-//
-function autoFn(ele,ele2){
-  var _arr = pathFn();
-  if(_arr){
-    var _json = {};
-    var _arr1 = _arr[1];
-    var _json = {'modelname1':_arr1};
-    ele.text(_arr1);
-    ele2.text(_arr1);
-    ajaxFn(_json,'devis_lists_text');
-    ajaxFn(_json,'devis_lists_text-callback');
-  }else{
-    return false;
-  }
-}
-
-$(document).ready(function(){
-
-    autoFn($('#dLabel'),$('#callbackLabel'));
-
-    // $('.online-menu li').on('click',function(){
-    //     var modelname = $(this).text();
-    //     $('#dLabel').text(modelname);
-    //     var _json = {'modelname1':modelname};
-    //     ajaxFn(_json,'devis_lists_text');
-    // });
-    // //rollback callback
-    // $('.rollback-menu li').on('click',function(){
-    //     var modelname = $(this).text();
-    //     $('#callbackLabel').text(modelname);
-
-    //     var _json = {'modelname1':modelname};
-    //     ajaxFn(_json,'devis_lists_text-callback');
-    // });
-    //click
-    $('#devis_lists_text').on('click','.i_lip',function(){
-
-      $(this).parents('.col-md-2').remove();
-    });
-    $('#devis_lists_text-callback').on('click','.i_lip',function(){
-
-      $(this).parents('.col-md-2').remove();
-    });
-});
-
-
-    $(".btn-online-back").click(function(){
-      var _rollback = Boolean($(this).attr('data-back'));
-      console.log(_rollback)
-    	var modelname = $("#dLabel").text();
-    	var version = $("#ver").val();
-    	var describe = $("#describe").val();
-      var liplists = '',hostnamestr = '';
-      $('.i_lip').each(function(){
-        liplists+=$(this).attr('data-lip')+',';
-        hostnamestr+=$(this).attr('data-lname')+',';
-      });
-      liplists = liplists.substring(0,liplists.length-1);
-      hostnamestr = hostnamestr.substring(0,hostnamestr.length-1);
-
-
-      var timer = null;
-      timer = setInterval(function(){
-        $.post("/fre_host/",null,function(data){
-          // console.log(data)
-          if(data){
-
-              if(_rollback){
-                $('#devis_lists_text-callback .col-md-2').find('p').css('color','#0864b3').removeClass('breath_light');
-                $('#devis_lists_text-callback .col-md-2').find('i').css('color','#0864b3').removeClass('breath_light');
-
-                $('#devis_lists_text-callback .col-md-2 i[data-lname="' +data+ '"]').css('color','red').addClass('breath_light');
-                $('#devis_lists_text-callback .col-md-2 i[data-lname="' +data+ '"]').next().css('color','red').addClass('breath_light');
-              }else{
-                $('#devis_lists_text .col-md-2').find('p').css('color','#0864b3').removeClass('breath_light');
-                $('#devis_lists_text .col-md-2').find('i').css('color','#0864b3').removeClass('breath_light');
-
-                $('#devis_lists_text .col-md-2 i[data-lname="' +data+ '"]').css('color','red').addClass('breath_light');
-                $('#devis_lists_text .col-md-2 i[data-lname="' +data+ '"]').next().css('color','red').addClass('breath_light');
-              }
-
-
-
-          }else{
-            alert('error')
-          }
-
-       });
-
-        $.post("/fre_log/",null,function(data){
-          // console.log(data)
-          if(data){
-
-              //var _text = $('#result').text();
-              if(_rollback){
-                $('#result_back').html(data).show();
-              }else{
-                $('#result').html(data).show();
-              }
-
-          }else{
-
-          }
-
-       });
-
-      },500);
-      var _param  = { 'mode':'deploy',
-                      'modelname':modelname,
-                      'liplists':liplists,
-                      'hostname':hostnamestr,
-                      'version':null,
-                      'describe':describe
-                    };
-      if(_rollback){//back
-        _param = null;
-        _param = {    'mode':'rollback',
-                      'modelname':modelname,
-                      'liplists':liplists,
-                      'hostname':hostnamestr,
-                      'version':null,
-                      'describe':null
-                    };
-      }
-    	$.post("/config_syn/",_param,function(data){
-
-
-    		//alert(data.length)
-        clearInterval(timer);
+        }
+        ;
         //
-        $('#devis_lists_text-callback .col-md-2').find('p').css('color','#0864b3').removeClass('breath_light');
-        $('#devis_lists_text-callback .col-md-2').find('i').css('color','#0864b3').removeClass('breath_light');
-        $('#devis_lists_text .col-md-2').find('p').css('color','#0864b3').removeClass('breath_light');
-        $('#devis_lists_text .col-md-2').find('i').css('color','#0864b3').removeClass('breath_light');
-        if(_rollback){//back
-          $('#result_back').html(data);
-          $('#result_back').show(); //改变display: none
-          alert("恭喜你回滚成功！！！");
-        }else{
-          $('#result').html(data);
-          $('#result').show(); //改变display: none
-          alert("恭喜你同步成功！！！")
+        function autoFn(ele, ele2,ele3,ele4) {
+            var _arr = pathFn();
+            if (_arr) {
+                var _json = {};
+                var _arr1 = _arr[0];
+                var _arr2 = _arr[1]
+                var _json = {'modelname1': _arr1};
+                ele.text(_arr1);
+                ele2.text(_arr1);
+                ele3.text(_arr2);
+                ele4.text(_arr2);
+{#                ajaxFn(_json, 'devis_lists_text');#}
+{#                ajaxFn(_json, 'devis_lists_text-callback');#}
+            } else {
+                return false;
+            }
         }
 
-
-    	 });
-
-      });
+        $(document).ready(function () {
 
 
-</script>
+            autoFn($('#devis_lists_text'), $('#devis_lists_text-callback'),$('#dLabel'),$('#callbackLabel'));
+
+            // $('.online-menu li').on('click',function(){
+            //     var modelname = $(this).text();
+            //     $('#dLabel').text(modelname);
+            //     var _json = {'modelname1':modelname};
+            //     ajaxFn(_json,'devis_lists_text');
+            // });
+            // //rollback callback
+            // $('.rollback-menu li').on('click',function(){
+            //     var modelname = $(this).text();
+            //     $('#callbackLabel').text(modelname);
+
+            //     var _json = {'modelname1':modelname};
+            //     ajaxFn(_json,'devis_lists_text-callback');
+            // });
+            //click
+
+        });
+
+
+        $(".btn-online-back").click(function () {
+            var _rollback = Boolean($(this).attr('data-back'));
+            console.log(_rollback)
+            var name = $("#dLabel").text()
+            var modelname = $("#devis_lists_text").text();
+            var version = $("#ver").val();
+            var describe = $("#describe").val();
+            var liplists = '', hostnamestr = '';
+            $('.i_lip').each(function () {
+                liplists += $(this).attr('data-lip') + ',';
+                hostnamestr += $(this).attr('data-lname') + ',';
+            });
+            liplists = liplists.substring(0, liplists.length - 1);
+            hostnamestr = hostnamestr.substring(0, hostnamestr.length - 1);
+
+            var _param = {
+                'mode': 'deploy',
+                'name':name,
+                'modelname': modelname,
+                'liplists': liplists,
+                'hostname': hostnamestr,
+                'version': null,
+                'describe': describe
+            };
+            if (_rollback) {//back
+                _param = null;
+                _param = {
+                    'mode': 'rollback',
+                    'name':name,
+                    'modelname': modelname,
+                    'liplists': liplists,
+                    'hostname': hostnamestr,
+                    'version': null,
+                    'describe': null
+                };
+            }
+            $.post("/config_syn/", _param, function (data) {
+
+                if (_rollback) {//back
+                    $('#result_back').html(data);
+                    $('#result_back').show(); //改变display: none
+                    alert("恭喜你回滚成功！！！");
+                } else {
+                    $('#result').html(data);
+                    $('#result').show(); //改变display: none
+                    alert("恭喜你同步成功！！！")
+                }
+
+
+            });
+
+        });
+
+
+    </script>
 
 {% endblock %}
 
