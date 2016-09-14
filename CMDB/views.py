@@ -147,6 +147,8 @@ def config_syn(request):
     return HttpResponse(status1)
 
 
+
+
 def mulfile(request):
     if request.method == 'POST':
         # un = request.POST.get('username')

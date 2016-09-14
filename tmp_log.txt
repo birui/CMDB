@@ -1,5 +1,5 @@
 nginx-crm002 ==>> download  ok
 Tomcat started.
-coohua    4058 40.5  8.7 1166780 52516 pts/0   Sl+  02:33   0:01 /usr/bin/java -Djava.util.logging.config.file=/app/coohua/altair/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.endorsed.dirs=/app/coohua/altair/endorsed -classpath /app/coohua/altair/bin/bootstrap.jar:/app/coohua/altair/bin/tomcat-juli.jar -Dcatalina.base=/app/coohua/altair -Dcatalina.home=/app/coohua/altair -Djava.io.tmpdir=/app/coohua/altair/temp org.apache.catalina.startup.Bootstrap start
+coohua    6200 53.6  9.1 1166780 55508 pts/1   Sl+  02:06   0:01 /usr/bin/java -Djava.util.logging.config.file=/app/coohua/altair/conf/logging.properties -Djava.util.logging.manager=org.apache.juli.ClassLoaderLogManager -Djava.endorsed.dirs=/app/coohua/altair/endorsed -classpath /app/coohua/altair/bin/bootstrap.jar:/app/coohua/altair/bin/tomcat-juli.jar -Dcatalina.base=/app/coohua/altair -Dcatalina.home=/app/coohua/altair -Djava.io.tmpdir=/app/coohua/altair/temp org.apache.catalina.startup.Bootstrap start
 start altair ok 
-  rm webapps-20160802042934
+  rm webapps-20160802043136

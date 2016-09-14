@@ -110,7 +110,7 @@ class iterms(models.Model):
 
 class online(models.Model):
     models_name = models.CharField(blank=True,max_length=20)
-    version = models.FloatField(null=True)
+    version = models.CharField(blank=True,max_length=20)
     describe = models.CharField(blank=True,max_length=250)
     date_time = models.DateTimeField(auto_now_add = True)
 
