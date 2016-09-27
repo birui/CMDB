@@ -7,6 +7,7 @@
 *.err
 *.ini
 *.tar
+*.txt
 settings.py
 mail.py
 zabbix_api.py
