@@ -14,16 +14,36 @@
             style="display:none">
     </select>
 
-    <div class="x_content">
+    <div>
         <div id="devis_lists_text"></div>
-        <br/>
-        <p>Drag multiple files to the box below for multi upload or click to select files. This is for demonstration
-            purposes only, the files are not uploaded to any server.</p>
-        <form method="post" action="/mulfile/" class="dropzone" enctype="multipart/form-data">
-        </form>
-        <br/>
-        <button class="btn btn-danger btn-default btn-file-submit">Submit</button>
+        {#        <br/>#}
+        {#        <p>Drag multiple files to the box below for multi upload or click to select files. This is for demonstration#}
+        {#            purposes only, the files are not uploaded to any server.</p>#}
+        {#        <form method="post" action="list" class="dropzone" enctype="multipart/form-data">#}
+        {#        </form>#}
+        {#        <br/>#}
+        {#        <button class="btn btn-danger btn-default btn-file-submit">Submit</button>#}
+
+
     </div>
+
+        <!-- Upload form. Note enctype attribute! -->
+        <form action="{% url "mulfile" %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>{{ form.non_field_errors }}</p>
+
+            <p>{{ form.docfile.label_tag }} {{ form.docfile.help_text }}</p>
+
+            <p>
+                {{ form.docfile.errors }}
+                {{ form.docfile }}
+            </p>
+
+{#            <p><input class=".btn-file-submit" type="submit" value="Upload"/></p>#}
+                <button class="btn btn-danger btn-default btn-file-submit">Submit</button>
+
+        </form>
+
 
 {% endblock %}
 
@@ -53,8 +73,8 @@
                         $('.online-menu').append(_str);
                         _tr = '', _td = '';
                     }
-{#                                        console.log(groupNameArr);#}
-{#                                        console.log(listsArr)#}
+                    {#                                        console.log(groupNameArr);#}
+                    {#                                        console.log(listsArr)#}
                     {#                    for (var i = 0; i < data.length; i++) {#}
                     {#                        _tr += '<option value="' + data[i].fields.hostname + '">' + data[i].fields.hostname + '</option>';#}
                     {#                    }#}
@@ -107,23 +127,32 @@
             //将hostanme和filename提交给后台
 
             $('.btn-file-submit').on('click', function () {
-                var _hostNameArr = getSelected(), hostnamestr = '', filenameStr = '';
 
-                $('.dz-filename').each(function () {
-                    filenameStr += $(this).text() + ',';
-                });
-                filenameStr = filenameStr.substring(0, filenameStr.length - 1);
+{#                alert('haha')#}
+
+                var _hostNameArr = getSelected(), hostnamestr = '', filenameStr = '';
+{#                alert(_hostNameArr)#}
+
+                var filename = $('#id_docfile').val();
+
+{#                alert(_filename);#}
+
+{#                $('#id_docfile').each(function () {#}
+{#                    filenameStr += $(this).val() + ',';#}
+{#                });#}
+{#                filenameStr = filenameStr.substring(0, filenameStr.length - 1);#}
+
                 for (var i = 0; i < _hostNameArr.length; i++) {
                     hostnamestr += _hostNameArr[i] + ',';
                 }
                 hostnamestr = hostnamestr.substring(0, hostnamestr.length - 1);
-                console.log(hostnamestr);
-                console.log(filenameStr);
+{#                alert(hostnamestr);#}
+{#                alert(filename);#}
                 var _param = {
                     'hostname': hostnamestr,
-                    'filename': filenameStr
+                    'filename': filename,
                 };
-                $.get("/mulfile/", _param, function (data) {
+                $.post("/sendfile/", _param, function (data) {
 
                 });
             });

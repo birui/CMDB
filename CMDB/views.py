@@ -159,18 +159,53 @@ def config_syn(request):
 
 def mulfile(request):
     if request.method == 'POST':
-        # un = request.POST.get('username')
-        hostname = request.POST.get('hostname')
         f = request.POST.get('filename')  # 'uploadfile'与提交表单中input名一致，多个文件参见getlist()
-        print f
-        print hostname
-        filename = '/'.join('/upload/', f)  # 存放内容的目标文件路径
-        print filename
-        with open(filename, 'a+') as keys:
-            for chunk in f.chunks():  # chunks()方法将文件切分成为块(<=2.5M)的迭代对象
-                keys.write(chunk)
+        form = DocumentForm(request.POST, request.FILES)
+        hostname = request.POST.get('hostname')
 
-    return render(request, 'new/mulfile.html', {'pagename': '文件分发'})
+        if form.is_valid():
+            newdoc = Document(docfile=request.FILES['docfile'])
+            newdoc.save()
+            return HttpResponseRedirect(reverse('mulfile'))
+    else:
+        form = DocumentForm()
+
+    documents = Document.objects.all()
+
+
+
+    return render(
+        request,
+        'new/mulfile.html',
+        {'pagename': '文件分发','documents': documents, 'form': form}
+    )
+
+def sendfile(request):
+    if request.method == 'POST':
+        f = request.POST.get('filename')  # 'uploadfile'与提交表单中input名一致，多个文件参见getlist()
+        hostname = request.POST.get('hostname')
+
+        file_e = re.compile(r'\\')
+        d = file_e.split(f)
+        s_filename = d[-1]
+
+        host_e = re.compile(r',')
+        host_d = host_e.split(hostname)
+
+
+        for i in host_d:
+            cmd = 'ansible %s -m copy -a "LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8;src=/tmp/ dest=/tmp/ mode=755 owner=coohua group=coohua' %(host_d,)
+
+
+    else:
+        print('POST ERROR')
+
+    return render(
+        request,
+        'new/mulfile.html',
+        {'pagename': '文件分发'}
+    )
+
 
 
 def mulcomm(request):
@@ -432,9 +467,9 @@ def online_app(request):
         # print modelname
         # print version
         if mode == 'deploy':
-            cmd = '/app/coohua/publish/deploy/deploy.sh %s %s' % (mode, version)
+            cmd = 'LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8;/app/coohua/publish/deploy/deploy.sh %s %s' % (mode, version)
         elif mode == 'rollback':
-            cmd = '/app/coohua/publish/deploy/deploy.sh %s' % (mode)
+            cmd = 'LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8;/app/coohua/publish/deploy/deploy.sh %s' % (mode)
         else:
             print 'ERROR NO ARGUMENT！！'
 
