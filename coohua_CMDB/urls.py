@@ -61,13 +61,14 @@ urlpatterns = [
     url(r'^ajax_config/$', ajax_config),
     url(r'^config_syn/$', config_syn),
     url(r'^backup_config/$', backup_config),
-    url(r'^mulfile/$', mulfile),
+    url(r'^mulfile/$', mulfile,name='mulfile'),
     url(r'^get_modelname/$', get_modelname),
     url(r'^mulcomm/$', mulcomm),
     url(r'^mulshell/$', mulshell),
     url(r'^list/$', list, name='list'),
+    url(r'^sendfile/$',sendfile),
 
-    # url(r'^col/$',online_app.col),
+                  # url(r'^col/$',online_app.col),
     # url(r'^control/(?P<server>[a-z0-9\.]+)/(?P<process>[a-z:_-]+)/(?P<action>[a-z]+)/$',control),
     # url(r'^query/$',query),
 
