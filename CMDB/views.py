@@ -467,9 +467,9 @@ def online_app(request):
         # print modelname
         # print version
         if mode == 'deploy':
-            cmd = 'LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8;/app/coohua/publish/deploy/deploy.sh %s %s' % (mode, version)
+            cmd = '/app/coohua/publish/deploy/deploy.sh %s %s' % (mode, version)
         elif mode == 'rollback':
-            cmd = 'LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8;/app/coohua/publish/deploy/deploy.sh %s' % (mode)
+            cmd = '/app/coohua/publish/deploy/deploy.sh %s' % (mode)
         else:
             print 'ERROR NO ARGUMENT！！'
 
