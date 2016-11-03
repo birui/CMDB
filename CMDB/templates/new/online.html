@@ -327,6 +327,7 @@
         });
 
         $(".btn-online-back").click(function () {
+            $(this).attr("disabled", true);
             var _rollback = Boolean($(this).attr('data-back'));
             console.log(_rollback)
             var modelname = $("#dLabel").text();
