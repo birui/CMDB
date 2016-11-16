@@ -67,8 +67,9 @@ urlpatterns = [
     url(r'^mulshell/$', mulshell),
     url(r'^list/$', list, name='list'),
     url(r'^sendfile/$',sendfile),
+    url(r'^dbsize/$',redis_db),
 
-                  # url(r'^col/$',online_app.col),
+    # url(r'^col/$',online_app.col),
     # url(r'^control/(?P<server>[a-z0-9\.]+)/(?P<process>[a-z:_-]+)/(?P<action>[a-z]+)/$',control),
     # url(r'^query/$',query),
 

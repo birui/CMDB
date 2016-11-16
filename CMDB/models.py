@@ -141,6 +141,14 @@ class Upload(models.Model):
     #注意这里的用户名是FileField类型
     name = models.FileField(upload_to = './upload/')
     username = models.CharField(max_length = 20)
-
     def __str__(self):
         return self.name
+
+class dbsize(models.Model):
+    hostname = models.CharField(max_length=50)
+    bj_ip = models.CharField(max_length=50,blank=True)
+    qd_size = models.IntegerField(blank=True,null=True)
+    bj_size = models.IntegerField(blank=True,null=True)
+
+    def __unicode__(self):
+        return str(self.hostname)

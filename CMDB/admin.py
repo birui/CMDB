@@ -40,6 +40,15 @@ class configAdmin(admin.ModelAdmin):
     list_filter = ('models_name',)
     # 指定要搜索的字段
     search_fields = ('models_name','name',)
+
+class dbsizeAdmin(admin.ModelAdmin):
+    #显示字段
+    list_display = ('hostname', 'bj_ip','qd_size','bj_size')
+    #指定列表过滤器,页面右边
+    list_filter = ('hostname',)
+    # 指定要搜索的字段
+    search_fields = ('hostname','bj_ip',)
+
 #admin里面显示哪些表：
 admin.site.register(Brothers)
 admin.site.register(History)
@@ -50,3 +59,4 @@ admin.site.register(Domain)
 admin.site.register(iterms)
 admin.site.register(online,OlineAdmin)
 admin.site.register(config,configAdmin)
+admin.site.register(dbsize,dbsizeAdmin)

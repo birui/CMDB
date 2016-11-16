@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<button onclick="window.location.reload()"> reloading......</button>
+
+<table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>青岛</th>
+            <th>北京</th>
+            <th>青岛dbsize</th>
+            <th>北京dbsize</th>
+          </tr>
+        <tbody>
+        共 {{ hostname|length }} 个
+        {% for domain1 in hostname %}
+
+        <tr> 
+        <td> {{ domain1.hostname }} </td>  
+        <td> {{ domain1.bj_ip }} </td>
+        <td class="qd_size" > {{ domain1.qd_size }} </td> 
+        <td class="bj_size" > {{ domain1.bj_size }} </td> 
+        </tr>
+
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+$.each($('.qd_size'), function(index){
+      if($(".qd_size").eq(index).text() == $(".bj_size").eq(index).text()) {
+        $(".qd_size").eq(index).css("background","green");$(".bj_size").eq(index).css("background","green");
+      }
+      else{
+        $(".qd_size").eq(index).css("background","red");$(".bj_size").eq(index).css("background","red");
+      }
+    });
+
+</script>
+
+
+
+
+{% endblock %}

@@ -20,6 +20,7 @@ import simplejson
 # from CMDB.backends.server import Server #如果导入不成功touch __init__.py
 from CMDB.backends.backend import Backend
 from CMDB.redis_conn import redis_comm
+from CMDB.dbsize import redis_dbsize
 from xmlrpclib import ServerProxy
 from CMDB.scripts.playbooks.ansicmd import *
 from CMDB.scripts.playbooks.ansiplaybook import *
@@ -664,4 +665,17 @@ def list(request):
         request,
         'upload2.html',
         {'documents': documents, 'form': form}
+    )
+
+def redis_db(request):
+    qd_hostname = dbsize.objects.all()
+    for i in qd_hostname:
+        qd_host=i.hostname
+        redis_db = redis_dbsize(qd_host)
+        redis_db.set_dbsie()
+        #print i.bj_ip
+    return render(
+        request,
+        'dbsize.html',
+        {'hostname': qd_hostname}
     )
