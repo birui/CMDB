@@ -1,6 +1,7 @@
 #coding=utf-8
 import redis 
 import MySQLdb
+import dbsize_config as cfg
 
 class redis_dbsize(object):
 	"""docstring for redis_comm"""
@@ -8,7 +9,10 @@ class redis_dbsize(object):
 		self.qd_host = qd_host
 
 	def get_bj_Ip(self):
-		conn = MySQLdb.connect(host='localhost',user='root',passwd='',db='cmdb',port=3306)
+		print cfg.mysql['host']
+		#conn = MySQLdb.connect(host='localhost',user='root',passwd='',db='cmdb',port=3306)
+		
+		conn = MySQLdb.connect(host=cfg.mysql['host'],user=cfg.mysql['user'],passwd=cfg.mysql['passwd'],db=cfg.mysql['db'],port=cfg.mysql['port'])
 		cur=conn.cursor()
 		cur.execute("select bj_ip from  CMDB_dbsize where hostname='%s' " % self.qd_host)
 		bj_ip = cur.fetchone()
