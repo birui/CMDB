@@ -17,4 +17,4 @@ CMDB/scripts/*
 tmp.txt
 media/*
 CMDB/migrations/*
-*_config
+*_config.py
