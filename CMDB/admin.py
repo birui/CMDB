@@ -43,11 +43,19 @@ class configAdmin(admin.ModelAdmin):
 
 class dbsizeAdmin(admin.ModelAdmin):
     #显示字段
-    list_display = ('hostname', 'bj_ip','qd_size','bj_size')
+    list_display = ('hostname', 'bj_ip','qd_ip','port','qd_size','bj_size',)
     #指定列表过滤器,页面右边
     list_filter = ('hostname',)
     # 指定要搜索的字段
-    search_fields = ('hostname','bj_ip',)
+    search_fields = ('hostname', 'bj_ip','qd_ip',)
+
+class mysql_countAdmin(admin.ModelAdmin):
+    #显示字段
+    list_display = ('table_name', 'bj_table_size','qd_table_size',)
+    #指定列表过滤器,页面右边
+    list_filter = ('table_name',)
+    # 指定要搜索的字段
+    search_fields = ('table_name', 'bj_table_size','qd_table_size',)
 
 #admin里面显示哪些表：
 admin.site.register(Brothers)
@@ -60,3 +68,4 @@ admin.site.register(iterms)
 admin.site.register(online,OlineAdmin)
 admin.site.register(config,configAdmin)
 admin.site.register(dbsize,dbsizeAdmin)
+admin.site.register(mysql_count,mysql_countAdmin)

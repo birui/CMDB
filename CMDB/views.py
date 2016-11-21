@@ -671,7 +671,10 @@ def redis_db(request):
     qd_hostname = dbsize.objects.all()
     for i in qd_hostname:
         qd_host=i.hostname
-        redis_db = redis_dbsize(qd_host)
+        bj_ip = i.bj_ip
+        qd_ip = i.bj_ip
+        port = i.port
+        redis_db = redis_dbsize(qd_host,bj_ip,qd_ip,port)
         redis_db.set_dbsie()
         #print i.bj_ip
     return render(

@@ -146,9 +146,19 @@ class Upload(models.Model):
 
 class dbsize(models.Model):
     hostname = models.CharField(max_length=50)
+    port = models.IntegerField(blank=True,null=True)
     bj_ip = models.CharField(max_length=50,blank=True)
+    qd_ip = models.CharField(max_length=50, blank=True)
     qd_size = models.IntegerField(blank=True,null=True)
     bj_size = models.IntegerField(blank=True,null=True)
 
     def __unicode__(self):
         return str(self.hostname)
+
+class mysql_count(models.Model):
+    table_name = models.CharField(max_length=50)
+    qd_table_size = models.IntegerField(blank=True,null=True)
+    bj_table_size = models.IntegerField(blank=True,null=True)
+
+    def __unicode__(self):
+        return str(self.table_name)
