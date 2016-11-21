@@ -16,5 +16,4 @@ ansicmd.py
 CMDB/scripts/*
 tmp.txt
 media/*
-CMDB/migrations/*
 *_config.py
