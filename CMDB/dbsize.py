@@ -26,6 +26,7 @@ class redis_dbsize(object):
 	def getdbsize_qd(self):
 		r = redis.StrictRedis(self.qd_ip, self.port)
 		a=r.dbsize()
+		# print r
 		if a :
 			return a
 		else:
@@ -36,6 +37,7 @@ class redis_dbsize(object):
 		#bj_ip=self.get_bj_Ip()[0]
 		r = redis.StrictRedis(self.bj_ip, self.port)
 		a=r.dbsize()
+		# print r
 		if a :
 			return a
 		else:
