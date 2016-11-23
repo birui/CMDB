@@ -47,11 +47,12 @@ class redis_dbsize(object):
 	def set_dbsie(self):
 		qd = self.getdbsize_qd()
 		bj = self.getdbsize_bj()
-		# print qd,bj,self.qd_host
-		update_db = """ update CMDB_dbsize set qd_size = %s ,bj_size = %s where hostname = %s """
+		diff = qd - bj
+		# print qd,bj,diff 
+		update_db = """ update CMDB_dbsize set qd_size = %s ,bj_size = %s ,diff_size = %s where hostname = %s """
 		conn = MySQLdb.connect(host=cfg.mysql['host'],user=cfg.mysql['user'],passwd=cfg.mysql['passwd'],db=cfg.mysql['db'],port=cfg.mysql['port'])
 		cur=conn.cursor()
-		cur.execute(update_db,[qd,bj,self.qd_host])
+		cur.execute(update_db,[qd,bj,diff,self.qd_host])
 		conn.commit()
 		cur.close()
 		conn.close()

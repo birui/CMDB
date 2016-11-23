@@ -34,7 +34,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
 from django.core.files.storage import FileSystemStorage
-
+from CMDB.mysql_count import mysql_tbsize
 
 sup_backend = Backend()
 
@@ -681,4 +681,18 @@ def redis_db(request):
         request,
         'dbsize.html',
         {'hostname': qd_hostname}
+    )
+
+def mysql_db(request):
+    mysql_database_name = mysql_count.objects.all()
+    for i in mysql_database_name:
+        db_name = i.database_name
+        tb_name = i.table_name
+        mysql_db = mysql_tbsize(db_name,tb_name)
+        mysql_db.set_dbsie()
+
+    return render(
+        request,
+        'mysqlsize.html',
+        {'mysql_database': mysql_database_name}
     )

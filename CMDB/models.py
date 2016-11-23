@@ -143,16 +143,19 @@ class dbsize(models.Model):
     port = models.IntegerField(blank=True,null=True)
     bj_ip = models.CharField(max_length=50,blank=True)
     qd_ip = models.CharField(max_length=50, blank=True)
-    qd_size = models.IntegerField(blank=True,null=True)
-    bj_size = models.IntegerField(blank=True,null=True)
+    qd_size = models.IntegerField(blank=True,null=True,default=0)
+    bj_size = models.IntegerField(blank=True,null=True,default=0)
+    diff_size = models.IntegerField(blank=True, null=True,default=0)
 
     def __unicode__(self):
         return str(self.hostname)
 
 class mysql_count(models.Model):
+    database_name = models.CharField(max_length=50)
     table_name = models.CharField(max_length=50)
-    qd_table_size = models.IntegerField(blank=True,null=True)
-    bj_table_size = models.IntegerField(blank=True,null=True)
+    qd_table_size = models.IntegerField(blank=True,null=True,default=0)
+    bj_table_size = models.IntegerField(blank=True,null=True,default=0)
+    diff_size = models.IntegerField(blank=True, null=True,default=0)
 
     def __unicode__(self):
         return str(self.table_name)

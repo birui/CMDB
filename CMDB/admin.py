@@ -51,7 +51,7 @@ class dbsizeAdmin(admin.ModelAdmin):
 
 class mysql_countAdmin(admin.ModelAdmin):
     #显示字段
-    list_display = ('table_name', 'bj_table_size','qd_table_size',)
+    list_display = ('database_name','table_name', 'bj_table_size','qd_table_size',)
     #指定列表过滤器,页面右边
     list_filter = ('table_name',)
     # 指定要搜索的字段
