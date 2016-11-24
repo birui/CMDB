@@ -44,15 +44,28 @@ class redis_dbsize(object):
 			print "a is null"
 			return 0
 
+	def status_bj(self):
+		#bj_ip=self.get_bj_Ip()[0]
+		r = redis.StrictRedis(self.bj_ip, self.port)
+		a = r.info('Replication')['role']
+		self.status = a
+		# print r
+		if a :
+			return a
+		else:
+			print "a is null"
+			return 0
+
 	def set_dbsie(self):
 		qd = self.getdbsize_qd()
 		bj = self.getdbsize_bj()
+		bj_status = self.status_bj()
 		diff = qd - bj
 		# print qd,bj,diff 
-		update_db = """ update CMDB_dbsize set qd_size = %s ,bj_size = %s ,diff_size = %s where hostname = %s """
+		update_db = """ update CMDB_dbsize set qd_size = %s ,bj_size = %s ,diff_size = %s ,bj_status = %s where hostname = %s """
 		conn = MySQLdb.connect(host=cfg.mysql['host'],user=cfg.mysql['user'],passwd=cfg.mysql['passwd'],db=cfg.mysql['db'],port=cfg.mysql['port'])
 		cur=conn.cursor()
-		cur.execute(update_db,[qd,bj,diff,self.qd_host])
+		cur.execute(update_db,[qd,bj,diff,bj_status,self.qd_host])
 		conn.commit()
 		cur.close()
 		conn.close()
@@ -60,7 +73,8 @@ class redis_dbsize(object):
 
 
     	
-# test = redis_dbsize('redis-altair001')
+# test = redis_dbsize('redis-altair001','123.56.11.110','115.28.108.0',6379)
+# test.setslave_bj()
 # test.set_dbsie()
 # qindao_size=test.getdbsize_qd()
 # beijing_size=test.getdbsize_bj()

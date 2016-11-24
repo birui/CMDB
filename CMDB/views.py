@@ -688,6 +688,7 @@ def mysql_db(request):
     for i in mysql_database_name:
         db_name = i.database_name
         tb_name = i.table_name
+        print db_name ,tb_name
         mysql_db = mysql_tbsize(db_name,tb_name)
         mysql_db.set_dbsie()
 
