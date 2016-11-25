@@ -43,7 +43,7 @@ class configAdmin(admin.ModelAdmin):
 
 class dbsizeAdmin(admin.ModelAdmin):
     #显示字段
-    list_display = ('hostname', 'bj_ip','qd_ip','port','qd_size','bj_size',)
+    list_display = ('hostname', 'bj_ip','qd_ip','qd_s_ip','port','qd_size','bj_size',)
     #指定列表过滤器,页面右边
     list_filter = ('hostname',)
     # 指定要搜索的字段
