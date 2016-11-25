@@ -690,9 +690,8 @@ def mysql_db(request):
         db_name = i.database_name
         tb_name = i.table_name
         print db_name ,tb_name
-        mysql_db = mysql_tbsize(db_name,tb_name)
-        mysql_db.set_dbsie()
-
+        # mysql_db = mysql_tbsize(db_name,tb_name)
+        # mysql_db.set_dbsie()
     return render(
         request,
         'mysqlsize.html',
