@@ -34,7 +34,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
 from django.core.files.storage import FileSystemStorage
-from CMDB.mysql_count import mysql_tbsize
+#from CMDB.mysql_count import mysql_tbsize
 
 sup_backend = Backend()
 

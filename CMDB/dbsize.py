@@ -9,7 +9,7 @@ class redis_dbsize(object):
 		self.qd_host = qd_host
 		self.bj_ip = bj_ip
 		self.qd_ip = qd_ip
-		self.qd_s_ip = qd_ip
+		self.qd_s_ip = qd_s_ip
 		self.port = port
 
 	# def get_bj_Ip(self):
@@ -38,6 +38,8 @@ class redis_dbsize(object):
 		try:
 			r = redis.StrictRedis(self.qd_s_ip, self.port)
 			a=r.dbsize()
+			print a
+			print self.qd_s_ip
 		except Exception as e:
 			return 0
 			print "a is null %s" %(e)
@@ -77,7 +79,7 @@ class redis_dbsize(object):
 		bj = self.getdbsize_bj()
 		bj_status = self.status_bj()
 		diff = qd - bj
-		print qd,bj,diff 
+		print qd_s,qd,bj,diff 
 		update_db = """ update CMDB_dbsize set qd_size = %s ,qd_s_size = %s ,bj_size = %s ,diff_size = %s ,bj_status = %s where hostname = %s """
 		try:
 			conn = MySQLdb.connect(host=cfg.mysql['host'],user=cfg.mysql['user'],passwd=cfg.mysql['passwd'],db=cfg.mysql['db'],port=cfg.mysql['port'])

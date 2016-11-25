@@ -69,7 +69,7 @@ def op():
 	except MySQLdb.Error,e:
 		print "Mysql Error %d: %s" % (e.args[0], e.args[1])
 
-op()	
+#op()
     	
 # test = mysql_tbsize('crm', 'tb_application')
 # test.op()
