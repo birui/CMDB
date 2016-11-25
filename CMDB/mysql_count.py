@@ -50,11 +50,32 @@ class mysql_tbsize(object):
 			conn.close()
 		except MySQLdb.Error,e:
 			print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+
+
+def op():
+	try:
+		conn = MySQLdb.connect(host=cfg.mysql['host'],user=cfg.mysql['user'],passwd=cfg.mysql['passwd'],db=cfg.mysql['db'],port=cfg.mysql['port'])
+		cur=conn.cursor()
+		cur.execute("select database_name,table_name from CMDB_mysql_count;")
+		db_num=cur.fetchall()
+		for x in db_num:
+			db_name = x[0]
+			tb_name = x[1]
+			print db_name ,tb_name
+			table_size_rsyn=mysql_tbsize(db_name,tb_name)
+			table_size_rsyn.set_dbsie()
+		cur.close()
+		conn.close()
+	except MySQLdb.Error,e:
+		print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+
+op()	
     	
-test = mysql_tbsize('crm', 'tb_application')
-#test.set_dbsie()
-qindao_size=test.getdbsize_qd()
-#beijing_size=test.getdbsize_bj()
-print qindao_size
+# test = mysql_tbsize('crm', 'tb_application')
+# test.op()
+# #test.set_dbsie()
+# qindao_size=test.getdbsize_qd()
+# #beijing_size=test.getdbsize_bj()
+# print qindao_size
 
 

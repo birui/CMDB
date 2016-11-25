@@ -6,6 +6,7 @@
 <table class="table table-hover table-bordered">
         <thead>
           <tr>
+            <th>databases</th>
             <th>tables</th>
             <th>青岛count</th>
             <th>北京count</th>
@@ -17,6 +18,7 @@
         {% for domain1 in mysql_database %}
 
         <tr> 
+        <td> {{ domain1.database_name }} </td>
         <td> {{ domain1.table_name }} </td>  
         <td class="qd_size" > {{ domain1.qd_table_size }} </td> 
         <td class="bj_size" > {{ domain1.bj_table_size }} </td> 
