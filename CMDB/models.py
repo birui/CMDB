@@ -144,6 +144,7 @@ class dbsize(models.Model):
     bj_ip = models.CharField(max_length=50,blank=True)
     qd_ip = models.CharField(max_length=50, blank=True)
     qd_s_ip = models.CharField(max_length=50, blank=True,default=0)
+    qd_s_wip = models.CharField(max_length=50, blank=True, default=0)
     qd_s_size = models.CharField(max_length=50, blank=True,default=0)
     qd_size = models.IntegerField(blank=True,null=True,default=0)
     bj_size = models.IntegerField(blank=True,null=True,default=0)
