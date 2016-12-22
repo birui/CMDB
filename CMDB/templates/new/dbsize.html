@@ -1,0 +1,57 @@
+{% extends "new/base.html" %}
+
+{% block content %}
+
+
+<table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>青岛</th>
+            <th>北京</th>
+            <th>青岛dbsize</th>
+            <th>青岛slave-dbsize</th>
+            <th>北京dbsize</th>
+            <th>difference</th>
+            <th>北京status</th>
+            
+          </tr>
+        <tbody>
+        共 {{ hostname|length }} 个 
+        <button onclick="window.location.reload()"> reload......</button><br>
+        {% for domain1 in hostname %}
+
+        <tr> 
+        <td> {{ domain1.hostname }} </td>  
+        <td> {{ domain1.bj_ip }} </td>
+        <td class="qd_size" > {{ domain1.qd_size }} </td> 
+        <td class="qd_s_size" > {{ domain1.qd_s_size }} </td> 
+        <td class="bj_size" > {{ domain1.bj_size }} </td> 
+        <td> {{ domain1.diff_size }} </td> 
+        <td> {{ domain1.bj_status }} </td> 
+        
+
+        </tr>
+
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+$.each($('.qd_size'), function(index){
+      if($(".qd_size").eq(index).text() == $(".bj_size").eq(index).text()) {
+        $(".qd_size").eq(index).css("background","green");$(".bj_size").eq(index).css("background","green");$(".qd_s_size").eq(index).css("background","green");
+      }
+      else{
+        $(".qd_size").eq(index).css("background","red");$(".bj_size").eq(index).css("background","red");$(".qd_s_size").eq(index).css("background","red");
+      }
+    });
+
+</script>
+
+
+
+
+{% endblock %}

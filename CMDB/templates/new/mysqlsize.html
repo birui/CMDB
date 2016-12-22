@@ -1,0 +1,50 @@
+{% extends "new/base.html" %}
+
+{% block content %}
+
+
+<table class="table table-hover table-bordered">
+        <thead>
+          <tr>
+            <th>databases</th>
+            <th>tables</th>
+            <th>青岛count</th>
+            <th>北京count</th>
+            <th>difference</th>
+          </tr>
+        <tbody>
+        共 {{ mysql_database|length }} 个 
+        <button onclick="window.location.reload()"> reload......</button><br>
+        {% for domain1 in mysql_database %}
+
+        <tr> 
+        <td> {{ domain1.database_name }} </td>
+        <td> {{ domain1.table_name }} </td>  
+        <td class="qd_size" > {{ domain1.qd_table_size }} </td> 
+        <td class="bj_size" > {{ domain1.bj_table_size }} </td> 
+        <td> {{ domain1.diff_size }} </td> 
+        </tr>
+
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+$.each($('.qd_size'), function(index){
+      if($(".qd_size").eq(index).text() == $(".bj_size").eq(index).text()) {
+        $(".qd_size").eq(index).css("background","green");$(".bj_size").eq(index).css("background","green");
+      }
+      else{
+        $(".qd_size").eq(index).css("background","red");$(".bj_size").eq(index).css("background","red");
+      }
+    });
+
+</script>
+
+
+
+
+{% endblock %}

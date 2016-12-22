@@ -10,6 +10,7 @@ from django.contrib import auth
 import json
 import re
 import time
+import urllib2
 from django.core import serializers
 import urllib2
 from django.http import JsonResponse
@@ -20,7 +21,7 @@ import simplejson
 # from CMDB.backends.server import Server #如果导入不成功touch __init__.py
 from CMDB.backends.backend import Backend
 from CMDB.redis_conn import redis_comm
-from CMDB.dbsize import redis_dbsize
+from CMDB.redis_rsync.dbsize import redis_dbsize
 from xmlrpclib import ServerProxy
 from CMDB.scripts.playbooks.ansicmd import *
 from CMDB.scripts.playbooks.ansiplaybook import *
@@ -34,7 +35,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
 from django.core.files.storage import FileSystemStorage
-#from CMDB.mysql_count import mysql_tbsize
+from CMDB.mysql_rsync.mysql_count import *
 
 sup_backend = Backend()
 
@@ -675,12 +676,12 @@ def redis_db(request):
         qd_ip = i.qd_ip
         qd_s_ip = i.qd_s_ip
         port = i.port
-        redis_db = redis_dbsize(qd_host,bj_ip,qd_ip,qd_s_ip,port)
-        redis_db.set_dbsie()
+        #redis_db = redis_dbsize(qd_host,bj_ip,qd_ip,qd_s_ip,port)
+        #redis_db.set_dbsie()
         #print i.bj_ip
     return render(
         request,
-        'dbsize.html',
+        'new/dbsize.html',
         {'hostname': qd_hostname}
     )
 
@@ -694,6 +695,26 @@ def mysql_db(request):
         # mysql_db.set_dbsie()
     return render(
         request,
-        'mysqlsize.html',
+        'new/mysqlsize.html',
         {'mysql_database': mysql_database_name}
     )
+def weixin_test(request):
+    return render(
+        request,
+        'weixin/weixin_test.html',
+    )
+def weixin_check(request):
+    domain = request.GET['a']
+    response = urllib2.urlopen("http://wx.mecnss.top/wx2.php?url=%s" %(domain))
+    status = response.read()
+    print status
+    if status == '0':
+        result = '屏蔽，域名在微信中无法访问'
+    elif status == '1':
+        result = '域名可以正常访问'
+    elif status == '2':
+        result = '域名可以正常访问 但是在网页版微信中会有提示'
+    elif status == '3':
+        result = '会提示 如需浏览，请长按网址复制后使用浏览器访问 如淘宝等网站'
+
+    return HttpResponse(result)
