@@ -704,17 +704,26 @@ def weixin_test(request):
         'weixin/weixin_test.html',
     )
 def weixin_check(request):
-    domain = request.GET['a']
-    response = urllib2.urlopen("http://wx.mecnss.top/wx2.php?url=%s" %(domain))
-    status = response.read()
-    print status
-    if status == '0':
-        result = '屏蔽，域名在微信中无法访问'
-    elif status == '1':
-        result = '域名可以正常访问'
-    elif status == '2':
-        result = '域名可以正常访问 但是在网页版微信中会有提示'
-    elif status == '3':
-        result = '会提示 如需浏览，请长按网址复制后使用浏览器访问 如淘宝等网站'
 
+    domain = request.GET['a']
+    domain_status = {}
+    p = re.compile(r'\n')
+    domain_list = p.split(domain)
+    print domain_list
+    for i in domain_list:
+        print i
+        response = urllib2.urlopen("http://wx.mecnss.top/wx2.php?url=%s" %(i))
+        status = response.read()
+        print status
+        if status == '0':
+            domain_status[i] = '屏蔽，域名在微信中无法访问'
+        elif status == '1':
+            domain_status[i] = '域名可以正常访问'
+        elif status == '2':
+            domain_status[i] = '域名可以正常访问 但是在网页版微信中会有提示'
+        elif status == '3':
+            domain_status[i] = '会提示 如需浏览，请长按网址复制后使用浏览器访问 如淘宝等网站'
+
+    result = json.dumps(domain_status)
+    print result
     return HttpResponse(result)
