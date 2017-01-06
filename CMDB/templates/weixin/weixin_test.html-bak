@@ -19,10 +19,18 @@
 
 <script>
     $(document).ready(function(){
-      $("#sum").click(function(){
-        var a = $("#a").val(); 
-        $.get("/weixin_check/",{'a':a}, function(ret){ //提交给add 数据a，b；获得的数据命名为ret
-            $('#result').html(ret)
+
+        var i = 0;
+        $("#sum").click(function(){
+        i++;
+        var a = $("#a").val();
+        $.get("/weixin_check/",{'a':a}, function(ret){
+            if(i % 2 == 0) {
+                $('#result').html(ret).css('color', 'red');
+            }else {
+                $('#result').html(ret).css('color', 'black');
+            }
+
         })
       });
     });
