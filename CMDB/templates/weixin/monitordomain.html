@@ -1,0 +1,68 @@
+{% extends "weixin/base_migrite.html" %}
+{% block content %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<body>
+<h4>渠道设置</h4>
+
+<br>
+<br>
+<style>.readonly input{border:none}</style>
+
+<table class="table table-striped">
+        <thead>
+          <tr>
+            <th>url</th>
+            <th>状态</th>
+            <th>时间</th>
+            <th>备注</th>
+            <th>操作</th>
+
+          </tr>
+        <tbody>
+        {% for last_value in ck_domain %}
+
+        <tr> 
+        <td> 
+          <div id="dvInput" class="readonly">
+            <input type="text" readonly value= {{ last_value.url }} name="url"  class="readonly" />
+          </div>
+        </td>
+        <td> {{ last_value.weixin_status }} </td>  
+        <td> {{ last_value.last_date }} </td>  
+        <td> 
+          <div id="dvInput" class="readonly">
+            <input type="text" readonly value= {{ last_value.remark }} name="remark" class="readonly" />
+          </div>
+        </td>
+        <td> <input type="button" value="编辑" onclick="btnClick(this)" />  <button>删除</button>  <button>提交</button> </td>    
+
+        {% endfor %}
+        </tbody>
+</table>
+
+
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.js"></script>
+
+
+<script>
+
+      function btnClick(btn) {
+        var toEdit = btn.value == '编辑';
+        $('#dvInput')[toEdit ? 'removeClass' : 'addClass']('readonly').find(':input').attr('readonly', toEdit ? false : true);
+        btn.value = toEdit ? '保存' : '编辑';
+        if (!toEdit) {//保存的ajax代码
+            //..
+        }
+      }
+
+ </script>
+</body>
+</html>
+{% endblock %}
+
+
+

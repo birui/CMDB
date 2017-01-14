@@ -1,0 +1,130 @@
+{% extends "weixin/base_migrite.html" %}
+{% block content %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<body>
+<h4>渠道设置</h4>
+
+<br>
+<br>
+
+ <form class="form-horizontal" method="post" role="form">
+  <div class="form-group">
+    <label for="inputText" class="col-sm-2 control-label">前一天整点新增大于</label>
+    <div class="col-sm-2 control-label">
+      <input type="text" class="form-control" name="a" id="a" placeholder="Text input">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputText" class="col-sm-2 control-label">今天整点新增低于前天%</label>
+    <div class="col-sm-2 control-label">
+      <input type="text" class="form-control" name="b" id="b" placeholder="Text input">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputText" class="col-sm-2 control-label">前一天新增大于</label>
+    <div class="col-sm-2 control-label">
+      <input type="text" class="form-control" name="c" id="c" placeholder="Text input">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputText" class="col-sm-2 control-label">今天新增低于前天%</label>
+    <div class="col-sm-2 control-label">
+      <input type="text" class="form-control" name="d" id="d" placeholder="Text input">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-1 col-sm-2">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-offset-1 col-sm-2">
+      <button type="submit" class="btn btn-default" id='sum'>提交</button>
+    </div>
+  </div>
+  <button type="button" id="b1" style="visibility: hidden;"></button>
+  <button type="button" id="b2" style="visibility: hidden;"></button>
+
+</form>
+
+<h5> 历史数据: </h5>
+<table class="table table-striped">
+        <thead>
+          <tr>
+            <th>a</th>
+            <th>b</th>
+            <th>x</th>
+            <th>y</th>
+            <th>date</th>
+
+          </tr>
+        <tbody>
+        {% for last_value in last_ten %}
+
+        <tr> 
+        <td> {{ last_value.date_a }} </td>
+        <td> {{ last_value.date_b }}</td>  
+        <td> {{ last_value.hourly_x }} </td>  
+        <td> {{ last_value.hourly_y }} </td> 
+        <td> {{ last_value.date_time }} </td> 
+       
+
+        {% endfor %}
+        </tbody>
+</table>
+
+
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+
+        var i = 0;
+        $("#sum").click(function(){
+        // i++;
+        var a = $("#a").val();
+        var b = $("#b").val();
+        var c = $("#c").val();
+        var d = $("#d").val();
+
+        $.post("/chanell_check/",{'a':a,'b':b,'c':c,'d':d}, function(data){
+
+            console.log(data)
+            
+            data = $.parseJSON(data); 
+
+            console.log(data)
+        })
+      });
+
+      $('#b1').on('click', function() {
+        $.get("/chanell_get/",{}, function(data){
+          data = JSON.parse(data);
+          console.log(data);
+
+          $("#a").val(data[0].fields.hourly_x);
+          $("#b").val(data[0].fields.hourly_y);
+          $("#c").val(data[0].fields.date_a);
+          $("#d").val(data[0].fields.date_b);
+        })
+      });
+
+      $('#b1').click();
+
+    });
+
+ </script>
+</body>
+</html>
+{% endblock %}
+
+
+

@@ -163,3 +163,32 @@ class mysql_count(models.Model):
 
     def __unicode__(self):
         return str(self.table_name)
+
+class chanell_data(models.Model):
+    hourly_x = models.IntegerField(blank=True,null=True)
+    hourly_y = models.IntegerField(blank=True,null=True)
+    date_a = models.IntegerField(blank=True,null=True)
+    date_b = models.IntegerField(blank=True,null=True)
+    date_time = models.DateTimeField(auto_now_add = True)
+    def __unicode__(self):
+        return str(self.id)
+
+class share_domain(models.Model):
+    domain_name = models.CharField(max_length=100)
+    reg_date = models.CharField(max_length=50,blank=True)
+    last_date = models.CharField(max_length=50,blank=True)
+    #0正常,1被封
+    weixin_status = models.IntegerField(blank=True,null=True)
+    deny_date = models.CharField(max_length=50,blank=True)
+    use_date = models.CharField(max_length=50,blank=True)
+    def __unicode__(self):
+        return str(self.domain_name)
+
+class monitordomain(models.Model):
+    url = models.CharField(max_length=100)
+    #1正常,-1被封
+    weixin_status = models.IntegerField(blank=True,null=True)
+    remark = models.CharField(max_length=200)
+    last_date = models.DateTimeField(auto_now_add = True)
+    def __unicode__(self):
+        return str(self.id)

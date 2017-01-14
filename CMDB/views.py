@@ -25,6 +25,7 @@ from CMDB.redis_rsync.dbsize import redis_dbsize
 from xmlrpclib import ServerProxy
 from CMDB.scripts.playbooks.ansicmd import *
 from CMDB.scripts.playbooks.ansiplaybook import *
+from CMDB.scripts.weixin.weixin import *
 from django.views.generic import ListView
 from django.views.generic import View
 from django.core.files import File
@@ -704,26 +705,148 @@ def weixin_test(request):
         'weixin/weixin_test.html',
     )
 def weixin_check(request):
-
     domain = request.GET['a']
     domain_status = {}
     p = re.compile(r'\n')
     domain_list = p.split(domain)
+    sharedomain = check_share_domain()
     print domain_list
     for i in domain_list:
-        print i
-        response = urllib2.urlopen("http://wx.mecnss.top/wx2.php?url=%s" %(i))
-        status = response.read()
-        print status
-        if status == '0':
-            domain_status[i] = '屏蔽，域名在微信中无法访问'
-        elif status == '1':
-            domain_status[i] = '域名可以正常访问'
-        elif status == '2':
-            domain_status[i] = '域名可以正常访问 但是在网页版微信中会有提示'
-        elif status == '3':
-            domain_status[i] = '会提示 如需浏览，请长按网址复制后使用浏览器访问 如淘宝等网站'
-
+        status = sharedomain.weixin_domain(i)
+        status = json.loads(status)
+        domain_status[i] = status['msg']
     result = json.dumps(domain_status)
-    print result
     return HttpResponse(result)
+
+def chanell(request):
+    return render(
+        request,
+        'weixin/chanell.html',
+    )
+#====chanell 接口========
+def chanell_get(request):
+    chanell_v = chanell_data.objects.all()
+    sid = str(chanell_data.objects.last())
+    jsondata = serializers.serialize("json", chanell_v.filter(id=sid))
+    return HttpResponse(jsondata)
+
+
+def chanell_check(request):
+    chanell_v = chanell_data.objects.all()
+    data_v = ''
+
+    if request.method == 'POST':
+        a = request.POST.get('a')
+        b = request.POST.get('b')
+        c = request.POST.get('c')
+        d = request.POST.get('d')
+        # print a,b,c,d
+        data_v = chanell_data(hourly_x=a, hourly_y=b, date_a=c, date_b=d)
+        data_v.save()
+    return HttpResponse('OK')
+
+def chanell_history(request):
+    chanell_v = chanell_data.objects.all()
+    print chanell_v
+    last_id = chanell_data.objects.last()
+    last_ten = []
+    last_id = str(last_id)
+    last_id = int(last_id)
+    # print last_id
+
+    for i in range(int(last_id) - 10,last_id + 1):
+        i = int(i)
+        # last_data = chanell_data.objects.filter(id=i)
+        jsondata = serializers.serialize("json", chanell_v.filter(id=i))
+
+        json_nc = json.loads(jsondata)
+        json_data = json_nc[0]['fields']
+        print json_data
+        last_ten.append(json_data)
+
+    return render(
+        request,
+        'weixin/chanell.html',
+        {'last_ten': last_ten}
+    )
+#=====10个微信域名===========
+def get_share_domain_list(request):
+    status_0 = {'status': 0}
+    try:
+        ten_domain = check_share_domain()
+        domain_lists = ten_domain.get_ten_domain()
+        # print domain_lists
+    except Exception, e:
+        return HttpResponse(json.dumps(status_0))
+    else:
+        return HttpResponse(json.dumps(domain_lists))
+#=====已经使用域名===========
+def usedomain(request):
+    #http://127.0.0.1:8000/usedomain/?domain=coohua.cn
+    domain = request.GET['domain']
+    status_1 = {'status':1}
+    status_0 = {'status': 0}
+    try:
+        set_domain = check_share_domain()
+        res = set_domain.set_used_domain(domain)
+        print res
+    except:
+        return HttpResponse(json.dumps(status_0))
+    else:
+        if res == 1:
+            return HttpResponse(json.dumps(status_1))
+        else:
+            return HttpResponse(json.dumps(status_0))
+#=====检测接口===========
+def checkdomain(request):
+    # http://127.0.0.1:8000/checkdomain/?domain=coohua.cn
+    domain = request.GET['domain']
+    sharedomain = check_share_domain()
+    res = sharedomain.weixin_domain(domain)
+    return HttpResponse(res)
+
+#=======报警接口=======
+
+def send_message(request):
+    #http://127.0.0.1:8000/send/?con=hshshshshshs
+    content = request.GET['con']
+    status_1 = {'status': 1}
+    status_0 = {'status': 0}
+    sharedomain = check_share_domain()
+
+    mailbox = [
+        'birui@coohua.com',
+        'op@coohua.com',
+    ]
+    subject = '渠道分享信息'
+
+    for i in mailbox:
+        print i
+        sharedomain.sendqqmail(i,subject,content)
+
+    mobile_number = [
+        '18600046769',
+    ]
+
+    for i in mobile_number:
+        sharedomain.send_sms(i,content)
+
+    return HttpResponse(json.dumps(status_1))
+
+def monitor_domain(request):
+    monitordomain_v = monitordomain.objects.all()
+    l_domain = []
+    print monitordomain_v
+    for i in monitordomain_v:
+        print i
+        i = str(i)
+        jsondata = serializers.serialize("json", monitordomain_v.filter(id=i))
+        json_nc = json.loads(jsondata)
+        json_data = json_nc[0]['fields']
+        print json_data
+        l_domain.append(json_data)
+    return render(
+        request,
+        'weixin/monitordomain.html',
+        {'ck_domain': l_domain}
+    )

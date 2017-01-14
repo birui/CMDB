@@ -57,6 +57,22 @@ class mysql_countAdmin(admin.ModelAdmin):
     # 指定要搜索的字段
     search_fields = ('table_name', 'bj_table_size','qd_table_size',)
 
+class share_domain_show(admin.ModelAdmin):
+    #显示字段
+    list_display = ('domain_name','reg_date', 'last_date','weixin_status','deny_date','use_date')
+    #指定列表过滤器,页面右边
+    list_filter = ('domain_name',)
+    # 指定要搜索的字段
+    search_fields = ('domain_name', 'reg_date','weixin_status',)
+
+class nmonitordomain_show(admin.ModelAdmin):
+    #显示字段
+    list_display = ('url','weixin_status', 'last_date','weixin_status','remark')
+    #指定列表过滤器,页面右边
+    list_filter = ('url',)
+    # 指定要搜索的字段
+    search_fields = ('url', 'last_date','weixin_status',)
+
 #admin里面显示哪些表：
 admin.site.register(Brothers)
 admin.site.register(History)
@@ -69,3 +85,5 @@ admin.site.register(online,OlineAdmin)
 admin.site.register(config,configAdmin)
 admin.site.register(dbsize,dbsizeAdmin)
 admin.site.register(mysql_count,mysql_countAdmin)
+admin.site.register(share_domain,share_domain_show)
+admin.site.register(monitordomain,nmonitordomain_show)
