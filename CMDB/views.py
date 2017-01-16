@@ -724,6 +724,7 @@ def chanell(request):
         'weixin/chanell.html',
     )
 #====chanell 接口========
+
 def chanell_get(request):
     chanell_v = chanell_data.objects.all()
     sid = str(chanell_data.objects.last())
@@ -835,18 +836,11 @@ def send_message(request):
 
 def monitor_domain(request):
     monitordomain_v = monitordomain.objects.all()
-    l_domain = []
-    print monitordomain_v
-    for i in monitordomain_v:
-        print i
-        i = str(i)
-        jsondata = serializers.serialize("json", monitordomain_v.filter(id=i))
-        json_nc = json.loads(jsondata)
-        json_data = json_nc[0]['fields']
-        print json_data
-        l_domain.append(json_data)
+    jsondata = serializers.serialize("json", monitordomain_v)
+    json_nc = json.loads(jsondata)
+
     return render(
         request,
         'weixin/monitordomain.html',
-        {'ck_domain': l_domain}
+        {'ck_domain': json_nc}
     )

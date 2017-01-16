@@ -26,18 +26,18 @@
 
         <tr> 
         <td> 
-          <div id="dvInput" class="readonly">
-            <input type="text" readonly value= {{ last_value.url }} name="url"  class="readonly" />
+          <div class="readonly dvInput_{{last_value.pk}}">
+            <input type="text" readonly value= {{ last_value.fields.url }} name="url"  class="readonly" />
           </div>
         </td>
-        <td> {{ last_value.weixin_status }} </td>  
-        <td> {{ last_value.last_date }} </td>  
+        <td class="wei_st" > {{ last_value.fields.weixin_status }} </td>  
+        <td> {{ last_value.fields.last_date }} </td>  
         <td> 
-          <div id="dvInput" class="readonly">
-            <input type="text" readonly value= {{ last_value.remark }} name="remark" class="readonly" />
+          <div class="readonly dvInput_{{last_value.pk}}">
+            <input type="text" readonly value= {{ last_value.fields.remark }} name="remark" class="readonly" />
           </div>
         </td>
-        <td> <input type="button" value="编辑" onclick="btnClick(this)" />  <button>删除</button>  <button>提交</button> </td>    
+        <td> <input type="button" value="编辑" class="dvInput_btn dvInput_btn_{{last_value.pk}}" />  <button>删除</button>  </td>    
 
         {% endfor %}
         </tbody>
@@ -47,22 +47,33 @@
 <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.js"></script>
 
-
 <script>
-
-      function btnClick(btn) {
-        var toEdit = btn.value == '编辑';
-        $('#dvInput')[toEdit ? 'removeClass' : 'addClass']('readonly').find(':input').attr('readonly', toEdit ? false : true);
-        btn.value = toEdit ? '保存' : '编辑';
-        if (!toEdit) {//保存的ajax代码
-            //..
-        }
+  $.each($('.dvInput_btn'), function(index, value) {
+    $('.dvInput_btn').eq(index).on('click', function() {
+      var toEdit = $(this).val();
+      $('.dvInput_'+(index+1))[$(this).val() == '编辑' ? 'removeClass' : 'addClass']('readonly').find(':input').attr('readonly', $(this).val() == '编辑' ? false : true);
+      $(this).val() == '编辑' ? $(this).val('保存') : $(this).val('编辑');
+      if ($(this).val() == '编辑') {//保存的ajax代码
+          console.log(111)
       }
+    });
+  })
+
+  $.each($('.wei_st'), function(index, value) {
+    // console.log(index);
+    // console.log($('.wei_st').eq(index).text().indexOf(1))
+    if($('.wei_st').eq(index).text().indexOf('-1') != -1){
+        $('.wei_st').eq(index).css("color", "red").text("被封");
+    }else {
+        $('.wei_st').eq(index).css("color", "green").text("正常");
+    }
+})
 
  </script>
 </body>
 </html>
 {% endblock %}
+
 
 
 
