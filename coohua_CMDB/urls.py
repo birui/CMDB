@@ -80,14 +80,8 @@ urlpatterns = [
     url(r'^checkdomain/$', checkdomain),
     url(r'^send/$', send_message),
     url(r'^monitordomain/$', monitor_domain),
-
-    # url(r'^col/$',online_app.col),
-    # url(r'^control/(?P<server>[a-z0-9\.]+)/(?P<process>[a-z:_-]+)/(?P<action>[a-z]+)/$',control),
-    # url(r'^query/$',query),
-
-    # url(r'^add/$',add),
-    # url(r'^test1/$',test1),
-    # url(r'^hosts/$', list_detail.object_list, hosts_info),
-    # url(r'^$', TemplateView.as_view(template_name='hosts_list_page.html'), name="home"),
+    url(r'^add_domain/$', add_domain),
+    url(r'^add_domain/$', add_domain),
+    url(r'^drop_domain/$', drop_domain),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

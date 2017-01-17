@@ -10,37 +10,60 @@
 <br>
 <br>
 <style>.readonly input{border:none}</style>
+<form class="form-horizontal" method="post" role="form">
+  <div class="form-group">
+    <label for="inputText" class="col-sm-1 control-label">域名</label>
+    <div class="col-sm-2 control-label">
+      <input type="text" class="form-control" name="url" id="url" placeholder="Text input">
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="inputText" class="col-sm-1 control-label">备注</label>
+    <div class="col-sm-2 control-label">
+      <input type="text" class="form-control" name="remark" id="remark" placeholder="Text input">
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <div class="col-sm-offset-1 col-sm-2">
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-sm-2">
+      <button type="submit" class="btn btn-default" id='sum'>提交</button>
+    </div>
+  </div>
+
+</form>
 
 <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>url</th>
-            <th>状态</th>
-            <th>时间</th>
-            <th>备注</th>
-            <th>操作</th>
+      <thead>
+        <tr>
+          <th>域名</th>
+          <th>状态</th>
+          <th>时间</th>
+          <th>备注</th>
+          <th>操作</th>
 
-          </tr>
-        <tbody>
-        {% for last_value in ck_domain %}
+        </tr>
+      <tbody>
+      {% for last_value in ck_domain %}
 
-        <tr> 
-        <td> 
-          <div class="readonly dvInput_{{last_value.pk}}">
-            <input type="text" readonly value= {{ last_value.fields.url }} name="url"  class="readonly" />
-          </div>
-        </td>
-        <td class="wei_st" > {{ last_value.fields.weixin_status }} </td>  
-        <td> {{ last_value.fields.last_date }} </td>  
-        <td> 
-          <div class="readonly dvInput_{{last_value.pk}}">
-            <input type="text" readonly value= {{ last_value.fields.remark }} name="remark" class="readonly" />
-          </div>
-        </td>
-        <td> <input type="button" value="编辑" class="dvInput_btn dvInput_btn_{{last_value.pk}}" />  <button>删除</button>  </td>    
+      <tr> 
+      <td> 
+        <div class="readonly dvInput_{{last_value.pk}}"> {{ last_value.fields.url }} </div>
+      </td>
+      <td class="wei_st" > {{ last_value.fields.weixin_status }} </td>  
+      <td> {{ last_value.fields.last_date }} </td>  
+      <td> 
+        <div class="readonly dvInput_{{last_value.pk}}">  {{ last_value.fields.remark }}        </div>
+      </td>
+      <td> <button class='de_bu'>删除</button>  </td>    
 
-        {% endfor %}
-        </tbody>
+      {% endfor %}
+      </tbody>
 </table>
 
 
@@ -48,24 +71,67 @@
 <script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.js"></script>
 
 <script>
-  $.each($('.dvInput_btn'), function(index, value) {
-    $('.dvInput_btn').eq(index).on('click', function() {
-      var toEdit = $(this).val();
-      $('.dvInput_'+(index+1))[$(this).val() == '编辑' ? 'removeClass' : 'addClass']('readonly').find(':input').attr('readonly', $(this).val() == '编辑' ? false : true);
-      $(this).val() == '编辑' ? $(this).val('保存') : $(this).val('编辑');
-      if ($(this).val() == '编辑') {//保存的ajax代码
-          console.log(111)
-      }
-    });
-  })
+
+$(document).ready(function(){
+
+        $("#sum").click(function(){
+        // i++;
+        var url = $("#url").val();
+        var remark = $("#remark").val();
+
+        $.post("/add_domain/",{'url':url,'remark':remark,}, function(data){
+
+            console.log(data);
+            
+             // data = $.parseJSON(data); 
+             // if(data == 'OK') {
+                  
+             //    }
+
+            // console.log(data)
+        })
+        location.reload();
+      });
+
+      $.each($('.de_bu'), function(index, value) {
+        $('.de_bu').eq(index).on('click', function() {
+
+          // var toEdit = $(this).val();
+          // $('.dvInput_'+(index+1))[$(this).val() == '编辑' ? 'removeClass' : 'addClass']('readonly').find(':input').attr('readonly', $(this).val() == '编辑' ? false : true);
+          // $(this).val() == '编辑' ? $(this).val('保存') : $(this).val('编辑');
+          // if ($(this).val() == '删除') {//保存的ajax代码
+            
+              url = $(this).parent().prev().prev().prev().prev().find('div').text();
+              remark = $(this).parent().prev().find('div').text();
+              console.log(url)
+              console.log(remark)
+              $.post("/drop_domain/",{'url':url,'remark':remark,}, function(data){
+
+                // console.log('dddd')
+
+                
+                if(data == 'OK') {
+                  location.reload();
+                }
+
+                
+            })
+          // }
+        });
+      })
+});
 
   $.each($('.wei_st'), function(index, value) {
     // console.log(index);
     // console.log($('.wei_st').eq(index).text().indexOf(1))
     if($('.wei_st').eq(index).text().indexOf('-1') != -1){
         $('.wei_st').eq(index).css("color", "red").text("被封");
-    }else {
+    }
+    else if($('.wei_st').eq(index).text().indexOf('1') != -1){
         $('.wei_st').eq(index).css("color", "green").text("正常");
+    }
+    else {
+        $('.wei_st').eq(index).css("color", "red").text("异常");
     }
 })
 

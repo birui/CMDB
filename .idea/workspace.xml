@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bdd5571d-1775-40d8-8711-e4db9207f0be" name="Default" comment="test">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/admin.py" afterPath="$PROJECT_DIR$/CMDB/admin.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/models.py" afterPath="$PROJECT_DIR$/CMDB/models.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/templates/weixin/base_migrite.html" afterPath="$PROJECT_DIR$/CMDB/templates/weixin/base_migrite.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/templates/weixin/monitordomain.html" afterPath="$PROJECT_DIR$/CMDB/templates/weixin/monitordomain.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/views.py" afterPath="$PROJECT_DIR$/CMDB/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coohua_CMDB/urls.py" afterPath="$PROJECT_DIR$/coohua_CMDB/urls.py" />
     </list>
     <ignored path="coohua_CMDB.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,21 +33,11 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/coohua_CMDB/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1140">
-              <caret line="81" column="19" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
+            <state relative-caret-position="528">
+              <caret line="84" column="40" selection-start-line="84" selection-start-column="40" selection-end-line="84" selection-end-column="40" />
               <folding>
                 <element signature="e#35#50#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/CMDB/templates/new/base.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="92" column="37" selection-start-line="92" selection-start-column="37" selection-end-line="92" selection-end-column="37" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -73,11 +65,19 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMDB/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="753" column="26" selection-start-line="753" selection-start-column="26" selection-end-line="753" selection-end-column="26" />
-              <folding>
-                <element signature="e#15#29#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="75">
+              <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../lib/python2.7/site-packages/django/core/handlers/base.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="221">
+              <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -85,7 +85,7 @@
       <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../lib/python2.7/site-packages/django/db/models/fields/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="35655">
+            <state relative-caret-position="573">
               <caret line="2415" column="0" selection-start-line="2415" selection-start-column="0" selection-end-line="2415" selection-end-column="0" />
               <folding />
             </state>
@@ -112,17 +112,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CMDB/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="166" column="18" selection-start-line="166" selection-start-column="6" selection-end-line="166" selection-end-column="18" />
+            <state relative-caret-position="573">
+              <caret line="195" column="0" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="admin.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMDB/admin.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="573">
@@ -175,10 +175,10 @@
         <option value="$PROJECT_DIR$/CMDB/templates/new/base.html" />
         <option value="$PROJECT_DIR$/CMDB/templates/weixin/weixin_test.html-bak" />
         <option value="$PROJECT_DIR$/CMDB/templates/weixin/weixin_test.html" />
-        <option value="$PROJECT_DIR$/coohua_CMDB/urls.py" />
-        <option value="$PROJECT_DIR$/CMDB/models.py" />
-        <option value="$PROJECT_DIR$/CMDB/views.py" />
         <option value="$PROJECT_DIR$/CMDB/admin.py" />
+        <option value="$PROJECT_DIR$/coohua_CMDB/urls.py" />
+        <option value="$PROJECT_DIR$/CMDB/views.py" />
+        <option value="$PROJECT_DIR$/CMDB/models.py" />
       </list>
     </option>
   </component>
@@ -704,9 +704,9 @@
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39012584" sideWeight="0.7951389" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33107454" sideWeight="0.7951389" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.104166664" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.104166664" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -738,13 +738,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/CMDB/views.py-bak">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CMDB/playbook.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="390">
@@ -1038,36 +1031,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMDB/templates/weixin/weixin_test.html-bak">
+    <entry file="file://$PROJECT_DIR$/CMDB/templates/new/base.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+        <state relative-caret-position="0">
+          <caret line="92" column="37" selection-start-line="92" selection-start-column="37" selection-end-line="92" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/../lib/python2.7/site-packages/django/db/models/fields/__init__.py">
+    <entry file="file://$PROJECT_DIR$/CMDB/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="35655">
-          <caret line="2415" column="0" selection-start-line="2415" selection-start-column="0" selection-end-line="2415" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coohua_CMDB/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1140">
-          <caret line="81" column="19" selection-start-line="81" selection-start-column="19" selection-end-line="81" selection-end-column="19" />
-          <folding>
-            <element signature="e#35#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMDB/templates/new/dbsize.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="405">
-          <caret line="27" column="58" selection-start-line="27" selection-start-column="58" selection-end-line="27" selection-end-column="58" />
+        <state relative-caret-position="573">
+          <caret line="89" column="33" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="33" />
           <folding />
         </state>
       </provider>
@@ -1080,6 +1055,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/CMDB/templates/new/dbsize.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="58" selection-start-line="27" selection-start-column="58" selection-end-line="27" selection-end-column="58" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/../lib/python2.7/site-packages/django/db/models/fields/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="573">
+          <caret line="2415" column="0" selection-start-line="2415" selection-start-column="0" selection-end-line="2415" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CMDB/templates/weixin/weixin_test.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
@@ -1088,36 +1079,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMDB/views.py">
+    <entry file="file://$PROJECT_DIR$/CMDB/templates/weixin/weixin_test.html-bak">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="753" column="26" selection-start-line="753" selection-start-column="26" selection-end-line="753" selection-end-column="26" />
+        <state relative-caret-position="435">
+          <caret line="29" column="19" selection-start-line="29" selection-start-column="19" selection-end-line="29" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/coohua_CMDB/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="528">
+          <caret line="84" column="40" selection-start-line="84" selection-start-column="40" selection-end-line="84" selection-end-column="40" />
           <folding>
-            <element signature="e#15#29#0" expanded="true" />
+            <element signature="e#35#50#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMDB/templates/new/base.html">
+    <entry file="file://$PROJECT_DIR$/../lib/python2.7/site-packages/django/core/handlers/base.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="92" column="37" selection-start-line="92" selection-start-column="37" selection-end-line="92" selection-end-column="37" />
+        <state relative-caret-position="221">
+          <caret line="148" column="0" selection-start-line="148" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMDB/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/CMDB/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="166" column="18" selection-start-line="166" selection-start-column="6" selection-end-line="166" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMDB/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="573">
-          <caret line="89" column="33" selection-start-line="89" selection-start-column="33" selection-end-line="89" selection-end-column="33" />
+          <caret line="195" column="0" selection-start-line="195" selection-start-column="0" selection-end-line="195" selection-end-column="0" />
           <folding />
         </state>
       </provider>

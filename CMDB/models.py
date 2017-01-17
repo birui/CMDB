@@ -175,12 +175,13 @@ class chanell_data(models.Model):
 
 class share_domain(models.Model):
     domain_name = models.CharField(max_length=100)
-    reg_date = models.CharField(max_length=50,blank=True)
-    last_date = models.CharField(max_length=50,blank=True)
+    reg_date = models.CharField(max_length=50,blank=True,null=True)
+    last_date = models.CharField(max_length=50,blank=True,null=True)
     #0正常,1被封
     weixin_status = models.IntegerField(blank=True,null=True)
-    deny_date = models.CharField(max_length=50,blank=True)
-    use_date = models.CharField(max_length=50,blank=True)
+    deny_date = models.CharField(max_length=50,blank=True,null=True)
+    use_date = models.CharField(max_length=50,blank=True,null=True)
+    Sponsoring_Registrar = models.CharField(max_length=50, blank=True, null=True)
     def __unicode__(self):
         return str(self.domain_name)
 

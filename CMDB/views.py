@@ -833,7 +833,7 @@ def send_message(request):
         sharedomain.send_sms(i,content)
 
     return HttpResponse(json.dumps(status_1))
-
+#====域名监控=====
 def monitor_domain(request):
     monitordomain_v = monitordomain.objects.all()
     jsondata = serializers.serialize("json", monitordomain_v)
@@ -844,3 +844,30 @@ def monitor_domain(request):
         'weixin/monitordomain.html',
         {'ck_domain': json_nc}
     )
+
+def add_domain(request):
+    if request.method == 'POST':
+        url = request.POST.get('url')
+        remark = request.POST.get('remark')
+        # print url,remark
+        check_domain = check_share_domain()
+        domain_str = check_domain.weixin_domain(url)
+        json_nc = json.loads(domain_str)
+        domain_status = int(json_nc['status'])
+        print domain_status
+
+        data_v = monitordomain(url=url,weixin_status=domain_status, remark=remark)
+        data_v.save()
+    return HttpResponse('OK')
+
+def drop_domain(request):
+    if request.method == 'POST':
+        url_l = request.POST.get('url')
+        remark = request.POST.get('remark')
+        content_ini = ' '.join(url_l.split())
+        domain = content_ini.replace('\r', '').replace('\n', '').replace('\t', '').replace(' ', '')
+        print domain
+        data_v = monitordomain.objects.filter(url=domain,)
+        data_v.delete()
+
+    return HttpResponse('OK')
