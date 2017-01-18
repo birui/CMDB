@@ -181,6 +181,8 @@ class share_domain(models.Model):
     weixin_status = models.IntegerField(blank=True,null=True)
     deny_date = models.CharField(max_length=50,blank=True,null=True)
     use_date = models.CharField(max_length=50,blank=True,null=True)
+    #1正常 -1未解析
+    res_sta = models.IntegerField(blank=True,null=True)
     Sponsoring_Registrar = models.CharField(max_length=50, blank=True, null=True)
     def __unicode__(self):
         return str(self.domain_name)
