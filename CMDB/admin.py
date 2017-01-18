@@ -59,7 +59,7 @@ class mysql_countAdmin(admin.ModelAdmin):
 
 class share_domain_show(admin.ModelAdmin):
     #显示字段
-    list_display = ('domain_name','reg_date', 'last_date','weixin_status','deny_date','use_date')
+    list_display = ('domain_name','reg_date', 'last_date','weixin_status','deny_date','use_date','res_sta','Sponsoring_Registrar')
     #指定列表过滤器,页面右边
     list_filter = ('domain_name',)
     # 指定要搜索的字段
