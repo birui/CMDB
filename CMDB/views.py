@@ -775,6 +775,7 @@ def get_share_domain_list(request):
     status_0 = {'status': 0}
     try:
         ten_domain = check_share_domain()
+        ten_domain.check_ten_domain()
         domain_lists = ten_domain.get_ten_domain()
         # print domain_lists
     except Exception, e:
