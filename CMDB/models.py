@@ -193,5 +193,6 @@ class monitordomain(models.Model):
     weixin_status = models.IntegerField(blank=True,null=True)
     remark = models.CharField(max_length=200)
     last_date = models.DateTimeField(auto_now_add = True)
+    deny_time = models.CharField(max_length=50,blank=True,null=True)
     def __unicode__(self):
         return str(self.id)
