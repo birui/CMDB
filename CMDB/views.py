@@ -26,6 +26,7 @@ from xmlrpclib import ServerProxy
 from CMDB.scripts.playbooks.ansicmd import *
 from CMDB.scripts.playbooks.ansiplaybook import *
 from CMDB.scripts.weixin.weixin import *
+from CMDB.scripts.weixin.coohua_domain import *
 from django.views.generic import ListView
 from django.views.generic import View
 from django.core.files import File
@@ -36,7 +37,9 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
 from django.core.files.storage import FileSystemStorage
-from CMDB.mysql_rsync.mysql_count import *
+
+import random
+import string
 
 sup_backend = Backend()
 
@@ -873,3 +876,113 @@ def drop_domain(request):
         data_v.delete()
 
     return HttpResponse('OK')
+
+
+# def random_char(y):
+#     return ''.join(random.choice(string.ascii_letters) for x in range(y))
+#
+# def coohua_change_share_domain(request):
+#     #http://127.0.0.1:8000/send/?url=http://www.baidu.com/ss/sf/sf/ee
+#     domain = request.GET['url']
+#     status_1 = {'status': 1}
+#     status_0 = {'status': 0}
+#     content_ini = re.compile('/')
+#     share_domain = content_ini.split(domain)
+#     # print len(share_domain)
+#     e = re.compile(r'\.')
+#     t = e.split(share_domain[2])
+#     coohua_domain = t[1]+'.'+t[2]
+#     s_domain = random_char(5)+'.'+coohua_domain
+#     uri = '/'.join(share_domain[3:])
+#     url = 'http://'+s_domain+'/'+uri
+#     return HttpResponse(url)
+
+#域名检测
+def coohua_share_domain_list(request):
+    status_0 = {'status': 0}
+    domain = request.GET['name']
+
+    if domain == 'qq':
+        try:
+            coohua_domain = check_coohua_domain()
+            # ten_domain.check_ten_domain()
+            domain_lists = coohua_domain.get_qq_domain()
+            # print domain_lists
+        except Exception, e:
+            print e
+            return HttpResponse(json.dumps(status_0))
+        else:
+            return HttpResponse(json.dumps(domain_lists))
+
+
+    elif domain == 'sharewechat':
+        try:
+            coohua_domain = check_coohua_domain()
+            # ten_domain.check_ten_domain()
+            domain_lists = coohua_domain.get_sharewechat_domain()
+            # print domain_lists
+        except Exception, e:
+            print e
+            return HttpResponse(json.dumps(status_0))
+        else:
+            return HttpResponse(json.dumps(domain_lists))
+
+    elif domain == 'cpwechat':
+        try:
+            coohua_domain = check_coohua_domain()
+            # ten_domain.check_ten_domain()
+            domain_lists = coohua_domain.get_cpwechat_domain()
+            # print domain_lists
+        except Exception, e:
+            print e
+            return HttpResponse(json.dumps(status_0))
+        else:
+            return HttpResponse(json.dumps(domain_lists))
+
+    elif domain == 'sharemoment':
+        try:
+            coohua_domain = check_coohua_domain()
+            # ten_domain.check_ten_domain()
+            domain_lists = coohua_domain.get_sharemoment_domain()
+            # print domain_lists
+        except Exception, e:
+            print e
+            return HttpResponse(json.dumps(status_0))
+        else:
+            return HttpResponse(json.dumps(domain_lists))
+
+    elif domain == 'cpsh':
+        try:
+            coohua_domain = check_coohua_domain()
+            # ten_domain.check_ten_domain()
+            domain_lists = coohua_domain.get_cpsh_domain()
+            # print domain_lists
+        except Exception, e:
+            print e
+            return HttpResponse(json.dumps(status_0))
+        else:
+            return HttpResponse(json.dumps(domain_lists))
+
+    elif domain == 'shareerweima':
+        try:
+            coohua_domain = check_coohua_domain()
+            # ten_domain.check_ten_domain()
+            domain_lists = coohua_domain.get_shareerweima_domain()
+            # print domain_lists
+        except Exception, e:
+            print e
+            return HttpResponse(json.dumps(status_0))
+        else:
+            return HttpResponse(json.dumps(domain_lists))
+
+    elif domain == 'h5':
+        try:
+            coohua_domain = check_coohua_domain()
+            # ten_domain.check_ten_domain()
+            domain_lists = coohua_domain.get_h5_domain()
+            # print domain_lists
+        except Exception, e:
+            print e
+            return HttpResponse(json.dumps(status_0))
+        else:
+            return HttpResponse(json.dumps(domain_lists))
