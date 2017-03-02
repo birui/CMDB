@@ -707,6 +707,7 @@ def weixin_test(request):
         request,
         'weixin/weixin_test.html',
     )
+#weixin检测web接口
 def weixin_check(request):
     domain = request.GET['a']
     domain_status = {}
@@ -897,7 +898,7 @@ def drop_domain(request):
 #     url = 'http://'+s_domain+'/'+uri
 #     return HttpResponse(url)
 
-#域名检测
+#coohua域名检测
 def coohua_share_domain_list(request):
     status_0 = {'status': 0}
     domain = request.GET['name']
@@ -986,3 +987,61 @@ def coohua_share_domain_list(request):
             return HttpResponse(json.dumps(status_0))
         else:
             return HttpResponse(json.dumps(domain_lists))
+#集合coohua share接口
+def coohua_share_count(request):
+    status_0 = {'status': 0}
+    domain = request.GET['name']
+    count = int(request.GET['count'])
+    print domain,count
+    try:
+        coohua_domain = check_coohua_domain()
+        # ten_domain.check_ten_domain()
+        domain_lists = coohua_domain.get_domain(domain,count)
+        # print domain_lists
+    except Exception, e:
+        print e
+        return HttpResponse(json.dumps(status_0))
+    else:
+        return HttpResponse(json.dumps(domain_lists))
+#导入域名接口
+
+def domain_import_web(request):
+    return render(
+        request,
+        'weixin/domain_import.html',
+    )
+
+def import_main(domain,mod,x,y):
+    for i in domain[x:y]:
+        i = i.split(',')
+        i.insert(1, mod)
+        print i
+        insert_data = coohua_share_domain(domain_name=i[0], model_name=i[1], reg_date=i[2],last_date=i[3],
+                                          Sponsoring_Registrar=i[4])
+        insert_data.save()
+
+
+def domain_import(request):
+
+    if request.method == 'POST':
+        domain = request.POST.get('a')
+
+        domain = domain.split()
+        print domain
+        try:
+            import_main(domain, 'qq', 0, 2)
+            import_main(domain, 'ccc', 2, 4)
+        except Exception, e:
+            print e
+            return HttpResponse('import error!')
+        else:
+            return HttpResponse('import succeed!')
+
+
+
+
+
+
+
+
+

@@ -83,6 +83,7 @@ urlpatterns = [
     url(r'^add_domain/$', add_domain),
     url(r'^add_domain/$', add_domain),
     url(r'^drop_domain/$', drop_domain),
-    url(r'^coohua_sharedomain/$', coohua_share_domain_list),
-
+    url(r'^coohua_sharedomain/$', coohua_share_count),
+    url(r'^imdomain/$', domain_import_web),
+    url(r'^domain_import/$', domain_import),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

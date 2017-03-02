@@ -200,6 +200,7 @@ class monitordomain(models.Model):
 class coohua_share_domain(models.Model):
     domain_name = models.CharField(max_length=100)
     model_name = models.CharField(max_length=100)
+    #当长期和短期用了,0长期,1短期
     reg_date = models.CharField(max_length=50,blank=True,null=True)
     last_date = models.CharField(max_length=50,blank=True,null=True)
     #1正常,-1被封
@@ -209,5 +210,6 @@ class coohua_share_domain(models.Model):
     #1正常 -1未解析
     res_sta = models.IntegerField(blank=True,null=True)
     Sponsoring_Registrar = models.CharField(max_length=50, blank=True, null=True)
+
     def __unicode__(self):
         return str(self.domain_name)
