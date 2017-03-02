@@ -1029,8 +1029,17 @@ def domain_import(request):
         domain = domain.split()
         print domain
         try:
-            import_main(domain, 'qq', 0, 2)
-            import_main(domain, 'ccc', 2, 4)
+            import_main(domain, 'qq', 0, 10)
+            import_main(domain, 'sharewechat', 10, 30)
+            import_main(domain, 'cpwechat', 30, 45)
+            import_main(domain, 'sharemoment', 45, 50)
+            import_main(domain, 'cpsh', 50, 90)
+            import_main(domain, 'shareerweima', 90, 100)
+            import_main(domain, 'h5', 100, 110)
+            import_main(domain, 'h5shareerweima', 110, 115)
+            import_main(domain, 'h5cpwechat', 115, 120)
+            import_main(domain, 'h5sharewechat', 120, 130)
+
         except Exception, e:
             print e
             return HttpResponse('import error!')
