@@ -81,11 +81,16 @@ urlpatterns = [
     url(r'^send/$', send_message),
     url(r'^monitordomain/$', monitor_domain),
     url(r'^add_domain/$', add_domain),
-    url(r'^add_domain/$', add_domain),
     url(r'^drop_domain/$', drop_domain),
-    # url(r'^coohua_sharedomain/$', coohua_share_count),coohua_share_domain_list
     url(r'^coohua_sharedomain/$', coohua_share_domain_list),
     url(r'^imdomain/$', domain_import_web),
     url(r'^domain_import/$', domain_import),
     url(r'^coohua_jusharedomain/$', coohua_share_count),
+    url(r'^domain_muimport/$', domain_muimport),
+    url(r'^show_mu_domain/$', show_mu_domain),
+    url(r'^drop_nu_domain/$', drop_nu_domain),
+    url(r'^domain_pool_web/$', domain_pool_web),
+    url(r'^domainpool_import/$',domainpool_import),
+    url(r'^drop_domain_pool/$',drop_domain_pool),
+    url(r'^get_pool_domain/$',get_pool_domain),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

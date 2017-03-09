@@ -79,7 +79,15 @@ class coohua_share_domain_show(admin.ModelAdmin):
     #指定列表过滤器,页面右边
     list_filter = ('domain_name',)
     # 指定要搜索的字段
-    search_fields = ('domain_name', 'reg_date','weixin_status',)
+    search_fields = ('domain_name','model_name', 'deny_date','weixin_status',)
+
+class coohua_domain_pool_show(admin.ModelAdmin):
+    #显示字段
+    list_display = ('pool_name','pool_count','date_time', 'domain_count','remark',)
+    #指定列表过滤器,页面右边
+    list_filter = ('pool_name',)
+    # 指定要搜索的字段
+    search_fields = ('pool_name', 'remark',)
 
 #admin里面显示哪些表：
 admin.site.register(Brothers)
@@ -97,3 +105,4 @@ admin.site.register(share_domain,share_domain_show)
 admin.site.register(monitordomain,nmonitordomain_show)
 admin.site.register(chanell_data)
 admin.site.register(coohua_share_domain,coohua_share_domain_show)
+admin.site.register(domain_pool,coohua_domain_pool_show)

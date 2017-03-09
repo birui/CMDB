@@ -1,0 +1,123 @@
+{% extends "weixin/base_migrite.html" %}
+{% block content %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+<body>
+    <h4>手动域名导入</h4>
+    <form class="form-horizontal col-sm-5" role="form">
+      <div class="form-group">
+
+           <label for="inputEmail3" class="col-sm-3 control-label" style="text-align: left;">baidu.com,1,qq,2018/09/02,ename</label>
+
+        <div class="col-sm-10">
+            <textarea class="form-control" rows="10" name="a" id="a"></textarea>
+        </div>
+
+      </div>
+      <div class="form-group">
+        <div class="col-sm-10">
+          <button type="button" class="btn btn-primary" id='sum'>导入</button>
+          <button type="button" id="b2" style="visibility: hidden;"></button>
+
+        </div>
+      </div>
+      <div class="form-group">
+        <span>导出结果:</span> </br>
+        <div id='result'></div>
+      </div>
+    </form>
+
+  <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>域名</th>
+            <th>模块</th>
+            <th>到期</th>
+            <th>微信状态</th>
+            <th>屏蔽</th>
+            <th>操作</th>
+          </tr>
+        <tbody>
+<!--         <p> {{ last_ten }}</p>
+ -->
+      {% for last_value in last_ten %}
+
+      <tr> 
+      <td> 
+        <div class="readonly dvInput_{{last_value.pk}}"> {{ last_value.domain_name }} </div>
+      </td>
+      <td class="wei_st" > {{ last_value.model_name }} </td>
+      <td> {{ last_value.last_date }} </td>  
+      <td> 
+        <div class="readonly dvInput_{{last_value.pk}}">  {{ last_value.weixin_status }}        </div>
+      </td>
+      <td class="wei_st" > {{ last_value.deny_date }} </td>  
+      <td> <button class='de_bu'>删除</button>  </td>    
+
+      {% endfor %}
+        </tbody>
+</table>
+
+
+<script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.0/js/bootstrap.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+
+        var i = 0;
+        $("#sum").click(function(){
+        // i++;
+        var a = $("#a").val();
+        $.post("/domain_muimport/",{'a':a}, function(data){
+
+            console.log(data)
+            
+            $('#result').html(data);
+
+          })
+        });
+
+        $('#b2').on('click', function() {
+            $.get("/show_mu_domain/",{}, function(){
+              // data = JSON.parse(data);
+              // console.log(data);
+            })
+        });
+
+      $('#b2').click();
+
+    });
+
+      $.each($('.de_bu'), function(index, value) {
+        $('.de_bu').eq(index).on('click', function() {
+            
+              domain = $(this).parent().prev().prev().prev().prev().prev().find('div').text();
+              console.log(domain)
+              console.log(index)
+              // console.log(remark)
+              $.post("/drop_nu_domain/",{'domain':domain}, function(data){
+
+              //   // console.log('dddd')
+
+                if(data == 'OK') {
+                  location.reload();
+                }
+
+                
+            })
+          // }
+        });
+      })
+
+</script>
+
+
+</body>
+</html>
+{% endblock %}
+
+

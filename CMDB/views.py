@@ -1046,11 +1046,148 @@ def domain_import(request):
         else:
             return HttpResponse('import succeed!')
 
+#手动导入的域名优先防止微信接口失败
+# def manual_domain_web(request):
+#     return render(
+#         request,
+#         'weixin/manual_domain.html',
+#     )
 
+def manual_domain_get(request):
+    chanell_v = coohua_share_domain.objects.all()
+    sid = str(coohua_share_domain.objects.last())
+    jsondata = serializers.serialize("json", chanell_v.filter(id=sid))
+    return HttpResponse(jsondata)
 
+def import_mudomain(domain,mod,reg,last,sre):
+    insert_data = coohua_share_domain(domain_name=domain, model_name=mod, reg_date=reg, last_date=last,
+                                      Sponsoring_Registrar=sre)
+    insert_data.save()
 
+def domain_muimport(request):
 
+    if request.method == 'POST':
+        domain = request.POST.get('a')
 
+        domain = domain.split()
+        print domain
+        try:
+            print domain
+            for i in domain:
+                i = i.split(',')
+                import_mudomain(i[0], i[1], i[2], i[3], i[4])
 
+        except Exception, e:
+            print e
+            return HttpResponse('import error!')
+        else:
+            return HttpResponse('import succeed!')
 
+def show_mu_domain(request):
+    chanell_v = coohua_share_domain.objects.filter(reg_date=1)
+    print chanell_v
+    last_id = coohua_share_domain.objects.last()
+    print last_id
 
+    last_ten = []
+    last_id = str(last_id)
+    last_id = int(last_id)
+    # print last_id
+
+    for i in range(0,int(last_id)+1):
+        i = int(i)
+        # last_data = chanell_data.objects.filter(id=i)
+        try:
+            jsondata = serializers.serialize("json", chanell_v.filter(id=i))
+            json_nc = json.loads(jsondata)
+            json_data = json_nc[0]['fields']
+            # print jsondata
+        except:
+            pass
+        else:
+            last_ten.append(json_data)
+        # print last_ten
+
+    return render(
+        request,
+        'weixin/manual_domain.html',
+        {'last_ten': last_ten}
+    )
+
+def drop_nu_domain(request):
+    if request.method == 'POST':
+        domain_1 = request.POST.get('domain')
+        content_ini = ' '.join(domain_1.split())
+        domain = content_ini.replace('\r', '').replace('\n', '').replace('\t', '').replace(' ', '')
+        # print domain
+        data_v = coohua_share_domain.objects.filter(domain_name=domain)
+        data_v.delete()
+
+    return HttpResponse('OK')
+#=======域名池====
+def domain_pool_web(request):
+    chanell_v = domain_pool.objects.filter()
+    print chanell_v
+    last_id = domain_pool.objects.last()
+    print last_id
+
+    last_ten = []
+    last_id = str(last_id)
+    try:
+        last_id = int(last_id)
+    except:
+        last_id = 0
+
+    for i in range(0, int(last_id) + 1):
+        i = int(i)
+        # last_data = chanell_data.objects.filter(id=i)
+        try:
+            jsondata = serializers.serialize("json", chanell_v.filter(id=i))
+            json_nc = json.loads(jsondata)
+            json_data = json_nc[0]['fields']
+            print json_data
+        except:
+            pass
+        else:
+            last_ten.append(json_data)
+            # print last_ten
+    return render(
+        request,
+        'weixin/domain_pool.html',
+        {'last_ten': last_ten}
+    )
+
+def import_data(pool_name,pool_count,remark):
+    insert_data = domain_pool(pool_name=pool_name, pool_count=pool_count, remark=remark)
+    insert_data.save()
+
+def domainpool_import(request):
+    if request.method == 'POST':
+        pool = request.POST.get('pool')
+        count = request.POST.get('count')
+        remark = request.POST.get('remark')
+        # print pool,count,remark
+        import_data(pool,count,remark)
+
+def drop_domain_pool(request):
+    if request.method == 'POST':
+        pool_name = request.POST.get('pool_name')
+        content_ini = ' '.join(pool_name.split())
+        pool_name = content_ini.replace('\r', '').replace('\n', '').replace('\t', '').replace(' ', '')
+        data_v = domain_pool.objects.filter(pool_name=pool_name)
+        data_v.delete()
+
+    return HttpResponse('OK')
+
+def get_pool_domain(request):
+    status_0 = {'status': 0}
+    dic_pool = {}
+    try:
+        pool = domain_pool.objects.all().values('pool_name','pool_count')
+        for i in pool:
+            dic_pool[i['pool_name']]=i['pool_count']
+        json_pool = json.dumps(dic_pool)
+    except:
+        return HttpResponse(json.dumps(status_0), content_type='application/json')
+    else:
+        return HttpResponse(json_pool, content_type='application/json')

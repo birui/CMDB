@@ -5,18 +5,26 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h4>渠道设置</h4>
+<h4>域名池设置</h4>
 
 <br>
 <br>
 <style>.readonly input{border:none}</style>
 <form class="form-horizontal" method="post" role="form">
   <div class="form-group">
-    <label for="inputText" class="col-sm-1 control-label">域名</label>
+    <label for="inputText" class="col-sm-1 control-label">域名池</label>
     <div class="col-sm-2 control-label">
-      <input type="text" class="form-control" name="url" id="url" placeholder="Text input">
+      <input type="text" class="form-control" name="pool" id="pool" placeholder="Text input">
     </div>
   </div>
+
+  <div class="form-group">
+    <label for="inputText" class="col-sm-1 control-label">大小</label>
+    <div class="col-sm-2 control-label">
+      <input type="text" class="form-control" name="count" id="count" placeholder="Text input">
+    </div>
+  </div>
+
 
   <div class="form-group">
     <label for="inputText" class="col-sm-1 control-label">备注</label>
@@ -33,7 +41,7 @@
   <div class="form-group">
     <div class="col-sm-2">
       <button type="submit" class="btn btn-default" id='sum'>提交</button>
-      <button type="button" id="b2" style="visibility: hidden;"></button>
+      <!-- <button type="button" id="b2" style="visibility: hidden;"></button> -->
     </div>
   </div>
 
@@ -42,24 +50,26 @@
 <table class="table table-striped">
       <thead>
         <tr>
-          <th>域名</th>
-          <th>状态</th>
+          <th>域名池</th>
+          <th>大小</th>
           <th>时间</th>
+          <th>数量</th>
           <th>备注</th>
           <th>操作</th>
 
         </tr>
       <tbody>
-      {% for last_value in ck_domain %}
+      {% for last_value in last_ten %}
 
       <tr> 
       <td> 
-        <div class="readonly dvInput_{{last_value.pk}}"> {{ last_value.fields.url }} </div>
+        <div class="readonly dvInput_{{last_value.pk}}"> {{ last_value.pool_name }} </div>
       </td>
-      <td class="wei_st" > {{ last_value.fields.weixin_status }} </td>  
-      <td> {{ last_value.fields.last_date }} </td>  
+      <td class="wei_st" > {{ last_value.pool_count }} </td>  
+      <td> {{ last_value.date_time }} </td>  
+      <td> {{ last_value.domain_count }} </td>  
       <td> 
-        <div class="readonly dvInput_{{last_value.pk}}">  {{ last_value.fields.remark }}        </div>
+        <div class="readonly dvInput_{{last_value.pk}}">  {{ last_value.remark }}        </div>
       </td>
       <td> <button class='de_bu'>删除</button>  </td>    
 
@@ -77,10 +87,11 @@ $(document).ready(function(){
 
         $("#sum").click(function(){
         // i++;
-        var url = $("#url").val();
+        var pool = $("#pool").val();
+        var count = $("#count").val();
         var remark = $("#remark").val();
 
-        $.post("/add_domain/",{'url':url,'remark':remark,}, function(data){
+        $.post("/domainpool_import/",{'pool':pool,'count':count,'remark':remark,}, function(data){
 
             console.log(data);
             
@@ -96,20 +107,10 @@ $(document).ready(function(){
 
       $.each($('.de_bu'), function(index, value) {
         $('.de_bu').eq(index).on('click', function() {
-
-          // var toEdit = $(this).val();
-          // $('.dvInput_'+(index+1))[$(this).val() == '编辑' ? 'removeClass' : 'addClass']('readonly').find(':input').attr('readonly', $(this).val() == '编辑' ? false : true);
-          // $(this).val() == '编辑' ? $(this).val('保存') : $(this).val('编辑');
-          // if ($(this).val() == '删除') {//保存的ajax代码
             
-              url = $(this).parent().prev().prev().prev().prev().find('div').text();
-              remark = $(this).parent().prev().find('div').text();
-              console.log(url)
-              console.log(remark)
-              $.post("/drop_domain/",{'url':url,'remark':remark,}, function(data){
-
-                // console.log('dddd')
-
+              pool_name = $(this).parent().prev().prev().prev().prev().prev().find('div').text();
+              console.log(pool_name)
+              $.post("/drop_domain_pool/",{'pool_name':pool_name}, function(data){
                 
                 if(data == 'OK') {
                   location.reload();
@@ -122,19 +123,19 @@ $(document).ready(function(){
       })
 });
 
-  $.each($('.wei_st'), function(index, value) {
-    // console.log(index);
-    // console.log($('.wei_st').eq(index).text().indexOf(1))
-    if($('.wei_st').eq(index).text().indexOf('-1') != -1){
-        $('.wei_st').eq(index).css("color", "red").text("被封");
-    }
-    else if($('.wei_st').eq(index).text().indexOf('1') != -1){
-        $('.wei_st').eq(index).css("color", "green").text("正常");
-    }
-    else {
-        $('.wei_st').eq(index).css("color", "red").text("异常");
-    }
-})
+//   $.each($('.wei_st'), function(index, value) {
+//     // console.log(index);
+//     // console.log($('.wei_st').eq(index).text().indexOf(1))
+//     if($('.wei_st').eq(index).text().indexOf('-1') != -1){
+//         $('.wei_st').eq(index).css("color", "red").text("被封");
+//     }
+//     else if($('.wei_st').eq(index).text().indexOf('1') != -1){
+//         $('.wei_st').eq(index).css("color", "green").text("正常");
+//     }
+//     else {
+//         $('.wei_st').eq(index).css("color", "red").text("异常");
+//     }
+// })
 
  </script>
 </body>

@@ -212,4 +212,15 @@ class coohua_share_domain(models.Model):
     Sponsoring_Registrar = models.CharField(max_length=50, blank=True, null=True)
 
     def __unicode__(self):
-        return str(self.domain_name)
+        return str(self.id)
+
+
+class domain_pool(models.Model):
+    pool_name = models.CharField(max_length=100)
+    pool_count = models.IntegerField(blank=True,null=True)
+    date_time = models.DateTimeField(auto_now_add = True)
+    domain_count = models.IntegerField(blank=True,null=True)
+    remark = models.CharField(max_length=200)
+
+    def __unicode__(self):
+        return str(self.id)
