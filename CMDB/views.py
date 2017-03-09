@@ -1134,14 +1134,14 @@ def domain_pool_web(request):
 
     for i in get_pool_name:
         pool_name = i['pool_name']
-        print pool_name
-        domain_list = coohua_share_domain.objects.filter(model_name=pool_name)
+        # print pool_name
+        domain_list = coohua_share_domain.objects.filter(model_name=pool_name,weixin_status=1)
         domain_count = domain_list.count()
-        print domain_count
+        # print domain_count
         domain_count = int(domain_count)
         domain_pool.objects.filter(pool_name=pool_name).update(domain_count=domain_count)
 
-        print domain_count
+        # print domain_count
 
     last_ten = []
     last_id = str(last_id)
