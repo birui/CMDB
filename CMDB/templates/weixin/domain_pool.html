@@ -40,8 +40,9 @@
   </div>
   <div class="form-group">
     <div class="col-sm-2">
-      <button type="submit" class="btn btn-default" id='sum'>提交</button>
+      <button type="button" class="btn btn-default" id='sum'>提交</button>
       <!-- <button type="button" id="b2" style="visibility: hidden;"></button> -->
+
     </div>
   </div>
 
@@ -102,7 +103,8 @@ $(document).ready(function(){
 
             // console.log(data)
         })
-        location.reload();
+        location.href = location.href;//自己刷新自己，防止提交空
+        // location.reload();
       });
 
       $.each($('.de_bu'), function(index, value) {
@@ -121,6 +123,8 @@ $(document).ready(function(){
           // }
         });
       })
+      
+
 });
 
 //   $.each($('.wei_st'), function(index, value) {

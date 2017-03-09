@@ -1126,10 +1126,22 @@ def drop_nu_domain(request):
     return HttpResponse('OK')
 #=======域名池====
 def domain_pool_web(request):
+    # domain_count = coohua_share_domain.objects.filter(reg_date=1)
     chanell_v = domain_pool.objects.filter()
-    print chanell_v
     last_id = domain_pool.objects.last()
-    print last_id
+    get_pool_name = domain_pool.objects.all().values('pool_name')
+    print get_pool_name
+
+    for i in get_pool_name:
+        pool_name = i['pool_name']
+        print pool_name
+        domain_list = coohua_share_domain.objects.filter(model_name=pool_name)
+        domain_count = domain_list.count()
+        print domain_count
+        domain_count = int(domain_count)
+        domain_pool.objects.filter(pool_name=pool_name).update(domain_count=domain_count)
+
+        print domain_count
 
     last_ten = []
     last_id = str(last_id)
@@ -1145,7 +1157,7 @@ def domain_pool_web(request):
             jsondata = serializers.serialize("json", chanell_v.filter(id=i))
             json_nc = json.loads(jsondata)
             json_data = json_nc[0]['fields']
-            print json_data
+            # print json_data
         except:
             pass
         else:

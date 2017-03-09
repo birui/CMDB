@@ -92,6 +92,9 @@
 
     });
 
+    location.href = location.href;//自己刷新自己，防止提交空
+
+
       $.each($('.de_bu'), function(index, value) {
         $('.de_bu').eq(index).on('click', function() {
             
