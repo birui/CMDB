@@ -79,6 +79,7 @@
             $('#result').html(data);
 
           })
+        location.href = location.href;//自己刷新自己，防止提交空
         });
 
         $('#b2').on('click', function() {
@@ -91,8 +92,6 @@
       $('#b2').click();
 
     });
-
-    location.href = location.href;//自己刷新自己，防止提交空
 
 
       $.each($('.de_bu'), function(index, value) {

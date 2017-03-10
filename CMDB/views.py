@@ -1047,11 +1047,6 @@ def domain_import(request):
             return HttpResponse('import succeed!')
 
 #手动导入的域名优先防止微信接口失败
-# def manual_domain_web(request):
-#     return render(
-#         request,
-#         'weixin/manual_domain.html',
-#     )
 
 def manual_domain_get(request):
     chanell_v = coohua_share_domain.objects.all()

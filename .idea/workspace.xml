@@ -48,11 +48,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMDB/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
-              <caret line="1141" column="89" selection-start-line="1141" selection-start-column="89" selection-end-line="1141" selection-end-column="89" />
+            <state relative-caret-position="-1640">
+              <caret line="1048" column="18" selection-start-line="1048" selection-start-column="18" selection-end-line="1048" selection-end-column="18" />
               <folding>
                 <element signature="e#15#29#0" expanded="true" />
               </folding>
@@ -60,11 +60,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CMDB/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="592">
-              <caret line="221" column="16" selection-start-line="221" selection-start-column="4" selection-end-line="221" selection-end-column="16" />
+            <state relative-caret-position="412">
+              <caret line="207" column="68" selection-start-line="207" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -1035,21 +1035,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMDB/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="221" column="16" selection-start-line="221" selection-start-column="4" selection-end-line="221" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CMDB/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="1141" column="89" selection-start-line="1141" selection-start-column="89" selection-end-line="1141" selection-end-column="89" />
+        <state relative-caret-position="-1640">
+          <caret line="1048" column="18" selection-start-line="1048" selection-start-column="18" selection-end-line="1048" selection-end-column="18" />
           <folding>
             <element signature="e#15#29#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMDB/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="207" column="68" selection-start-line="207" selection-start-column="0" selection-end-line="208" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
