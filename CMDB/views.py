@@ -1198,3 +1198,17 @@ def get_pool_domain(request):
         return HttpResponse(json.dumps(status_0), content_type='application/json')
     else:
         return HttpResponse(json_pool, content_type='application/json')
+
+def updata_count(request):
+    if request.method == 'POST':
+        pool_count = request.POST.get('pool_count')
+        pool_name = request.POST.get('pool_name')
+        content_ini = ' '.join(pool_name.split())
+        pool_name = content_ini.replace('\r', '').replace('\n', '').replace('\t', '').replace(' ', '')
+        pool_count = int(pool_count)
+        domain_pool.objects.filter(pool_name=pool_name).update(pool_count=pool_count)
+        # # domain_pool.objects.filter(pool_name=pool_name).update(domain_count=domain_count)
+        # print pool_name
+        # print pool_count
+
+    return HttpResponse('OK')

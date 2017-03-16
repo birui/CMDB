@@ -66,13 +66,19 @@
       <td> 
         <div class="readonly dvInput_{{last_value.pk}}"> {{ last_value.pool_name }} </div>
       </td>
-      <td class="wei_st" > {{ last_value.pool_count }} </td>  
+
+      <td class="wei_st" > 
+
+      <input type="text" name="pool_name" value={{ last_value.pool_count }}  > 
+
+      </td>  
+
       <td> {{ last_value.date_time }} </td>  
       <td> {{ last_value.domain_count }} </td>  
       <td> 
-        <div class="readonly dvInput_{{last_value.pk}}">  {{ last_value.remark }}        </div>
+        <div class="readonly dvInput_{{last_value.pk}}">  {{ last_value.remark }}       </div>
       </td>
-      <td> <button class='de_bu'>删除</button>  </td>    
+      <td> <button class='de_bu'>删除</button> <button class='de_up'>修改</button>  </td>    
 
       {% endfor %}
       </tbody>
@@ -123,8 +129,24 @@ $(document).ready(function(){
           // }
         });
       })
-      
 
+    $.each($('.de_up'), function(index, value) {
+        $('.de_up').eq(index).on('click', function() {
+            
+              pool_count = $(this).parent().prev().prev().prev().prev().find('input').val();
+              pool_name = $(this).parent().prev().prev().prev().prev().prev().find('div').text();
+
+              console.log(pool_name,pool_count)
+              $.post("/updata_count/",{'pool_count':pool_count,'pool_name':pool_name}, function(data){
+                
+                if(data == 'OK') {
+                  location.reload();
+                }
+            })
+          // }
+        });
+      })
+      
 });
 
 //   $.each($('.wei_st'), function(index, value) {
