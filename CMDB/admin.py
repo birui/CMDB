@@ -77,7 +77,7 @@ class coohua_share_domain_show(admin.ModelAdmin):
     #显示字段
     list_display = ('domain_name','model_name','reg_date', 'last_date','weixin_status','deny_date','use_date','res_sta','Sponsoring_Registrar')
     #指定列表过滤器,页面右边
-    list_filter = ('domain_name',)
+    list_filter = ('model_name',)
     # 指定要搜索的字段
     search_fields = ('domain_name','model_name', 'deny_date','weixin_status',)
 

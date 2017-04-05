@@ -37,6 +37,7 @@ from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
 from django.core.files.storage import FileSystemStorage
+from django.db import connection
 
 import random
 import string
@@ -1212,3 +1213,15 @@ def updata_count(request):
         # print pool_count
 
     return HttpResponse('OK')
+
+def get_deny_count(request):
+    chanell_v = coohua_share_domain.objects.filter(weixin_status=-1).values('model_name','domain_name','deny_date')
+    pool_name = domain_pool.objects.values('pool_name')
+    with connection.cursor() as cursor:
+        cursor.execute("select model_name,count(domain_name) from  CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%Y-%m-%d') = date_sub(curdate(),interval 1 day) Group By model_name;")
+        row = cursor.fetchall()
+        print row
+
+    # print pool_name
+    # print chanell_v
+    return HttpResponse(row)
