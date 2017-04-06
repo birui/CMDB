@@ -226,9 +226,12 @@ class domain_pool(models.Model):
         return str(self.id)
 
 class deny_count(models.Model):
-    date_time = models.DateTimeField(auto_now_add = True)
-    models_name = models.IntegerField(blank=True,null=True)
-    remark = models.CharField(max_length=200)
+    models_name = models.CharField(max_length=100)
+    models_count = models.IntegerField(blank=True, null=True)
+    date_time = models.CharField(max_length=20)
+    cost_count = models.IntegerField(blank=True, null=True)
 
     def __unicode__(self):
         return str(self.id)
+
+

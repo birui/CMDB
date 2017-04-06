@@ -776,6 +776,7 @@ def chanell_history(request):
         {'last_ten': last_ten}
     )
 #=====10个微信域名===========
+#coohua news get share dimain
 def get_share_domain_list(request):
     status_0 = {'status': 0}
     try:
@@ -1221,7 +1222,18 @@ def get_deny_count(request):
         cursor.execute("select model_name,count(domain_name) from  CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%Y-%m-%d') = date_sub(curdate(),interval 1 day) Group By model_name;")
         row = cursor.fetchall()
         print row
-
     # print pool_name
     # print chanell_v
     return HttpResponse(row)
+
+#=====显示域名屏蔽数=====
+def show_deny(request):
+    deny_model = deny_count.objects.all().values('date_time','models_name','models_count')
+    # print deny_count
+    for i in deny_model:
+        print i
+    return render(
+        request,
+        'weixin/deny_show.html',
+        {'deny_model': deny_model}
+    )

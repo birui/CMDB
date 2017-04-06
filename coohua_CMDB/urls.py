@@ -94,6 +94,6 @@ urlpatterns = [
     url(r'^drop_domain_pool/$',drop_domain_pool),
     url(r'^get_pool_domain/$',get_pool_domain),
     url(r'^updata_count/$',updata_count),
-    url(r'^get_deny_count/$',get_deny_count),
+    url(r'^show_deny/$', show_deny),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
