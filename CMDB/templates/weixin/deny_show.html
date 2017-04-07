@@ -5,10 +5,42 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h4>域名池设置</h4>
+<h4>域名池被封数量</h4>
 
 <br>
 <br>
+<div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        // 指定图表的配置项和数据
+
+        // a = {{name_today}}
+        // console.log(a)
+
+        var option = {
+            title: {
+                text: '今日被封'
+            },
+            tooltip: {},
+            legend: {
+                data:['域名数']
+            },
+            xAxis: {
+                data: {{name_today}}
+            },
+            yAxis: {},
+            series: [{
+                name: '域名数',
+                type: 'bar',
+                data: {{count_today}}
+            }]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
 
 <table class="table table-striped">
       <thead>

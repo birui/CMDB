@@ -95,5 +95,6 @@ urlpatterns = [
     url(r'^get_pool_domain/$',get_pool_domain),
     url(r'^updata_count/$',updata_count),
     url(r'^show_deny/$', show_deny),
+    url(r'^get_deny_count/$', get_deny_count),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

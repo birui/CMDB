@@ -4,7 +4,6 @@ from django.shortcuts import render, render_to_response
 from django.template import loader, Context
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from CMDB.models import *
-from datetime import datetime
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import auth
 import json
@@ -41,6 +40,8 @@ from django.db import connection
 
 import random
 import string
+import datetime
+
 
 sup_backend = Backend()
 
@@ -1219,7 +1220,7 @@ def get_deny_count(request):
     chanell_v = coohua_share_domain.objects.filter(weixin_status=-1).values('model_name','domain_name','deny_date')
     pool_name = domain_pool.objects.values('pool_name')
     with connection.cursor() as cursor:
-        cursor.execute("select model_name,count(domain_name) from  CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%Y-%m-%d') = date_sub(curdate(),interval 1 day) Group By model_name;")
+        cursor.execute("select model_name,count(domain_name) from  CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%Y-%m-%d') = date_sub(curdate(),interval 0 day) Group By model_name;")
         row = cursor.fetchall()
         print row
     # print pool_name
@@ -1229,11 +1230,41 @@ def get_deny_count(request):
 #=====显示域名屏蔽数=====
 def show_deny(request):
     deny_model = deny_count.objects.all().values('date_time','models_name','models_count')
-    # print deny_count
-    for i in deny_model:
-        print i
+    tday = datetime.date.today()
+    yesterday = tday - datetime.timedelta(days=1)
+    dcount = deny_count.objects.all().filter(date_time='%s' %(yesterday)).values( 'models_name', 'models_count')
+    name_today = []
+    count_today = []
+
+
+
+    with connection.cursor() as cursor:
+        cursor.execute("select model_name,count(domain_name) from  CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%Y-%m-%d') = date_sub(curdate(),interval 0 day) Group By model_name;")
+        row = cursor.fetchall()
+        for i in row:
+            name_today.append(i[0])
+            count_today.append(int(i[1]))
+
+    # name_today = ", ".join(name_today)
+
+    print name_today,count_today
+
+    for i in dcount:
+        name_count['models_name'] = models_count
+
+
+    print dcount
+    print deny_model
+
+    count = []
+
+    for i in dcount:
+        count.append(int(i['models_count']))
+
+    print count
     return render(
         request,
         'weixin/deny_show.html',
-        {'deny_model': deny_model}
+        {'deny_model': deny_model,'name_today':name_today,'count_today':count_today}
     )
+
