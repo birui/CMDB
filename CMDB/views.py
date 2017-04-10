@@ -1216,16 +1216,16 @@ def updata_count(request):
 
     return HttpResponse('OK')
 
-def get_deny_count(request):
-    chanell_v = coohua_share_domain.objects.filter(weixin_status=-1).values('model_name','domain_name','deny_date')
-    pool_name = domain_pool.objects.values('pool_name')
-    with connection.cursor() as cursor:
-        cursor.execute("select model_name,count(domain_name) from  CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%Y-%m-%d') = date_sub(curdate(),interval 0 day) Group By model_name;")
-        row = cursor.fetchall()
-        print row
-    # print pool_name
-    # print chanell_v
-    return HttpResponse(row)
+# def get_deny_count(request):
+#     chanell_v = coohua_share_domain.objects.filter(weixin_status=-1).values('model_name','domain_name','deny_date')
+#     pool_name = domain_pool.objects.values('pool_name')
+#     with connection.cursor() as cursor:
+#         cursor.execute("select model_name,count(domain_name) from  CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%Y-%m-%d') = date_sub(curdate(),interval 0 day) Group By model_name;")
+#         row = cursor.fetchall()
+#         print row
+#     # print pool_name
+#     # print chanell_v
+#     return HttpResponse(row)
 
 #=====显示域名屏蔽数=====
 def show_deny(request):
@@ -1233,38 +1233,53 @@ def show_deny(request):
     tday = datetime.date.today()
     yesterday = tday - datetime.timedelta(days=1)
     dcount = deny_count.objects.all().filter(date_time='%s' %(yesterday)).values( 'models_name', 'models_count')
-    name_today = []
-    count_today = []
-
-
-
-    with connection.cursor() as cursor:
-        cursor.execute("select model_name,count(domain_name) from  CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%Y-%m-%d') = date_sub(curdate(),interval 0 day) Group By model_name;")
-        row = cursor.fetchall()
-        for i in row:
-            name_today.append(i[0])
-            count_today.append(int(i[1]))
-
-    # name_today = ", ".join(name_today)
-
-    print name_today,count_today
-
-    for i in dcount:
-        name_count['models_name'] = models_count
-
-
-    print dcount
-    print deny_model
-
-    count = []
-
-    for i in dcount:
-        count.append(int(i['models_count']))
-
-    print count
+    # name_today = []
+    # count_today = []
+    #
+    #
+    #
+    # with connection.cursor() as cursor:
+    #     cursor.execute("select model_name,count(domain_name) from  CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%Y-%m-%d') = date_sub(curdate(),interval 0 day) Group By model_name;")
+    #     row = cursor.fetchall()
+    #     for i in row:
+    #         test = i[0].encode('utf-8')
+    #         # name_today.append(test)
+    #         count_today.append(int(i[1]))
+    #
+    # # name_today_1 = ", ".join(name_today)
+    # # print name_today_1
+    # name_today = (['h5','qq','shareerweima','sharewechat'])
+    # # print name_today_1
+    #
+    # print name_today,count_today
+    #
+    # for i in dcount:
+    #     name_count['models_name'] = models_count
+    #
+    #
+    # print dcount
+    # print deny_model
+    #
+    # count = []
+    #
+    # for i in dcount:
+    #     count.append(int(i['models_count']))
+    #
+    # print count
     return render(
         request,
         'weixin/deny_show.html',
-        {'deny_model': deny_model,'name_today':name_today,'count_today':count_today}
+        {'deny_model': deny_model}
     )
 
+def get_deny_count(request):
+    today_deny_count = {}
+    with connection.cursor() as cursor:
+        cursor.execute("select model_name,count(domain_name) from  CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%Y-%m-%d') = date_sub(curdate(),interval 0 day) Group By model_name;")
+        row = cursor.fetchall()
+        for i  in row:
+            today_deny_count[i[0]] = i[1]
+
+    json_today_deny = json.dumps(today_deny_count)
+
+    return HttpResponse(json_today_deny)

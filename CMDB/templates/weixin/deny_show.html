@@ -11,13 +11,22 @@
 <br>
 <div id="main" style="width: 600px;height:400px;"></div>
     <script type="text/javascript">
+       $.post("/get_deny_count/",{}, function(data){
+
+            console.log(data)
+            
+            data = $.parseJSON(data); 
+
+            console.log(data)
+            var names = Object.keys(data);
+            var values = Object.values(data);
+            console.log(names)
+            console.log(values)
+
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main'));
 
         // 指定图表的配置项和数据
-
-        // a = {{name_today}}
-        // console.log(a)
 
         var option = {
             title: {
@@ -28,18 +37,22 @@
                 data:['域名数']
             },
             xAxis: {
-                data: {{name_today}}
-            },
+                data: names
+              },
             yAxis: {},
             series: [{
                 name: '域名数',
                 type: 'bar',
-                data: {{count_today}}
-            }]
+                data: values   
+              }]
         };
 
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
+
+      });
+
+    
     </script>
 
 <table class="table table-striped">
