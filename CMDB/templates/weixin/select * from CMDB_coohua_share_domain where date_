@@ -1,0 +1,6 @@
+select * from CMDB_coohua_share_domain where date_sub(deny_date, INTERVAL 7 DAY) <= date(`add_time`);
+
+select model_name,count(domain_name) from  CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%Y-%m-%d') = date_sub(curdate(),interval 0 day) Group By model_name;
+
+
+    SELECT * FROM CMDB_coohua_share_domain e where DATE_SUB(CURDATE(), INTERVAL 6 DAY) <= date(createdate);

@@ -1233,39 +1233,7 @@ def show_deny(request):
     tday = datetime.date.today()
     yesterday = tday - datetime.timedelta(days=1)
     dcount = deny_count.objects.all().filter(date_time='%s' %(yesterday)).values( 'models_name', 'models_count')
-    # name_today = []
-    # count_today = []
-    #
-    #
-    #
-    # with connection.cursor() as cursor:
-    #     cursor.execute("select model_name,count(domain_name) from  CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%Y-%m-%d') = date_sub(curdate(),interval 0 day) Group By model_name;")
-    #     row = cursor.fetchall()
-    #     for i in row:
-    #         test = i[0].encode('utf-8')
-    #         # name_today.append(test)
-    #         count_today.append(int(i[1]))
-    #
-    # # name_today_1 = ", ".join(name_today)
-    # # print name_today_1
-    # name_today = (['h5','qq','shareerweima','sharewechat'])
-    # # print name_today_1
-    #
-    # print name_today,count_today
-    #
-    # for i in dcount:
-    #     name_count['models_name'] = models_count
-    #
-    #
-    # print dcount
-    # print deny_model
-    #
-    # count = []
-    #
-    # for i in dcount:
-    #     count.append(int(i['models_count']))
-    #
-    # print count
+
     return render(
         request,
         'weixin/deny_show.html',
@@ -1283,3 +1251,51 @@ def get_deny_count(request):
     json_today_deny = json.dumps(today_deny_count)
 
     return HttpResponse(json_today_deny)
+
+def get_denymodel(model_name):
+    model_data = []
+    for i in range(7):
+        time1 = (datetime.datetime.now() - datetime.timedelta(days=i)).strftime("%Y-%m-%d")
+        time1 = str(time1)
+        with connection.cursor() as cursor:
+            cursor.execute("select count(domain_name) from CMDB_coohua_share_domain where weixin_status = -1 and DATE_FORMAT( deny_date, '%%Y-%%m-%%d') = '%s' and model_name = '%s' " %(time1,model_name))
+            model_count = cursor.fetchall()
+        for j in  model_count:
+            str1 = j[0]
+            # print str1
+        model_data.append(str1)
+
+    return model_data
+
+def get_table_deny(request):
+    pool_name = domain_pool.objects.all().values('pool_name')
+    deny_data_extent = []
+    dict_deny_data = {}
+    pool_name_list = []
+    list_sing_modle = []
+
+    for i in range(7):
+        time1 = (datetime.datetime.now() - datetime.timedelta(days=i)).strftime("%Y-%m-%d")
+        deny_data_extent.append(time1)
+
+    dict_deny_data['deny_data_extent'] = deny_data_extent
+
+    for i in pool_name:
+        dict_sing_modle = {}
+        model_name = i['pool_name']
+        print model_name
+        pool_name_list.append(model_name)
+        dict_sing_modle['name'] = model_name
+        dict_sing_modle['type'] = 'line'
+        dict_sing_modle['stack'] = '总量'
+        dict_sing_modle['data'] = get_denymodel(model_name)
+        list_sing_modle.append(dict_sing_modle)
+
+    dict_deny_data['series'] = list_sing_modle
+    dict_deny_data['pool_name'] = pool_name_list
+
+    print list_sing_modle
+
+    json_deny_data = json.dumps(dict_deny_data)
+
+    return HttpResponse(json_deny_data)
