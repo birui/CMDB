@@ -33,13 +33,33 @@
     </div>
   </div>
 
+  <div class="form-group">
+      <div class="col-sm-offset-1 col-sm-2">
+        <div class="checkbox">
+          <label>
+            <input name="weixin" type="checkbox"> 微信
+          </label>
+        </div>
+      </div>
+  </div>
+
+  <div class="form-group">
+      <div class="col-sm-offset-1 col-sm-2">
+        <div class="checkbox">
+          <label>
+            <input name="qq" type="checkbox"> QQ
+          </label>
+        </div>
+      </div>
+  </div>
+
 
   <div class="form-group">
     <div class="col-sm-offset-1 col-sm-2">
     </div>
   </div>
   <div class="form-group">
-    <div class="col-sm-2">
+    <div class="col-sm-offset-1 col-sm-2">
       <button type="button" class="btn btn-default" id='sum'>提交</button>
       <!-- <button type="button" id="b2" style="visibility: hidden;"></button> -->
 
@@ -55,6 +75,8 @@
           <th>大小</th>
           <th>时间</th>
           <th>数量</th>
+          <th>QQ</th>
+          <th>微信</th>
           <th>备注</th>
           <th>操作</th>
 
@@ -75,8 +97,10 @@
 
       <td> {{ last_value.date_time }} </td>  
       <td> {{ last_value.domain_count }} </td>  
+      <td> {{ last_value.qq_status }} </td>  
+      <td> {{ last_value.weixin_status }} </td>  
       <td> 
-        <div class="readonly dvInput_{{last_value.pk}}">  {{ last_value.remark }}       </div>
+        <div class="readonly dvInput_{{last_value.pk}}">  {{ last_value.remark }}      </div>
       </td>
       <td> <button class='de_bu'>删除</button> <button class='de_up'>修改</button>  </td>    
 
@@ -97,8 +121,21 @@ $(document).ready(function(){
         var pool = $("#pool").val();
         var count = $("#count").val();
         var remark = $("#remark").val();
+        if($("input[name='weixin']").prop('checked')) {
+          var weixin_status = '1'
+        }else {
+          var weixin_status = '0'
+        }
+        if($("input[name='qq']").prop('checked')) {
+          var qq_status = '1'
+        }else {
+          var qq_status = '0'
+        }
 
-        $.post("/domainpool_import/",{'pool':pool,'count':count,'remark':remark,}, function(data){
+        console.log(weixin_status);
+        console.log(qq_status);
+
+        $.post("/domainpool_import/",{'pool':pool,'count':count,'remark':remark,'qq_status':qq_status,'weixin_status':weixin_status}, function(data){
 
             console.log(data);
             

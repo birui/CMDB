@@ -6,6 +6,8 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from CMDB.models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import auth
+from urllib import urlencode
+from urllib import unquote
 import json
 import re
 import time
@@ -41,6 +43,7 @@ from django.db import connection
 import random
 import string
 import datetime
+from .forms import NameForm
 
 
 sup_backend = Backend()
@@ -876,7 +879,7 @@ def drop_domain(request):
         content_ini = ' '.join(url_l.split())
         domain = content_ini.replace('\r', '').replace('\n', '').replace('\t', '').replace(' ', '')
         print domain
-        data_v = monitordomain.objects.filter(url=domain,)
+        data_v = monitordomain.objects.filter(url=domain,remark=remark)
         data_v.delete()
 
     return HttpResponse('OK')
@@ -1167,8 +1170,8 @@ def domain_pool_web(request):
         {'last_ten': last_ten}
     )
 
-def import_data(pool_name,pool_count,remark):
-    insert_data = domain_pool(pool_name=pool_name, pool_count=pool_count, remark=remark)
+def import_data(pool_name,pool_count,qq_status,weixin_status,remark):
+    insert_data = domain_pool(pool_name=pool_name, pool_count=pool_count,qq_status=qq_status,weixin_status=weixin_status,remark=remark)
     insert_data.save()
 
 def domainpool_import(request):
@@ -1176,8 +1179,11 @@ def domainpool_import(request):
         pool = request.POST.get('pool')
         count = request.POST.get('count')
         remark = request.POST.get('remark')
-        # print pool,count,remark
-        import_data(pool,count,remark)
+        qq_status = request.POST.get('qq_status')
+        weixin_status = request.POST.get('weixin_status')
+        print pool,count,remark,qq_status,weixin_status
+        import_data(pool,count,qq_status,weixin_status,remark)
+        return HttpResponse('OK')
 
 def drop_domain_pool(request):
     if request.method == 'POST':
@@ -1299,3 +1305,25 @@ def get_table_deny(request):
     json_deny_data = json.dumps(dict_deny_data)
 
     return HttpResponse(json_deny_data)
+
+#test--forms
+def get_name(request):
+    # if this is a POST request we need to process the form data
+    if request.method == 'POST':
+        # create a form instance and populate it with data from the request:
+        form = NameForm(request.POST)
+        # check whether it's valid:
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            # redirect to a new URL:
+            return HttpResponseRedirect('/thanks/')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = NameForm()
+
+    return render(request, 'test/name.html', {'form': form})
+
+
+

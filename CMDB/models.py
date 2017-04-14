@@ -205,6 +205,7 @@ class coohua_share_domain(models.Model):
     last_date = models.CharField(max_length=50,blank=True,null=True)
     #1正常,-1被封
     weixin_status = models.IntegerField(blank=True,null=True)
+    qq_status = models.IntegerField(blank=True,null=True)
     deny_date = models.CharField(max_length=50,blank=True,null=True)
     use_date = models.CharField(max_length=50,blank=True,null=True)
     #1正常 -1未解析
@@ -220,6 +221,9 @@ class domain_pool(models.Model):
     pool_count = models.IntegerField(blank=True,null=True)
     date_time = models.DateTimeField(auto_now_add = True)
     domain_count = models.IntegerField(blank=True,null=True)
+    #1检测或0不检测
+    qq_status = models.IntegerField(blank=True, null=True)
+    weixin_status = models.IntegerField(blank=True, null=True)
     remark = models.CharField(max_length=200)
 
     def __unicode__(self):

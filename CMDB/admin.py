@@ -75,7 +75,7 @@ class nmonitordomain_show(admin.ModelAdmin):
 
 class coohua_share_domain_show(admin.ModelAdmin):
     #显示字段
-    list_display = ('domain_name','model_name','reg_date', 'last_date','weixin_status','deny_date','use_date','res_sta','Sponsoring_Registrar')
+    list_display = ('domain_name','model_name','reg_date', 'last_date','weixin_status','qq_status','deny_date','use_date','res_sta','Sponsoring_Registrar')
     #指定列表过滤器,页面右边
     list_filter = ('model_name',)
     # 指定要搜索的字段
@@ -83,7 +83,7 @@ class coohua_share_domain_show(admin.ModelAdmin):
 
 class coohua_domain_pool_show(admin.ModelAdmin):
     #显示字段
-    list_display = ('pool_name','pool_count','date_time', 'domain_count','remark',)
+    list_display = ('pool_name','pool_count','date_time', 'domain_count','remark','qq_status','weixin_status')
     #指定列表过滤器,页面右边
     list_filter = ('pool_name',)
     # 指定要搜索的字段

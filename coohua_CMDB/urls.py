@@ -97,5 +97,6 @@ urlpatterns = [
     url(r'^show_deny/$', show_deny),
     url(r'^get_deny_count/$', get_deny_count),
     url(r'^get_table_deny/$', get_table_deny),
+    url(r'^get_name_test/$',get_name),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
