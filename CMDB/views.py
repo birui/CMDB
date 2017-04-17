@@ -877,8 +877,10 @@ def drop_domain(request):
         url_l = request.POST.get('url')
         remark = request.POST.get('remark')
         content_ini = ' '.join(url_l.split())
+        remark_v = ' '.join(remark.split())
         domain = content_ini.replace('\r', '').replace('\n', '').replace('\t', '').replace(' ', '')
-        print domain
+        remark = remark_v.replace('\r', '').replace('\n', '').replace('\t', '').replace(' ', '')
+        print remark,domain
         data_v = monitordomain.objects.filter(url=domain,remark=remark)
         data_v.delete()
 
