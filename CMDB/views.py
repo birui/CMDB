@@ -1327,5 +1327,10 @@ def get_name(request):
 
     return render(request, 'test/name.html', {'form': form})
 
-
+#======oss_upload=====
+def oss_upload(request):
+    return render(
+        request,
+        'weixin/oss/oss.html',
+    )
 

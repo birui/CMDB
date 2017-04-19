@@ -18,3 +18,4 @@ tmp.txt
 media/*
 *_config.py
 CMDB/migrations/*
+CMDB/static/oss/upload.js
