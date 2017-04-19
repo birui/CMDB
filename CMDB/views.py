@@ -866,7 +866,30 @@ def add_domain(request):
         domain_str = check_domain.weixin_domain(url)
         json_nc = json.loads(domain_str)
         domain_status = int(json_nc['status'])
-        print domain_status
+        sharedomain = check_share_domain()
+        # print domain_status
+        content = url
+        if domain_status == -1:
+            mailbox = [
+                'domain_alarm@coohua.com',
+            ]
+            subject = '分享域名报警'
+
+            for i in mailbox:
+                print i
+                sharedomain.sendqqmail(i, subject, content)
+
+            mobile_number = [
+                '18515937401',
+                '18500324192',
+                '18811346265',
+                '15801402572',
+                '15665229832',
+                '18600046769',
+            ]
+
+            for i in mobile_number:
+                sharedomain.send_sms(i, content)
 
         data_v = monitordomain(url=url,weixin_status=domain_status, remark=remark)
         data_v.save()
