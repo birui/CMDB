@@ -1,11 +1,30 @@
-<form action="/your-name/" method="post" class="form-horizontal">
+{% extends "weixin/base_migrite.html" %}
+{% block content %}
+{% load staticfiles %}
+
+<form action="/your-name/" method="post">
     {% csrf_token %}
-    {% load bootstrap %}
-    {{ form|bootstrap }}
-    <div class="form-group">
-      <div class="col-sm-10 col-sm-offset-2">
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </div>
+    
+    <div class="fieldWrapper">
+    {{ form.email.errors }}
+    <label for="{{ form.email.id_for_label}}" class="col-sm-3 control-label" style="text-align: left;" >Email subject:</label>
+    {{ form.email }}
+
+    <input type="submit" value="Submit" class="btn btn-primary" />
+{{ field.label }}
+</div>
+
+   
+{% for field in form %}
+    <div class="fieldWrapper">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
     </div>
 
+{% endfor %}
+
 </form>
+{% endblock %}

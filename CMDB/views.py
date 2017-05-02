@@ -891,7 +891,13 @@ def add_domain(request):
             for i in mobile_number:
                 sharedomain.send_sms(i, content)
 
-        data_v = monitordomain(url=url,weixin_status=domain_status, remark=remark)
+
+        check_repeat = monitordomain.objects.filter(url=url,remark=remark)
+        # print check_repeat
+        if len(check_repeat) >= 1:
+            monitordomain.objects.filter(url=url,remark=remark).update(remark=remark)
+        else:
+            data_v = monitordomain(url=url,weixin_status=domain_status, remark=remark)
         data_v.save()
     return HttpResponse('OK')
 
