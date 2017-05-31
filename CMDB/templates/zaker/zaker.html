@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+ <head> 
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" /> 
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" /> 
+  <title></title> 
+  <link rel="stylesheet" type="text/css" href="http://zkres.myzaker.com/static/zaker_web2/css/article.min.css?v=20170324" /> 
+  <link rel="stylesheet" type="text/css" href="http://zkres.myzaker.com/static/zaker_web2/css/normalize.min.css?v=20170205" /> 
+  <link rel="stylesheet" type="text/css" href="http://zkres.myzaker.com/static/zaker_web2/css/base.min.css?v=20170228" /> 
+  <link rel="stylesheet" type="text/css" href="http://zkres.myzaker.com/static/zaker_web2/css/dianzan.min.css?v=20170205" /> 
+  <script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script> 
+  <style type="text/css">.img_box img { height: auto; }</style> 
+  <style type="text/css">.zk_top_bar { background-color: blue; }</style>
+  <style type="text/css">  
+  .article_header {
+    position: relative;
+    font-size: 15px;
+    color: #ababab;
+    background-color: #fff;
+}
+</style>
+ </head> 
+ <body> 
+  <div class="main flex-block"> 
+   <!-- 内容 --> 
+   <div id="article" class="flex-8"> 
+    <br /> 
+    <div class="article_header"> 
+     <h1>{{ title }}</h1> 
+     {{ author|safe }}
+     </div> 
+      <div class="article_content"> 
+       {{ content|safe }}
+      </div> 
+      <br>
+      <div class="article_header"> </div> 
+     <div class="article_detail">
+                            原网页已经由 ZAKER 转码排版 <a rel="external nofollow" target="_blank" href="{{ source_site }}">查看原文</a>
+      </div>
+
+    </div> 
+   </div> 
+  </div> 
+  <!-- 内容end --> 
+  <script src="http://zkres.myzaker.com/static/zaker_web2/js/jquery-1.9.1.min.js" type="text/javascript"></script> 
+  <script src="http://zkres.myzaker.com/static/zaker_web2/js/tool.min.js?v=20170121" type="text/javascript"></script> 
+  <script src="http://zkres.myzaker.com/static/zaker_web2/js/dianzan.min.js?v=20170121" type="text/javascript"></script> 
+  <script src="http://zkres.myzaker.com/static/zaker_web2/js/layout_hack.min.js?v=20170121" type="text/javascript"></script> 
+  <script src="http://zkres.myzaker.com/static/zaker_web2/js/top2.min.js?v=20170121" type="text/javascript"></script> 
+  <script src="http://zkres.myzaker.com/static/zaker_web2/js/lazyload_new.min.js?v=20170121" type="text/javascript"></script> 
+  <script src="http://zkres.myzaker.com/static/zaker_web2/js/ercode_tips.min.js?v=20170121" type="text/javascript"></script> 
+  <script src="http://zkres.myzaker.com/static/zaker_web2/js/fixed_tool.min.js?v=20170121" type="text/javascript"></script> 
+  <script src="http://zkres.myzaker.com/static/zaker_web2/js/web3.min.js?v=20170121" type="text/javascript"></script> 
+  <script src="http://zkres.myzaker.com/static/zaker_web2/js/home_main.min.js?v=20170324" type="text/javascript"></script> 
+  <script src="http://zkres.myzaker.com/static/zaker_web2/js/article.min.js?v=20170302" type="text/javascript"></script>  
+ </body>
+</html>

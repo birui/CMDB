@@ -238,4 +238,12 @@ class deny_count(models.Model):
     def __unicode__(self):
         return str(self.id)
 
-
+class zaker_spider(models.Model):
+    title = models.CharField(max_length=200)
+    link = models.CharField(max_length=200)
+    content = models.TextField(blank=True, null=True)
+    top_img = models.CharField(max_length=200)
+    author = models.CharField(max_length=200)
+    source_site = models.CharField(max_length=200)
+    def __unicode__(self):
+        return str(self.id)

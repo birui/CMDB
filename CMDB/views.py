@@ -936,110 +936,62 @@ def drop_domain(request):
 #     return HttpResponse(url)
 
 #coohua域名检测
-def coohua_share_domain_list(request):
-    status_0 = {'status': 0}
-    domain = request.GET['name']
-
-    if domain == 'qq':
-        try:
-            coohua_domain = check_coohua_domain()
-            # ten_domain.check_ten_domain()
-            domain_lists = coohua_domain.get_qq_domain()
-            # print domain_lists
-        except Exception, e:
-            print e
-            return HttpResponse(json.dumps(status_0))
-        else:
-            return HttpResponse(json.dumps(domain_lists))
-
-
-    elif domain == 'sharewechat':
-        try:
-            coohua_domain = check_coohua_domain()
-            # ten_domain.check_ten_domain()
-            domain_lists = coohua_domain.get_sharewechat_domain()
-            # print domain_lists
-        except Exception, e:
-            print e
-            return HttpResponse(json.dumps(status_0))
-        else:
-            return HttpResponse(json.dumps(domain_lists))
-
-    elif domain == 'cpwechat':
-        try:
-            coohua_domain = check_coohua_domain()
-            # ten_domain.check_ten_domain()
-            domain_lists = coohua_domain.get_cpwechat_domain()
-            # print domain_lists
-        except Exception, e:
-            print e
-            return HttpResponse(json.dumps(status_0))
-        else:
-            return HttpResponse(json.dumps(domain_lists))
-
-    elif domain == 'sharemoment':
-        try:
-            coohua_domain = check_coohua_domain()
-            # ten_domain.check_ten_domain()
-            domain_lists = coohua_domain.get_sharemoment_domain()
-            # print domain_lists
-        except Exception, e:
-            print e
-            return HttpResponse(json.dumps(status_0))
-        else:
-            return HttpResponse(json.dumps(domain_lists))
-
-    elif domain == 'cpsh':
-        try:
-            coohua_domain = check_coohua_domain()
-            # ten_domain.check_ten_domain()
-            domain_lists = coohua_domain.get_cpsh_domain()
-            # print domain_lists
-        except Exception, e:
-            print e
-            return HttpResponse(json.dumps(status_0))
-        else:
-            return HttpResponse(json.dumps(domain_lists))
-
-    elif domain == 'shareerweima':
-        try:
-            coohua_domain = check_coohua_domain()
-            # ten_domain.check_ten_domain()
-            domain_lists = coohua_domain.get_shareerweima_domain()
-            # print domain_lists
-        except Exception, e:
-            print e
-            return HttpResponse(json.dumps(status_0))
-        else:
-            return HttpResponse(json.dumps(domain_lists))
-
-    elif domain == 'h5':
-        try:
-            coohua_domain = check_coohua_domain()
-            # ten_domain.check_ten_domain()
-            domain_lists = coohua_domain.get_h5_domain()
-            # print domain_lists
-        except Exception, e:
-            print e
-            return HttpResponse(json.dumps(status_0))
-        else:
-            return HttpResponse(json.dumps(domain_lists))
 #集合coohua share接口
+
+def get_domain_1(model, count):
+    ten_domain = {}
+    qq_status = domain_pool.objects.filter(pool_name=model).values('qq_status')
+    weixin_status = domain_pool.objects.filter(pool_name=model).values('weixin_status')
+    qq_status = qq_status[0]['qq_status']
+    weixin_status = weixin_status[0]['weixin_status']
+    print qq_status,weixin_status
+    if (qq_status == 1 and weixin_status == 0) or (qq_status == 1 and weixin_status == ''):
+        with connection.cursor() as cursor:
+            sql = "select domain_name,weixin_status from  CMDB_coohua_share_domain where qq_status <> -1 and res_sta = 1 and model_name = '%s' and DATE_FORMAT( last_date, '%%Y/%%m/%%d') > date_format(now(),'%%Y/%%m/%%d') limit %d;" % (model, count)
+            cursor.execute(sql)
+            row = cursor.fetchall()
+            for i in row:
+                ten_domain[i[0]] = i[1]
+    elif (weixin_status == 1 and qq_status == 0) or (weixin_status == 1 and qq_status == ''):
+        with connection.cursor() as cursor:
+            sql = "select domain_name,weixin_status from  CMDB_coohua_share_domain where weixin_status <> -1 and res_sta = 1 and model_name = '%s' and DATE_FORMAT( last_date, '%%Y/%%m/%%d') > date_format(now(),'%%Y/%%m/%%d') limit %d;" % (model, count)
+            cursor.execute(sql)
+            row = cursor.fetchall()
+            for i in row:
+                ten_domain[i[0]] = i[1]
+    elif weixin_status == 1 and qq_status == 1:
+        with connection.cursor() as cursor:
+            sql = "select domain_name,weixin_status from  CMDB_coohua_share_domain where weixin_status <> -1 and qq_status <> -1 and res_sta = 1 and model_name = '%s' and DATE_FORMAT( last_date, '%%Y/%%m/%%d') > date_format(now(),'%%Y/%%m/%%d') limit %d;" % (model, count)
+            cursor.execute(sql)
+            row = cursor.fetchall()
+            for i in row:
+                ten_domain[i[0]] = i[1]
+    else:
+        print 'Model Error !!!'
+
+    return ten_domain
+
 def coohua_share_count(request):
+
     status_0 = {'status': 0}
     domain = request.GET['name']
     count = int(request.GET['count'])
     print domain,count
+
     try:
-        coohua_domain = check_coohua_domain()
-        # ten_domain.check_ten_domain()
-        domain_lists = coohua_domain.get_domain(domain,count)
+        # coohua_domain = check_coohua_domain()
+        # # ten_domain.check_ten_domain()
+        # domain_lists = coohua_domain.get_domain(domain,count)
         # print domain_lists
+        domain_lists = get_domain_1(domain,count)
+        print domain_lists
+
     except Exception, e:
         print e
         return HttpResponse(json.dumps(status_0))
     else:
         return HttpResponse(json.dumps(domain_lists))
+
 #导入域名接口
 
 def domain_import_web(request):
@@ -1363,3 +1315,19 @@ def oss_upload(request):
         'weixin/oss/oss.html',
     )
 
+
+#======spider test ===
+def zaker(request,id):
+    # print id
+    zaker_spider_db = zaker_spider.objects.filter(id=id)
+    for i in zaker_spider_db:
+        title = i.title
+        link = i.link
+        content = i.content
+        top_img = i.top_img
+        author = i.author
+        source_site = i.source_site
+
+        # print title,link,content,top_img,author,source_site
+        context = {'title': title, 'author': author, 'content': content, 'source_site':source_site}
+    return render(request,'zaker/zaker.html',context)

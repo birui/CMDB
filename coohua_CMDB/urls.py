@@ -82,7 +82,7 @@ urlpatterns = [
     url(r'^monitordomain/$', monitor_domain),
     url(r'^add_domain/$', add_domain),
     url(r'^drop_domain/$', drop_domain),
-    url(r'^coohua_sharedomain/$', coohua_share_domain_list),
+    # url(r'^coohua_sharedomain/$', coohua_share_domain_list),
     url(r'^imdomain/$', domain_import_web),
     url(r'^domain_import/$', domain_import),
     url(r'^coohua_jusharedomain/$', coohua_share_count),
@@ -99,5 +99,6 @@ urlpatterns = [
     url(r'^get_table_deny/$', get_table_deny),
     url(r'^get_name_test/$',get_name),
     url(r'^oss_upload/$',oss_upload),
+    url(r'^zaker/([0-9]+)/$',zaker),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
