@@ -247,3 +247,4 @@ class zaker_spider(models.Model):
     source_site = models.CharField(max_length=200)
     def __unicode__(self):
         return str(self.id)
+

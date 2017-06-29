@@ -1278,6 +1278,8 @@ def get_table_deny(request):
         dict_sing_modle['type'] = 'line'
         dict_sing_modle['stack'] = '总量'
         dict_sing_modle['data'] = get_denymodel(model_name)
+        dict_item = { 'normal': {'label' : {'show': 'true'}}}
+        dict_sing_modle['itemStyle'] = dict_item
         list_sing_modle.append(dict_sing_modle)
 
     dict_deny_data['series'] = list_sing_modle
