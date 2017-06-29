@@ -152,27 +152,6 @@
    </script>
 
 
-
-<table class="table table-striped">
-      <thead>
-        <tr>
-          <th>域名池</th>
-          <th>被封数量</th>
-          <th>时间</th>
-        </tr>
-      <tbody>
-      {% for i in deny_model %}
-
-      <tr> 
-      <td> 
-        <div class="readonly dvInput_{{last_value.pk}}"> {{ i.models_name }} </div>
-      </td>
-      <td> {{ i.models_count }} </td>  
-      <td> {{ i.date_time }} </td>  
-      {% endfor %}
-      </tbody>
-</table>
-
 </body>
 </html>
 {% endblock %}
