@@ -81,7 +81,11 @@
               trigger: 'axis'
           },
           legend: {
-              data:pool_name
+              data:pool_name,
+              show:true,
+              selectedMode:true,
+              x: 'left', // 'center' | 'left' | {number},
+              y: 'bottom', // 'center' | 'bottom' | {number}
           },
           toolbox: {
               show : true,
@@ -93,7 +97,7 @@
                   saveAsImage : {show: true}
               }
           },
-          calculable : true,
+          calculable : false,
           xAxis : [
               {
                   type : 'category',
