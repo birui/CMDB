@@ -191,7 +191,7 @@ class monitordomain(models.Model):
     url = models.CharField(max_length=100)
     #1正常,-1被封
     weixin_status = models.IntegerField(blank=True,null=True)
-    # qq_statu = models.IntegerField(blank=True, null=True ,default=1)
+    qq_statu = models.IntegerField(blank=True, null=True ,default=1)
     remark = models.CharField(max_length=200)
     last_date = models.DateTimeField(auto_now_add = True)
     deny_time = models.CharField(max_length=50,blank=True,null=True)
