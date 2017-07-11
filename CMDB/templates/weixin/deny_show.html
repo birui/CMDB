@@ -69,7 +69,7 @@
         pool_name = data.pool_name
         deny_data_extent = data.deny_data_extent
         series = data.series
-        console.log(series)
+        // console.log(series)
 
 
 
@@ -78,7 +78,8 @@
 
       var option = {
           tooltip : {
-              trigger: 'axis'
+              trigger: 'axis',
+              z:8,
           },
           legend: {
               data:pool_name,
@@ -112,6 +113,25 @@
           ],
 
           series : series 
+
+          {
+            type: 'line',
+            lineStyle: {
+                color: '#48b',
+                width: 2,
+                type: 'solid'
+            },
+            crossStyle: {
+                color: '#1e90ff',
+                width: 1,
+                type: 'dashed'
+            },
+            shadowStyle: {
+                color: 'rgba(150,150,150,0.3)',
+                width: 'auto',
+                type: 'default'
+            }
+        } 
           // series : [
           //     {
           //         name:'邮件营销',
