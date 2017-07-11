@@ -43,7 +43,8 @@
       <thead>
         <tr>
           <th>域名</th>
-          <th>状态</th>
+          <th>微信</th>
+          <th>qq</th>
           <th>时间</th>
           <th>备注</th>
           <th>操作</th>
@@ -57,6 +58,7 @@
         <div class="readonly dvInput_{{last_value.pk}}"> {{ last_value.fields.url }} </div>
       </td>
       <td class="wei_st" > {{ last_value.fields.weixin_status }} </td>  
+      <td class="qq_st" > {{ last_value.fields.qq_status }} </td> 
       <td> {{ last_value.fields.last_date }} </td>  
       <td> 
         <div class="readonly dvInput_{{last_value.pk}}">  {{ last_value.fields.remark }}        </div>
@@ -133,6 +135,20 @@ $(document).ready(function(){
     }
     else {
         $('.wei_st').eq(index).css("color", "red").text("异常");
+    }
+})
+
+  $.each($('.qq_st'), function(index, value) {
+    // console.log(index);
+    // console.log($('.wei_st').eq(index).text().indexOf(1))
+    if($('.qq_st').eq(index).text().indexOf('-1') != -1){
+        $('.qq_st').eq(index).css("color", "red").text("被封");
+    }
+    else if($('.qq_st').eq(index).text().indexOf('1') != -1){
+        $('.qq_st').eq(index).css("color", "green").text("正常");
+    }
+    else {
+        $('.qq_st').eq(index).css("color", "red").text("异常");
     }
 })
 
