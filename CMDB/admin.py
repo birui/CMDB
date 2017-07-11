@@ -67,11 +67,11 @@ class share_domain_show(admin.ModelAdmin):
 
 class nmonitordomain_show(admin.ModelAdmin):
     #显示字段
-    list_display = ('url','weixin_status', 'last_date','weixin_status','qq_status','remark','deny_time','qq_deny_time')
+    list_display = ('url','weixin_status', 'last_date','weixin_status','qq_statu','remark','deny_time','qq_deny_time')
     #指定列表过滤器,页面右边
     list_filter = ('url',)
     # 指定要搜索的字段
-    search_fields = ('url', 'last_date','weixin_status','qq_status')
+    search_fields = ('url', 'last_date','weixin_status','qq_statu')
 
 class coohua_share_domain_show(admin.ModelAdmin):
     #显示字段
