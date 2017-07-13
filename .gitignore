@@ -8,6 +8,7 @@
 *.ini
 *.tar
 *.txt
+.idea/*
 !requirements.txt
 settings.py
 mail.py
