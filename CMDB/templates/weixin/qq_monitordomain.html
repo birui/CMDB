@@ -43,7 +43,7 @@
       <thead>
         <tr>
           <th>域名</th>
-          <th>微信</th>
+          <th>qq</th>
           <th>时间</th>
           <th>备注</th>
           <th>操作</th>
@@ -56,8 +56,7 @@
       <td> 
         <div class="readonly dvInput_{{last_value.pk}}"> {{ last_value.fields.url }} </div>
       </td>
-      <td class="wei_st" > {{ last_value.fields.weixin_status }} </td>  
-      <!-- <td class="qq_st" > {{ last_value.fields.qq_statu }} </td>  -->
+      <td class="qq_st" > {{ last_value.fields.qq_statu }} </td> 
       <td> {{ last_value.fields.last_date }} </td>  
       <td> 
         <div class="readonly dvInput_{{last_value.pk}}">  {{ last_value.fields.remark }}        </div>
@@ -81,7 +80,7 @@ $(document).ready(function(){
         var url = $("#url").val();
         var remark = $("#remark").val();
 
-        $.post("/add_domain/",{'url':url,'remark':remark,}, function(data){
+        $.post("/add_qq_domain/",{'url':url,'remark':remark,}, function(data){
 
             console.log(data);
             
@@ -98,23 +97,17 @@ $(document).ready(function(){
       $.each($('.de_bu'), function(index, value) {
         $('.de_bu').eq(index).on('click', function() {
 
-          // var toEdit = $(this).val();
-          // $('.dvInput_'+(index+1))[$(this).val() == '编辑' ? 'removeClass' : 'addClass']('readonly').find(':input').attr('readonly', $(this).val() == '编辑' ? false : true);
-          // $(this).val() == '编辑' ? $(this).val('保存') : $(this).val('编辑');
-          // if ($(this).val() == '删除') {//保存的ajax代码
-            
               url = $(this).parent().prev().prev().prev().prev().find('div').text();
               remark = $(this).parent().prev().find('div').text();
-              console.log(url)
-              console.log(remark)
-              $.post("/drop_domain/",{'url':url,'remark':remark,}, function(data){
+              // console.log(url)
+              // console.log(remark)
+              $.post("/drop_qq_domain/",{'url':url,'remark':remark,}, function(data){
 
                 // console.log('dddd')
-
-                
                 if(data == 'OK') {
                   location.reload();
                 }
+              location.reload();
 
                 
             })
@@ -123,20 +116,19 @@ $(document).ready(function(){
       })
 });
 
-  $.each($('.wei_st'), function(index, value) {
+  $.each($('.qq_st'), function(index, value) {
     // console.log(index);
     // console.log($('.wei_st').eq(index).text().indexOf(1))
-    if($('.wei_st').eq(index).text().indexOf('-1') != -1){
-        $('.wei_st').eq(index).css("color", "red").text("被封");
+    if($('.qq_st').eq(index).text().indexOf('-1') != -1){
+        $('.qq_st').eq(index).css("color", "red").text("被封");
     }
-    else if($('.wei_st').eq(index).text().indexOf('1') != -1){
-        $('.wei_st').eq(index).css("color", "green").text("正常");
+    else if($('.qq_st').eq(index).text().indexOf('1') != -1){
+        $('.qq_st').eq(index).css("color", "green").text("正常");
     }
     else {
-        $('.wei_st').eq(index).css("color", "red").text("异常");
+        $('.qq_st').eq(index).css("color", "red").text("异常");
     }
 })
-
 
  </script>
 </body>

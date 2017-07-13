@@ -938,6 +938,79 @@ def drop_domain(request):
 #coohua域名检测
 #集合coohua share接口
 
+#====qq域名监控=====
+
+def monitor_qq_domain(request):
+    monitordomain_v = monitordomain_qq.objects.all()
+    jsondata = serializers.serialize("json", monitordomain_v)
+    json_nc = json.loads(jsondata)
+
+    return render(
+        request,
+        'weixin/qq_monitordomain.html',
+        {'ck_domain': json_nc}
+    )
+
+def add_qq_domain(request):
+    if request.method == 'POST':
+        url = request.POST.get('url')
+        remark = request.POST.get('remark')
+        # print url,remark
+        # check_domain = check_share_domain()
+        # domain_str = check_domain.weixin_domain(url)
+        # json_nc = json.loads(domain_str)
+        # domain_status = int(json_nc['status'])
+        # sharedomain = check_share_domain()
+        # # print domain_status
+        # content = url
+        # if domain_status == -1:
+        #     mailbox = [
+        #         'domain_alarm@coohua.com',
+        #     ]
+        #     subject = '分享域名报警'
+        #
+        #     for i in mailbox:
+        #         print i
+        #         sharedomain.sendqqmail(i, subject, content)
+        #
+        #     mobile_number = [
+        #         '18515937401',
+        #         '18500324192',
+        #         '18811346265',
+        #         '15801402572',
+        #         '15665229832',
+        #         '18600046769',
+        #     ]
+        #
+        #     for i in mobile_number:
+        #         sharedomain.send_sms(i, content)
+
+
+        check_repeat = monitordomain_qq.objects.filter(url=url,remark=remark)
+        # print check_repeat
+        if len(check_repeat) >= 1:
+            monitordomain_qq.objects.filter(url=url,remark=remark).update(remark=remark)
+        else:
+            data_v = monitordomain_qq(url=url, remark=remark)
+        data_v.save()
+    return HttpResponse('OK')
+
+def drop_qq_domain(request):
+    if request.method == 'POST':
+        url_l = request.POST.get('url')
+        remark = request.POST.get('remark')
+        content_ini = ' '.join(url_l.split())
+        remark_v = ' '.join(remark.split())
+        domain = content_ini.replace('\r', '').replace('\n', '').replace('\t', '').replace(' ', '')
+        remark = remark_v.replace('\r', '').replace('\n', '').replace('\t', '').replace(' ', '')
+        # print remark,domain
+        data_v = monitordomain_qq.objects.filter(url=domain,remark=remark)
+        data_v.delete()
+
+    return HttpResponse('OK')
+
+#====qq doman monit END ====
+
 def get_domain_1(model, count):
     ten_domain = {}
     qq_status = domain_pool.objects.filter(pool_name=model).values('qq_status')

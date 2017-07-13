@@ -89,6 +89,14 @@ class coohua_domain_pool_show(admin.ModelAdmin):
     # 指定要搜索的字段
     search_fields = ('pool_name', 'remark',)
 
+class monitordomain_qq_show(admin.ModelAdmin):
+    #显示字段
+    list_display = ('url','qq_statu','remark','qq_deny_time','last_date')
+    #指定列表过滤器,页面右边
+    list_filter = ('url','qq_statu')
+    # 指定要搜索的字段
+    search_fields = ('url', 'last_date','qq_status')
+
 #admin里面显示哪些表：
 admin.site.register(Brothers)
 admin.site.register(History)
@@ -106,3 +114,4 @@ admin.site.register(monitordomain,nmonitordomain_show)
 admin.site.register(chanell_data)
 admin.site.register(coohua_share_domain,coohua_share_domain_show)
 admin.site.register(domain_pool,coohua_domain_pool_show)
+admin.site.register(monitordomain_qq,monitordomain_qq_show)
