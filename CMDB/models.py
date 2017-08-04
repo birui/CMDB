@@ -259,3 +259,17 @@ class zaker_spider(models.Model):
     def __unicode__(self):
         return str(self.id)
 
+class ngx_ip(models.Model):
+    domain = models.CharField(max_length=200)
+    ip = models.GenericIPAddressField(blank=True, null=True)
+    time = models.IntegerField(blank=True, null=True)
+    num = models.IntegerField(blank=True, null=True)
+    def __unicode__(self):
+        return str(self.id)
+
+class ngx_api(models.Model):
+    domain = models.CharField(max_length=200)
+    api = models.CharField(max_length=200)
+    num = models.IntegerField(blank=True, null=True)
+    def __unicode__(self):
+        return str(self.id)

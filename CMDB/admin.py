@@ -97,6 +97,22 @@ class monitordomain_qq_show(admin.ModelAdmin):
     # 指定要搜索的字段
     search_fields = ('url', 'last_date','qq_status')
 
+class ngx_ip_show(admin.ModelAdmin):
+    #显示字段
+    list_display = ('domain','ip','num')
+    #指定列表过滤器,页面右边
+    list_filter = ('domain','ip')
+    # 指定要搜索的字段
+    search_fields = ('domain', 'ip')
+
+class ngx_api_show(admin.ModelAdmin):
+    #显示字段
+    list_display = ('domain','api','num')
+    #指定列表过滤器,页面右边
+    list_filter = ('domain','api')
+    # 指定要搜索的字段
+    search_fields = ('domain', 'api')
+
 #admin里面显示哪些表：
 admin.site.register(Brothers)
 admin.site.register(History)
@@ -115,3 +131,5 @@ admin.site.register(chanell_data)
 admin.site.register(coohua_share_domain,coohua_share_domain_show)
 admin.site.register(domain_pool,coohua_domain_pool_show)
 admin.site.register(monitordomain_qq,monitordomain_qq_show)
+admin.site.register(ngx_ip,ngx_ip_show)
+admin.site.register(ngx_api,ngx_api_show)

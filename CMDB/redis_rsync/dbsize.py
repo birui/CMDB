@@ -94,7 +94,7 @@ class redis_dbsize(object):
 
 
     	
-# test = redis_dbsize('redis-altair001','123.56.11.110','115.28.108.0',6379)
+# test = redis_dbsize('redis-test001','127.0.0.1','127.0.0.1',6379)
 # test.setslave_bj()
 # test.set_dbsie()
 # qindao_size=test.getdbsize_qd()

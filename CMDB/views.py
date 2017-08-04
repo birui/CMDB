@@ -941,6 +941,7 @@ def drop_domain(request):
 #====qq域名监控=====
 
 def monitor_qq_domain(request):
+    # monitordomain_v = monitordomain_qq.objects.all().values('url','qq_statu','remark','last_date')
     monitordomain_v = monitordomain_qq.objects.all()
     jsondata = serializers.serialize("json", monitordomain_v)
     json_nc = json.loads(jsondata)
