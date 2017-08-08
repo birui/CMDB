@@ -413,7 +413,9 @@ def online_app(request):
     liplists = request.POST['liplists']
     describe = request.POST['describe']
     hostname = request.POST['hostname']
-    deploy_path = Modelname.objects.all().filter(name='%s' % (modelname)).values('deploy')
+
+    deploy_dic = Modelname.objects.filter(name='%s' % (modelname)).values('deploy')
+    deploy_path = deploy_dic[0]['deploy']
 
     # print modelname,version,liplists,describe,hostname
 
