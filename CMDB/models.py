@@ -9,6 +9,7 @@ class Modelname(models.Model):
     name = models.CharField(max_length=70)
     lead = models.CharField(max_length=50)
     remark = models.CharField(max_length=250)
+    deploy = models.CharField(max_length=250,default='/app/coohua/publish/deploy/deploy.sh')
     def __unicode__(self):
         return self.name
 

@@ -5,7 +5,7 @@ from CMDB.models import *
 
 class ServicesAdmin(admin.ModelAdmin):
     #显示字段
-    list_display = ('name', 'lead', 'remark')
+    list_display = ('name', 'lead', 'deploy','remark')
     #指定列表过滤器,页面右边
     list_filter = ('lead',)
     # 指定要搜索的字段
