@@ -485,7 +485,7 @@ def online_app(request):
             cmd = '%s %s %s' % (deploy_path,mode,version)
         elif mode == 'rollback':
             # cmd = '/app/coohua/publish/deploy/deploy.sh %s' % (mode)
-            cmd = '%s %s %s' % (deploy_path, mode)
+            cmd = '%s %s' % (deploy_path, mode)
         else:
             print 'ERROR NO ARGUMENT！！'
 
