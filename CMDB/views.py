@@ -413,8 +413,11 @@ def online_app(request):
     liplists = request.POST['liplists']
     describe = request.POST['describe']
     hostname = request.POST['hostname']
+    print modelname
+
 
     deploy_dic = Modelname.objects.filter(name='%s' % (modelname)).values('deploy')
+    print deploy_dic
     deploy_path = deploy_dic[0]['deploy']
 
     # print modelname,version,liplists,describe,hostname
@@ -485,7 +488,7 @@ def online_app(request):
             cmd = '%s %s %s' % (deploy_path,mode,version)
         elif mode == 'rollback':
             # cmd = '/app/coohua/publish/deploy/deploy.sh %s' % (mode)
-            cmd = '%s %s' % (deploy_path, mode)
+            cmd = '%s %s' % (deploy_path,mode)
         else:
             print 'ERROR NO ARGUMENT！！'
 
