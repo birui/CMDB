@@ -329,8 +329,13 @@
         $(".btn-online-back").click(function () {
             $(this).attr("disabled", true);
             var _rollback = Boolean($(this).attr('data-back'));
-            console.log(_rollback)
-            var modelname = $("#dLabel").text();
+            var btnText = $(this).text();
+            console.log(btnText)
+            if(btnText.indexOf('提交上线') != -1) {
+                var modelname = $("#dLabel").text();
+            }else if(btnText.indexOf('提交回滚') != -1) {
+                var modelname = $("#callbackLabel").text();
+            }
             var version = $("#ver").val();
             var describe = $("#describe").val();
             var liplists = '', hostnamestr = '';
