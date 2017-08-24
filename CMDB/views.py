@@ -473,13 +473,13 @@ def online_app(request):
     # ==================end===========================
     status = []
 
-    file('tmp_log.txt', 'w')
+    # file('tmp_log.txt', 'w')
 
     for host in host_list:
-        f = file('tmp.txt', 'w+')
-        f.write(host)
-        f.flush()
-        f.close()
+        # f = file('tmp.txt', 'w+')
+        # f.write(host)
+        # f.flush()
+        # f.close()
         # print host
         # print modelname
         # print version
@@ -497,14 +497,14 @@ def online_app(request):
         # print runcmd
         sta = runcmd.runcmd()
         # print sta
-        f = file('tmp_log.txt', 'w+')
-        f.write(sta)
-        f.flush()
-        f.close()
+        # f = file('tmp_log.txt', 'w+')
+        # f.write(sta)
+        # f.flush()
+        # f.close()
 
         status.append(sta)
 
-        time.sleep(5)
+        time.sleep(2)
 
     # print "%s , %s, %s" %(version,modelname,describe)
     ##存入数据库
@@ -513,7 +513,7 @@ def online_app(request):
 
     mailbox = [
     'birui@coohua.com',
-    'zhubaofeng@coohua.com',
+    'wanglong@coohua.com',
     ]
 
     subject = '%s %s 上线' % (modelname,version)
