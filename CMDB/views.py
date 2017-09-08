@@ -473,13 +473,13 @@ def online_app(request):
     # ==================end===========================
     status = []
 
-    # file('tmp_log.txt', 'w')
+    file('tmp_log.txt', 'w')
 
     for host in host_list:
-        # f = file('tmp.txt', 'w+')
-        # f.write(host)
-        # f.flush()
-        # f.close()
+        f = file('tmp.txt', 'w+')
+        f.write(host)
+        f.flush()
+        f.close()
         # print host
         # print modelname
         # print version
