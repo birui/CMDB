@@ -12,17 +12,21 @@ class Server(object):
     def refresh(self):
         #key以group，name和管理地址的id做为key
         # print '=========================================================>>>>>>>>>'
-        for i in self.connection.supervisor.getAllProcessInfo():
+        try:
+            self.connection.supervisor.getAllProcessInfo()
+        except Exception as e:
+            print e
+        else:
+            for i in self.connection.supervisor.getAllProcessInfo():
+                self.dic["%s:%s:%s" % (i['group'], i['name'],self.id)] = i 
 
-            self.dic["%s:%s:%s" % (i['group'], i['name'],self.id)] = i 
-
-            # self.dic['statename']=i['statename']
-            # self.dic['description']=i['description']
-            # self.dic['name']=i['name']
-            # self.dic['logfile']=i['logfile']
-            # print self.dic["%s:%s" % (i['group'], i['name'])]['description']
-            # print self.dic.keys()
-            #print self.dic.values()
+                # self.dic['statename']=i['statename']
+                # self.dic['description']=i['description']
+                # self.dic['name']=i['name']
+                # self.dic['logfile']=i['logfile']
+                # print self.dic["%s:%s" % (i['group'], i['name'])]['description']
+                # print self.dic.keys()
+                # print self.dic.values()
 
     def stop(self, name):
         try:
@@ -49,7 +53,7 @@ class Server(object):
 
 #======test========
 
-# test = Server('http://192.168.11.10:8899')
+# test = Server('http://192.168.11.11:9001')
 # test.refresh()
 # test.stop('beanstalk-11304')
 

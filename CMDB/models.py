@@ -274,3 +274,15 @@ class ngx_api(models.Model):
     num = models.IntegerField(blank=True, null=True)
     def __unicode__(self):
         return str(self.id)
+
+class supervisor_ip(models.Model):
+    su_hostname = models.CharField(max_length=200)
+    su_url = models.CharField(max_length=200)
+    # su_hostname = models.CharField(max_length=200)
+    # su_ip = models.GenericIPAddressField()
+    # su_port = models.IntegerField(blank=True, null=True)
+    # su_user = models.CharField(max_length=200)
+    # su_password = models.CharField(max_length=200)
+    su_remark = models.CharField(max_length=200)
+    def __unicode__(self):
+        return str(self.id)

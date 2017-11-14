@@ -6,6 +6,7 @@ from django.http import HttpResponse, HttpResponseRedirect, Http404
 from CMDB.models import *
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.contrib import auth
+from django.shortcuts import redirect
 from urllib import urlencode
 from urllib import unquote
 import json
@@ -99,6 +100,10 @@ def new_supervisor(request):
         return render_to_response('new/supervisor.html', {
             'servers_list': sup_backend.server_list,
         })
+
+def get_supervisor_ip(request):
+    su_url_list = supervisor_ip.objects.all().values('id','su_url')
+    return HttpResponse(su_url_list)
 
 
 def new_report(request):
@@ -584,12 +589,22 @@ def control(request):
     sup_backend.refresh()
     process_name = request.GET['name']
     action = request.GET['action']
-    print action
-    print process_name
-    if action not in ('start', 'stop', 'restart'):
+    # print action
+    # print process_name
+    if action not in ('start', 'stop', 'restart','log'):
         raise Http404
-    getattr(sup_backend, 'action')(process_name, action)  # test实例里面的action方法对process_name进行操作
-    return HttpResponse(action)  # TODO url reverse
+    if action == 'log':
+        su_id = getattr(sup_backend, 'sup_id')(process_name)
+        print su_id
+        su_url_s= supervisor_ip.objects.filter(id=su_id).values('su_url')
+        for i in su_url_s:
+            url = i['su_url'] + '/logtail/' + process_name
+            # print 'log ====.>',url
+            return HttpResponse(url)
+
+    else:
+        getattr(sup_backend, 'action')(process_name, action)  # test实例里面的action方法对process_name进行操作
+        return HttpResponse()  # TODO url reverse
 
 
 class test_view(View):

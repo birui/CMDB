@@ -52,6 +52,7 @@ urlpatterns = [
     url(r'^new_domain/$', new_domain),
     url(r'^new_items/$', new_items),
     url(r'^new_supervisor/$', new_supervisor),
+    url(r'^get_supervisor_ip/$', get_supervisor_ip),
     url(r'^new_report/$', new_report),
     url(r'^openFile/$', openFile),
     url(r'^updatefile/$', updatefile),

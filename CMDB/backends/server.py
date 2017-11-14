@@ -1,3 +1,4 @@
+#coding=utf-8
 from xmlrpclib import ServerProxy, Fault
 from urlparse import urlparse
 

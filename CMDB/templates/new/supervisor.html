@@ -2,7 +2,6 @@
 
 {% block content %}
 
-<!-- {% load custem_temp %} -->
 
 <table class="table table-hover table-bordered" id = "mytable">
         <thead>
@@ -35,6 +34,8 @@
         <td> 
         <a href="#" id="start_stop_a" class='start_stop_a' data-name="{{i.name}}">start</a>   
         <a href="#" id="restart_a" class='restart_stop_a' data-name="{{i.name}}"> </a> 
+        <a href="#" id="tail_log_a" class='tail_log_a' data-name="{{i.name}}">log</a> 
+
         </td> 
         <!-- <td> mark </td>   -->
         </tr>
@@ -56,6 +57,10 @@ $('#mytable').on( 'click', 'a', function () {
         var action = $(this).html()
         // alert(action);
         $.get('/control/',{'name':name,'action':action},function(ret){
+            // console.log(ret)
+            if(ret != '') {
+                window.open(ret);
+            }
             window.location.reload();
         })
 
@@ -86,7 +91,8 @@ $('#mytable').on( 'click', 'a', function () {
                 $('#mytable .start_stop_a').eq(i).text('start');
             }
         })
-  })   
+  }) 
+
 </script>
 
 
