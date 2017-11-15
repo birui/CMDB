@@ -3,12 +3,11 @@ from xmlrpclib import ServerProxy, Fault
 from urlparse import urlparse
 
 class Server(object):
-    def __init__(self, connection_string, id, su_hostname):
+    def __init__(self, connection_string, id):
         self.name = urlparse(connection_string).hostname
         self.connection = ServerProxy(connection_string)
         self.dic = {}
         self.id = id
-        self.su_hostname =su_hostname
 
     def refresh(self):
         #key以group，name和管理地址的id做为key
@@ -20,7 +19,6 @@ class Server(object):
         else:
             for i in self.connection.supervisor.getAllProcessInfo():
                 self.dic["%s:%s:%s" % (i['group'], i['name'],self.id)] = i 
-                self.dic["%s:%s:%s" % (i['group'], i['name'],self.id)]['su_hostname'] = self.su_hostname
 
                 # self.dic['statename']=i['statename']
                 # self.dic['description']=i['description']

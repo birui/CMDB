@@ -16,22 +16,26 @@ class Backend(object):
 		self.super_url = {}
 		#所有机器获取的服务列表
 		self.server_list = {}
+		self.id_hostname = {}
 		#加入id方便以后通过id找到supervisor管理url
 	def refresh(self):
-		su_url_list = supervisor_ip.objects.all().values('id', 'su_url')
+		su_url_list = supervisor_ip.objects.all().values('id', 'su_hostname', 'su_url')
 		for su_list in su_url_list:
 			su_id = int(su_list['id'])
 			self.super_url[su_id] = su_list['su_url'].encode('utf8')
+			self.id_hostname[su_id] = su_list['su_hostname'].encode('utf8')
 
 		# print 'url == >' , self.super_url
 
 		# 将server.py 得到的多个机器的supervisor数据统一导入server_list字典方便统一输出到页面
 		for k1,v1 in self.super_url.items():
-			# print s
-			test = Server(v1,k1)
+			su_hostname = self.id_hostname[int(k1)]
+			test = Server(v1,k1,su_hostname)
 			test.refresh()
 			for k in  test.dic.keys():
 				self.server_list[k] = test.dic[k]
+
+				print self.server_list
 
 	def action(self,name,action):
 		#通过name找到id，正则过滤出key里面的id
@@ -43,7 +47,8 @@ class Backend(object):
 		    	# print '==:>' ,id
 		#通过id可以得到url
 		url = self.super_url[int(id)]
-		sup_action = Server(url,id)
+		su_hostname = self.id_hostname[int(id)]
+		sup_action = Server(url,id,su_hostname)
 		if action == 'start':
 			sup_action.start(name)
 		elif action == 'stop':
