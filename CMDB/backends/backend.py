@@ -35,7 +35,7 @@ class Backend(object):
 			for k in  test.dic.keys():
 				self.server_list[k] = test.dic[k]
 
-				print self.server_list
+				# print self.server_list
 
 	def action(self,name,action):
 		#通过name找到id，正则过滤出key里面的id
@@ -43,7 +43,9 @@ class Backend(object):
 			p = re.compile("%s:.*" %(name))
 			match = p.findall(k)
 			if match != [] :
-				id=re.findall("\d",match[0],flags=0)[-1]
+				e = re.compile(':')
+				id = e.split(match[0])[-1]
+				# id=re.findall("\d",match[0],flags=0)[-1]
 		    	# print '==:>' ,id
 		#通过id可以得到url
 		url = self.super_url[int(id)]
@@ -61,7 +63,9 @@ class Backend(object):
 			p = re.compile("%s:.*" %(name))
 			match = p.findall(k)
 			if match != [] :
-				id=re.findall("\d",match[0],flags=0)[-1]
+				e = re.compile(':')
+				id = e.split(match[0])[-1]
+				# id=re.findall("\d",match[0],flags=0)[-1]
 				return int(id)
 
 # test=Backend()

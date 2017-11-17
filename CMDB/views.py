@@ -595,13 +595,12 @@ def control(request):
         raise Http404
     if action == 'log':
         su_id = getattr(sup_backend, 'sup_id')(process_name)
-        print su_id
+        # print '======-id---------------------->',su_id
         su_url_s= supervisor_ip.objects.filter(id=su_id).values('su_url')
         for i in su_url_s:
             url = i['su_url'] + '/logtail/' + process_name
-            # print 'log ====.>',url
+            # print '=================url==================>',url
             return HttpResponse(url)
-
     else:
         getattr(sup_backend, 'action')(process_name, action)  # test实例里面的action方法对process_name进行操作
         return HttpResponse()  # TODO url reverse
