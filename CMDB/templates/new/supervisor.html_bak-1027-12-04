@@ -1,0 +1,132 @@
+{% extends "new/base.html" %}
+{% load staticfiles %}
+{% block css  %}
+    <link rel="stylesheet" type="text/css" href="{% static 'admin/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+    <link href="{% static 'cmdb_css/reveal.css' %}" rel="stylesheet">
+    <style type="text/css">
+              th, td { white-space: nowrap; }
+              /*div.dataTables_wrapper {
+                width: 1200px;
+                margin: 0 auto;
+              }*/
+              .dataTables_processing{
+                line-height: 30px;
+                height: auto;
+              }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<div id="myModal" class="modal fade bs-example-modal-lg"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document" style="width:960px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">服务管理</h4>
+      </div>
+      <div class="modal-body">
+        <h1 id="hostname1" ></h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <table class="table table-hover table-bordered" id = "mytable"> -->
+<table id="table_id" class="table table-striped table-bordered" cellspacing="0" width="100%">
+
+        <thead>
+          <tr>
+            <th>状态</th>
+            <th>主机名</th>
+            <th>服务</th>
+            <th>描述</th>
+            <th>操作</th>
+            <!-- <th>备注</th> -->
+          </tr>
+
+        <tbody>
+
+      </tbody>
+    </table>
+{% endblock %}
+
+
+{% block js %}
+<script type="text/javascript" src=" {% static 'admin/vendors/datatables.net/js/jquery.dataTables.min.js' %} "></script>
+<script type="text/javascript" src="{% static 'admin/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+<!-- <script type="text/javascript" src="{% static 'cmdb_css/jquery.reveal_2.js' %}"  ></script> -->
+<script type="text/javascript">
+
+  $(document).ready( function () {
+    window.table = $('#table_id').DataTable({
+    "processing": true, 
+    "sScrollX": "100%",
+    "sScrollXInner": "110%",
+    "bScrollCollapse": true,
+    "iDisplayLength":50,
+    "ajax": {
+      "url": "/new_supervisor/",
+      "type": "GET",
+      "dataSrc": "",
+    },
+ 
+  "columns": [
+          { "data": "statename"},
+          { "data": "su_hostname" },
+          { "data": "name" },
+          { "data": "description" },
+          // { "data": "fields.server"},
+          // { "data": "fields.data_center"},
+          // { "data": "fields.cost" },
+          // {"defaultContent": '<a href="javascrip:;"  class="check-btn" style="color:#5bc0de"> 监控 </a>' },
+          // { "data": "fields.remark" },
+      ],
+  });
+
+$('#mytable').on( 'click', 'a', function () {
+        //h5方法直接用data取出数据或者
+        var name = $(this).data('name');//过滤出hostname数据
+        var action = $(this).html()
+        // alert(action);
+        $.get('/control/',{'name':name,'action':action},function(ret){
+            // console.log(ret)
+            if(ret != '') {
+                window.open(ret);
+            }
+            window.location.reload();
+        })
+
+    });
+
+      // 获取id是mytable下的class是state的元素
+        var $stateObj = $('#mytable .state');
+     // 遍历方法each() 这些元素，i的初始值是0 eq(i)就是给元素加一个index使元素有唯一性。
+        $stateObj.each(function(i){
+            //获取id=state-named的值
+            var state = $(this).attr("state-name");
+
+            //如果是RUNNING要显示的背景是绿色，显示 stop和restart按钮，eq(i)加下标防止都一样。
+            if(state == 'RUNNING'){
+                $(this).css({'backgroundColor':'green','color':'#fff'});
+                $('#mytable .start_stop_a').eq(i).text('stop');
+                $('#mytable .restart_stop_a').eq(i).text('restart');
+
+            }else if(state == 'STOPPED'){
+                $(this).css({'backgroundColor':'red','color':'#fff'});
+                $('#mytable .start_stop_a').eq(i).text('start');
+            }else{
+                $(this).css({'backgroundColor':'yellow','color':'black'});
+                $('#mytable .start_stop_a').eq(i).text('start');
+            }
+        })
+
+});
+
+</script>
+
+
+{% endblock %}
+
+

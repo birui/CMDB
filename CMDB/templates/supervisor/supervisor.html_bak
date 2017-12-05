@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+<script type="text/javascript">
+  $(document).ready(function(){
+      // 获取id是mytable下的class是state的元素
+        var $stateObj = $('#mytable .state');
+     // 遍历方法each() 这些元素，i的初始值是0 eq(i)就是给元素加一个index使元素有唯一性。
+        $stateObj.each(function(i){
+            //获取id=state-named的值
+            var state = $(this).attr("state-name");
+
+            //如果是RUNNING要显示的背景是绿色，显示 stop和restart按钮，eq(i)加下标防止都一样。
+            if(state == 'RUNNING'){
+                $(this).css({'backgroundColor':'green','color':'#fff'});
+                $('#mytable .start_stop_a').eq(i).text('stop');
+                $('#mytable .restart_stop_a').eq(i).text('restart');
+
+            }else if(state == 'STOPPED'){
+                $(this).css({'backgroundColor':'red','color':'#fff'});
+                $('#mytable .start_stop_a').eq(i).text('start');
+            }else{
+                $(this).css({'backgroundColor':'yellow','color':'black'});
+                $('#mytable .start_stop_a').eq(i).text('start');
+            }
+        })
+  })   
+</script>
+
+
+
+<table class="table table-hover table-bordered" id = "mytable">
+        <thead>
+          <tr>
+            <th>状态</th>
+            <th>描述</th>
+            <th>名称</th>
+            <th>操作</th>
+            <!-- <th>备注</th> -->
+          </tr>
+
+        <tbody>
+
+        <!--      <script type="text/javascript"> 
+       var test = '{{ i.name }}'
+        window.alert(test)
+        </script> -->
+
+        共 {{ servers_list|length }} 个
+
+        <!-- 只需要列表的values获取各个程序的name，描述，状态 -->
+    
+         {% for i  in servers_list.values %}
+
+        <tr> 
+        <td state-name="{{i.statename}}" class="state" > {{ i.statename }} </td>  
+        <td> {{ i.description }} </td>
+        <td> {{ i.name }} </td> 
+        <!-- h5 属性要data开头 -->
+        <td> 
+        <a href="#" id="start_stop_a" class='start_stop_a' data-name="{{i.name}}">start</a>   
+        <a href="#" id="restart_a" class='restart_stop_a' data-name="{{i.name}}"> </a> 
+        </td> 
+        <!-- <td> mark </td>   -->
+        </tr>
+
+        {% endfor %}
+
+      </tbody>
+    </table>
+
+
+<script type="text/javascript">
+
+$('#mytable').on( 'click', 'a', function () {
+        //h5方法直接用data取出数据或者
+        var name = $(this).data('name');//过滤出hostname数据
+        var action = $(this).html()
+        // alert(action);
+        $.get('/control/',{'name':name,'action':action},function(ret){
+            window.location.reload();
+        })
+
+    });
+
+</script>
+
+
+{% endblock %}
+
+

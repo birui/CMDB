@@ -83,6 +83,20 @@ def new_domain(request):
 def new_items(request):
     return render_to_response('new/items_list.html')
 
+def supervisor_server(request):
+    return render_to_response('new/supervisor.html')
+
+def supervisor_api(request):
+    try:
+        sup_backend.refresh()
+    except Exception, e:
+
+        default_err = {'err': {'statename': 'error', 'description': 'error', 'name': 'error'},}
+        return render_to_response('new/supervisor.html', {
+            'servers_list': default_err,
+        })
+    else:
+        return HttpResponse(json.dumps(sup_backend.server_list),content_type='application/json')
 
 def new_supervisor(request):
     # print test.server_list
@@ -98,8 +112,14 @@ def new_supervisor(request):
     else:
         # 将所有机器的supervisor控制的程序列表传给模板，字典格式
         return render_to_response('new/supervisor.html', {
-            'servers_list': sup_backend.server_list,
+            'servers_list': sup_backend.server_list
         })
+        # print type(sup_backend.server_list)
+        # print sup_backend.server_list
+
+        # return HttpResponse(json.dumps(sup_backend.server_list),content_type='application/json')
+
+
 
 def get_supervisor_ip(request):
     su_url_list = supervisor_ip.objects.all().values('id','su_url')
@@ -365,6 +385,7 @@ def account_login(request):
 
 def data(request):
     hosts = serializers.serialize("json", Hosts.objects.all())
+    print hosts
     return HttpResponse(hosts, content_type='application/json')
 
 

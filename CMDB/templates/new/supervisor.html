@@ -1,103 +1,137 @@
-{% extends "new/base.html" %}
+{% extends "new/base.html" %} {% load staticfiles %} {% block css %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css">
+<link href="{% static 'cmdb_css/reveal.css' %}" rel="stylesheet">
+<style type="text/css">
+th,
+td {
+    white-space: nowrap;
+}
 
-{% block content %}
 
+/*div.dataTables_wrapper {
+                width: 1200px;
+                margin: 0 auto;
+              }*/
 
-<table class="table table-hover table-bordered" id = "mytable">
-        <thead>
-          <tr>
+.dataTables_processing {
+    line-height: 30px;
+    height: auto;
+}
+</style>
+{% endblock %} {% block content %}
+<div id="myModal" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg" role="document" style="width:960px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">服务管理</h4>
+            </div>
+            <div class="modal-body">
+                <h1 id="hostname1"></h1>
+            </div>
+        </div>
+    </div>
+</div>
+<table id="table_id" class="table table-striped table-bordered" cellspacing="0" width="100%">
+    <thead>
+        <tr>
             <th>状态</th>
             <th>主机名</th>
             <th>服务</th>
             <th>描述</th>
             <th>操作</th>
-            <!-- <th>备注</th> -->
-          </tr>
-
-        <tbody>
-
-        <!--      <script type="text/javascript"> 
-       var test = '{{ i.name }}'
-        window.alert(test)
-        </script> -->
-
-        共 {{ servers_list|length }} 个
-
-        <!-- 只需要列表的values获取各个程序的name，描述，状态 -->
-    
-         {% for i  in servers_list.values %}
-
-        <tr> 
-        <td state-name="{{i.statename}}" class="state" > {{ i.statename }} </td>  
-        <td> {{ i.su_hostname }} </td>
-        <td> {{ i.name }} </td> 
-        <td> {{ i.description }} </td>
-        <!-- h5 属性要data开头 -->
-        <td> 
-        <a href="#" id="start_stop_a" class='start_stop_a' data-name="{{i.name}}">start</a>   
-        <a href="#" id="restart_a" class='restart_stop_a' data-name="{{i.name}}"> </a> 
-        <a href="#" id="tail_log_a" class='tail_log_a' data-name="{{i.name}}">log</a> 
-
-        </td> 
-        <!-- <td> mark </td>   -->
         </tr>
-
-        {% endfor %}
-
-      </tbody>
-    </table>
-{% endblock %}
-
-
-{% block js %}
-
+    </thead>
+    <tfoot>
+        <tr>
+            <th>状态</th>
+            <th>主机名</th>
+            <th>服务</th>
+            <th>描述</th>
+            <th>操作</th>
+        </tr>
+    </tfoot>
+</table>
+{% endblock %} {% block js %}
+<script type="text/javascript" src="{% static 'cmdb_css/jquery.reveal_2.js' %}"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
+$(document).ready(function() {
 
-$('#mytable').on( 'click', 'a', function () {
+    window.table = $('#table_id').DataTable({
+        "processing": true,
+        "sScrollX": "100%",
+        "sScrollXInner": "100%",
+        "bScrollCollapse": true,
+        "iDisplayLength": 50,
+        "ajax": {
+            "url": "/supervisor_api/",
+            "type": "POST",
+            "dataSrc": "",
+        },
+
+        "columns": [{
+                "data": "statename",
+                render: function(data, type, row, meta) {
+                    if (data == 'RUNNING') {
+
+                        return "<div data-name1=" + data + " class='state' style='background:rgba(58, 148, 220,.6);background-color:#C4F77F;width:" + data + " ;'> " + data + "</div>";
+
+                    } else if (data == 'STOPPED') {
+
+                        return "<div style='background:rgba(58, 148, 220,.6);background-color:#F77D60;width:" + data + " ;'> " + data + "</div>";
+                    } else {
+
+                        return "<div style='background:rgba(58, 148, 220,.6);background-color:#F9F261;width:" + data + " ;'> " + data + "</div>";
+                    }
+                }
+            },
+
+            { "data": "su_hostname" },
+            { "data": "name" },
+            { "data": "description" },
+            {
+                "data": "name",
+                render: function(data, type, row, meta) {
+                    // return " <a href='#' id='start_stop_a' class='start_stop_a' data-name=" + data + ">start</a> <a href='#' id='restart_a' class='restart_stop_a' data-name=" + data + "> </a> <a href='#' id='tail_log_a' class='tail_log_a' data-name=" + data + ">log</a> ";
+                    return " <button type='button' id='start_stop_a' class='start_stop_a btn btn-danger btn-xs' data-name=" + data + " >start</button> <button type='button' id='restart_a' class='restart_stop_a btn btn-warning btn-xs' data-name=" + data + "></button> <button type='button' id='tail_log_a' class='restart_stop_a btn btn-info btn-xs' data-name=" + data + " >log</button>"
+                }
+            }
+        ],
+        //数据加载完后加载按钮
+        "rowCallback": function(row, data, index) {
+            // var state = row.attr("data-name1");
+            // console.log(row)
+            var test = $(row).find("td:last")
+            var a = $(test).find("button")
+            if (data.statename == 'RUNNING') {
+                $(a[0]).text("stop");
+                $(a[1]).text("restart");
+            } else {
+                $(a[0]).text("start");
+                $(a[1]).hide();
+            }
+        }
+
+
+    });
+
+    $('#table_id').on('click', 'button', function() {
         //h5方法直接用data取出数据或者
-        var name = $(this).data('name');//过滤出hostname数据
+        var name = $(this).data('name'); //过滤出hostname数据
         var action = $(this).html()
-        // alert(action);
-        $.get('/control/',{'name':name,'action':action},function(ret){
+        console.log(name);
+        $.get('/control/', { 'name': name, 'action': action }, function(ret) {
             // console.log(ret)
-            if(ret != '') {
+            if (ret != '') {
                 window.open(ret);
             }
             window.location.reload();
         })
+        window.location.reload();
 
     });
-
+});
 </script>
-
-<script type="text/javascript">
-  $(document).ready(function(){
-      // 获取id是mytable下的class是state的元素
-        var $stateObj = $('#mytable .state');
-     // 遍历方法each() 这些元素，i的初始值是0 eq(i)就是给元素加一个index使元素有唯一性。
-        $stateObj.each(function(i){
-            //获取id=state-named的值
-            var state = $(this).attr("state-name");
-
-            //如果是RUNNING要显示的背景是绿色，显示 stop和restart按钮，eq(i)加下标防止都一样。
-            if(state == 'RUNNING'){
-                $(this).css({'backgroundColor':'green','color':'#fff'});
-                $('#mytable .start_stop_a').eq(i).text('stop');
-                $('#mytable .restart_stop_a').eq(i).text('restart');
-
-            }else if(state == 'STOPPED'){
-                $(this).css({'backgroundColor':'red','color':'#fff'});
-                $('#mytable .start_stop_a').eq(i).text('start');
-            }else{
-                $(this).css({'backgroundColor':'yellow','color':'black'});
-                $('#mytable .start_stop_a').eq(i).text('start');
-            }
-        })
-  }) 
-
-</script>
-
-
 {% endblock %}
-
-
