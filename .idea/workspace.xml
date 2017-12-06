@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bdd5571d-1775-40d8-8711-e4db9207f0be" name="Default" comment="test">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/backends/file.py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/backends/backend.py" afterPath="$PROJECT_DIR$/CMDB/backends/backend.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/backends/server_test.py" afterPath="$PROJECT_DIR$/CMDB/backends/server_test.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/templates/new/hosts.html" afterPath="$PROJECT_DIR$/CMDB/templates/new/hosts.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/templates/new/supervisor.html" afterPath="$PROJECT_DIR$/CMDB/templates/new/supervisor.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/templates/supervisor/supervisor.html" afterPath="$PROJECT_DIR$/CMDB/templates/supervisor/supervisor.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/views.py" afterPath="$PROJECT_DIR$/CMDB/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/coohua_CMDB/urls.py" afterPath="$PROJECT_DIR$/coohua_CMDB/urls.py" />
     </list>
     <ignored path="coohua_CMDB.iws" />
     <ignored path=".idea/workspace.xml" />
