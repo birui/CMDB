@@ -1,0 +1,195 @@
+{% extends "new/base.html" %}
+{% load staticfiles %}
+{% block css %}
+
+    <!-- <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet"> -->
+
+{% endblock %}
+
+{% block content %}
+
+    <ul class="nav nav-tabs" role="tablist" id='myTabs'>
+        <li role="presentation" class="active"><a href="#online" aria-controls="online" role="tab"
+                                                  data-toggle="tab">同步</a></li>
+        <!-- <li role="presentation"><a href="#rollback" aria-controls="rollback" role="tab" data-toggle="tab">回滚</a></li> -->
+    </ul>
+
+    <div class="tab-content">
+        <!-- 上线部分 -->
+        <div role="tabpanel" class="tab-pane active" id="online">
+
+            <div class="row" style='margin-top:20px'>
+
+                <div class="col-lg-1">
+                    <p> 名称：</p>
+                </div>
+                <div class="col-lg-6 ">
+                    <p id="dLabel" style='width:100%'></p>
+
+                </div><!-- /.col-lg-6 -->
+
+
+            </div>
+
+            <div class="row devis_lists" style='margin-top:10px'>
+                <div class="col-lg-1">
+                    <p> 路径：</p>
+                </div>
+                <div class="col-lg-6">
+                    <div id='devis_lists_text'></div>
+                </div>
+            </div>
+
+            <!-- 描述 -->
+            <div class="row" style='margin-top:10px'>
+                <div class="col-lg-1"><p> 描述：</p></div>
+
+                <div class="col-lg-6"><textarea id="describe" class="form-control" rows="3"></textarea></div>
+
+            </div>
+
+            <div class="row" style='margin-top:10px'>
+                <div class="col-lg-6">
+                    <button type="button" class="btn btn-danger btn-default btn-online-back" data-back=''>执行playbook</button>
+
+                </div>
+            </div>
+
+            <div class="row" style='margin-top:100px'></div>
+
+            <div class="col-lg-6 ">
+                <!-- <p> <textarea id="result" style="width: 900px ;border: 0 none; outline-style: none">   </textarea>   </p> -->
+                <p>
+                <pre id="result" style="width: 900px ;border: 0 none; outline-style: none;display: none">   </pre>
+                </p>
+            </div>
+
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript">
+
+        //通过浏览器地址栏获取提交参数
+        function pathFn() {
+            var _path = window.location.search;
+            if (_path) {
+
+                _path = _path.substring(1);
+                var _pathArr = _path.split('&');
+
+                var _modname = _pathArr[0].split('=')
+                var _name = _pathArr[1].split('=')
+                var _marr = [_modname[1],_name[1]]
+
+{#                console.log(_marr);#}
+                return _marr
+            } else {
+                return [];
+            }
+        };
+        //
+        function autoFn(ele, ele2,ele3,ele4) {
+            var _arr = pathFn();
+            if (_arr) {
+                var _json = {};
+                var _arr1 = _arr[0];
+                var _arr2 = _arr[1]
+                var _json = {'modelname1': _arr1};
+                ele.text(_arr1);
+                ele2.text(_arr1);
+                ele3.text(_arr2);
+                ele4.text(_arr2);
+{#                ajaxFn(_json, 'devis_lists_text');#}
+{#                ajaxFn(_json, 'devis_lists_text-callback');#}
+            } else {
+                return false;
+            }
+        }
+
+        $(document).ready(function () {
+
+
+            autoFn($('#devis_lists_text'), $('#devis_lists_text-callback'),$('#dLabel'),$('#callbackLabel'));
+
+            // $('.online-menu li').on('click',function(){
+            //     var modelname = $(this).text();
+            //     $('#dLabel').text(modelname);
+            //     var _json = {'modelname1':modelname};
+            //     ajaxFn(_json,'devis_lists_text');
+            // });
+            // //rollback callback
+            // $('.rollback-menu li').on('click',function(){
+            //     var modelname = $(this).text();
+            //     $('#callbackLabel').text(modelname);
+
+            //     var _json = {'modelname1':modelname};
+            //     ajaxFn(_json,'devis_lists_text-callback');
+            // });
+            //click
+
+        });
+
+
+        $(".btn-online-back").click(function () {
+            var _rollback = Boolean($(this).attr('data-back'));
+            console.log(_rollback)
+            var name = $("#dLabel").text()
+            var modelname = $("#devis_lists_text").text();
+            var version = $("#ver").val();
+            var describe = $("#describe").val();
+            var liplists = '', hostnamestr = '';
+            $('.i_lip').each(function () {
+                liplists += $(this).attr('data-lip') + ',';
+                hostnamestr += $(this).attr('data-lname') + ',';
+            });
+            liplists = liplists.substring(0, liplists.length - 1);
+            hostnamestr = hostnamestr.substring(0, hostnamestr.length - 1);
+
+            var _param = {
+                'mode': 'deploy',
+                'name':name,
+                'modelname': modelname,
+                'liplists': liplists,
+                'hostname': hostnamestr,
+                'version': null,
+                'describe': describe
+            };
+            if (_rollback) {//back
+                _param = null;
+                _param = {
+                    'mode': 'rollback',
+                    'name':name,
+                    'modelname': modelname,
+                    'liplists': liplists,
+                    'hostname': hostnamestr,
+                    'version': null,
+                    'describe': null
+                };
+            }
+            $.post("/playbook_run/", _param, function (data) {
+
+                if (_rollback) {//back
+                    $('#result_back').html(data);
+                    $('#result_back').show(); //改变display: none
+                    alert("恭喜你回滚成功！！！");
+                } else {
+                    $('#result').html(data);
+                    $('#result').show(); //改变display: none
+                    alert("恭喜你执行成功！！！")
+                }
+
+
+            });
+
+        });
+
+
+    </script>
+
+{% endblock %}
+

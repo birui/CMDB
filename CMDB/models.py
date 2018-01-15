@@ -125,6 +125,14 @@ class config(models.Model):
     # class Meta:
     #     ordering = ['models_name']
 
+class playbook(models.Model):
+    name = models.CharField(blank=True,max_length=50,null=True)
+    playbook_path = models.CharField(blank=True, max_length=250)
+    describe = models.CharField(blank=True,max_length=250)
+    date_time = models.DateTimeField(auto_now_add=True,)
+
+
+
 class Document(models.Model):
     docfile = models.FileField(upload_to='documents/%Y/%m/%d')
 

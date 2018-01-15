@@ -1,0 +1,129 @@
+{% extends "new/base.html" %}
+{% load staticfiles %}
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'admin/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css' %}">
+<link href="{% static 'cmdb_css/reveal.css' %}" rel="stylesheet">
+<style type="text/css">
+          th, td { white-space: nowrap; }
+          /*div.dataTables_wrapper {
+            width: 1200px;
+            margin: 0 auto;
+          }*/
+          .dataTables_processing{
+            line-height: 30px;
+            height: auto;
+          }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- 弹出层 -->
+<div id="myModal2" class="modal fade bs-example-modal-lg"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document" style="width:960px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">监控</h4>
+      </div>
+      <div class="modal-body">
+        <h1 id="hostname2" ></h1>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end -->
+
+<div id="myModal" class="modal fade bs-example-modal-lg"  tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg" role="document" style="width:960px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">playbook管理</h4>
+      </div>
+      <div class="modal-body">
+        <h1 id="hostname1" ></h1>
+      </div>
+    </div>
+  </div>
+</div>
+
+ <!-- <table id="table_id" class="display" cellspacing="0" width="100%"> -->
+ <table id="table_id" class="table table-striped table-bordered" cellspacing="0" width="100%">
+
+        <thead>
+          <tr>
+            <th>名称</th>
+            <th>路径</th>
+            <th>描述</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+<!--         <tfoot>
+          <tr>
+            <th>名称</th>
+            <th>模块</th>
+            <th>路径</th>
+            <th>操作</th>
+          </tr>
+        </tfoot> -->
+    </table>
+
+
+{% endblock %}
+
+
+{% block js %}
+
+<script type="text/javascript" src=" {% static 'admin/vendors/datatables.net/js/jquery.dataTables.min.js' %} "></script>
+<script type="text/javascript" src="{% static 'admin/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js' %}"></script>
+<!-- <script type="text/javascript" src="{% static 'cmdb_css/jquery.reveal_2.js' %}"  ></script> -->
+<script type="text/javascript">
+
+  $(document).ready( function () {
+    window.table = $('#table_id').DataTable({
+    "processing": true, 
+    "sScrollX": "100%",
+    "sScrollXInner": "100%",
+    "bScrollCollapse": true,
+    "iDisplayLength":50,
+    "ajax": {
+      "url": "/playbook_data/",
+      "type": "POST",
+      "dataSrc": ""
+    },
+    "columns": [
+          { "data": "fields.name"},
+          { "data": "fields.playbook_path"},
+          { "data": "fields.describe" },
+          {"defaultContent": '<a href="javascript:;" title="编辑" class="fa fa-edit" style="margin-right:10px"></a><a href="javascript:;" title="执行" class="fa fa-external-link-square" style=""></a>' }
+      ]
+  });
+//edit
+$('#table_id').on('click','.fa-edit',function(){
+    var _tr = $(this).parents('tr');
+    var _path = _tr.find('td:eq(1)').text();
+    var _file_name = _tr.find('td:eq(0)').text();
+    var _host = window.location.host;
+    window.location.href = 'http://'+_host+'/playbookfile?path='+_path+'&file_name='+_file_name;
+    //window.location.href = 'http://www.baidu.com';
+});
+
+$('#table_id').on('click','.fa-external-link-square',function(){
+    var _tr = $(this).parents('tr');
+    var _path = _tr.find('td:eq(1)').text();
+    var _file_name = _tr.find('td:eq(0)').text();
+    var _host = window.location.host;
+    window.location.href = 'http://'+_host+'/playbook_update?path='+_path+'&file_name='+_file_name;
+
+    // $("#hostname2").html( "哈哈哈");
+    // $('#myModal2').modal('show');
+    // window.location.href = 'http://'+_host+'/openFile?path='+_path;
+    //window.location.href = 'http://www.baidu.com';
+});
+
+});
+</script>
+<!-- openFile -->
+
+{% endblock %}
+

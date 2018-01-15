@@ -121,6 +121,14 @@ class supervisor_ip_show(admin.ModelAdmin):
     # 指定要搜索的字段
     search_fields = ('su_hostname', 'su_url')
 
+class playbook_show(admin.ModelAdmin):
+    #显示字段
+    list_display = ('name','playbook_path','describe','date_time')
+    #指定列表过滤器,页面右边
+    list_filter = ('name',)
+    # 指定要搜索的字段
+    search_fields = ('name', 'describe')
+
 #admin里面显示哪些表：
 admin.site.register(Brothers)
 admin.site.register(History)
@@ -141,3 +149,4 @@ admin.site.register(domain_pool,coohua_domain_pool_show)
 admin.site.register(monitordomain_qq,monitordomain_qq_show)
 admin.site.register(ngx_ip,ngx_ip_show)
 admin.site.register(supervisor_ip,supervisor_ip_show)
+admin.site.register(playbook,playbook_show)

@@ -157,15 +157,15 @@ def config_syn(request):
     mode = request.POST['mode']  # 执行模块
     name = request.POST['name']
     modelname = request.POST['modelname']  # 业务模块
-    version = request.POST['version']
-    liplists = request.POST['liplists']
-    describe = request.POST['describe']
-    hostname = request.POST['hostname']
+    # version = request.POST['version']
+    # liplists = request.POST['liplists']
+    # describe = request.POST['describe']
+    # hostname = request.POST['hostname']
     jsondata = serializers.serialize("json", config.objects.all().filter(models_name=modelname))
     listdata = json.loads(jsondata)
     playbook_path = listdata[0]['fields']['playbook_path']
-    remote_user = listdata[0]['fields']['remote_user']
-    path = listdata[0]['fields']['path']
+    # remote_user = listdata[0]['fields']['remote_user']
+    # path = listdata[0]['fields']['path']
 
     if mode == 'deploy':
 
@@ -191,7 +191,52 @@ def config_syn(request):
     return HttpResponse(status1)
 
 
+def playbook_manage(request):
+    return render(request, 'new/playbook.html', {'pagename': 'playbook管理'})
 
+def playbook_data(request):
+    playbookname = serializers.serialize("json", playbook.objects.all())
+    return HttpResponse(playbookname, content_type='application/json')
+
+def playbookfile(request):
+    path = request.GET.get('path')
+    filename = request.GET.get('file_name')
+    filepath = str(path) +'/'+ str(filename)
+    print filepath
+    num = request.session.get('num')
+    num = filepath
+    request.session['num'] = num
+    f = file(filepath, 'r')
+    c = f.read()
+    f.close()
+    return render(request, 'new/playbookfile.html', {'fileHandler1': c})
+
+def playbook_update(request):
+    return render(request, 'new/playbook_update.html', {'pagename': '配置同步'})
+
+def playbook_run(request):
+    mode = request.POST['mode']  # 执行模块
+    name = request.POST['name']
+    modelname = request.POST['modelname']  # 业务模块
+    jsondata = serializers.serialize("json", config.objects.all().filter(models_name=modelname))
+    listdata = json.loads(jsondata)
+    playbook_path = listdata[0]['fields']['playbook_path']
+
+    if mode == 'deploy':
+        # 改之前同步到old备份,而不是现在
+        cmd = 'cd %s; ansible-playbook %s' %(playbook_path,name)
+        print cmd
+
+    elif mode == 'rollback':
+        # 如果是回滚不用同步
+        cmd = 'cd %s; ansible-playbook %s' %(playbook_path,name)
+
+    else:
+        print 'ERROR NO ARGUMENT！！'
+
+    status1 = subprocess.check_output(cmd, shell=True)
+
+    return HttpResponse(status1)
 
 def mulfile(request):
     if request.method == 'POST':

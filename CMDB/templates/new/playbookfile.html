@@ -23,7 +23,7 @@
             <br/>
 
             <input type="submit" value="提交" name="" id="submit-btn" class="btn btn-success">
-            <!-- <input type="button" value="执行" name="play-btn" id='play-btn' class="btn btn-primary"> -->
+            <input type="button" value="执行" name="play-btn" id='play-btn' class="btn btn-primary">
             <input type="submit" value="取消" name="" class="btn btn-default">
 
         </form>
@@ -69,21 +69,37 @@
              data: {model_name:_model_name},
              dataType: "json",
              success: function(data){
-                 alert('同步成功!')
+                 alert('执行成功!')
              }
             });
         });
 
-        //执行playbook
+        function pathFn() {
+            var _path = window.location.search;
+            if (_path) {
 
-        // $('#play-btn').on('click',function(){
-        //     var _arr = pathFn();
-        //     var _path = _arr[0];
-        //     var _model_name = _arr[1];
-        //     var _host = window.location.host;
-        //     window.location.href = 'http://'+_host+'/config_update?path='+_path+'&model_name='+_model_name;
+                _path = _path.substring(1);
+                var _pathArr = _path.split('&');
 
-        // });
+                var _modname = _pathArr[0].split('=')
+                var _name = _pathArr[1].split('=')
+                var _marr = [_modname[1],_name[1]]
+
+                console.log(_marr);
+                return _marr
+            } else {
+                return [];
+            }
+        };
+
+        $('#play-btn').on('click',function(){
+            var _arr = pathFn();
+            var _path = _arr[0];
+            var _file_name = _arr[1];
+            var _host = window.location.host;
+            window.location.href = 'http://'+_host+'/playbook_update?path='+_path+'&file_name='+_file_name;
+
+        });
     </script>
 
 {% endblock %}
