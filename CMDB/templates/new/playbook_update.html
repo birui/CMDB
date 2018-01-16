@@ -73,7 +73,6 @@
 
 {% block js %}
     <script type="text/javascript">
-
         //通过浏览器地址栏获取提交参数
         function pathFn() {
             var _path = window.location.search;
@@ -116,78 +115,41 @@
 
             autoFn($('#devis_lists_text'), $('#devis_lists_text-callback'),$('#dLabel'),$('#callbackLabel'));
 
-            // $('.online-menu li').on('click',function(){
-            //     var modelname = $(this).text();
-            //     $('#dLabel').text(modelname);
-            //     var _json = {'modelname1':modelname};
-            //     ajaxFn(_json,'devis_lists_text');
-            // });
-            // //rollback callback
-            // $('.rollback-menu li').on('click',function(){
-            //     var modelname = $(this).text();
-            //     $('#callbackLabel').text(modelname);
+            $('.online-menu li').on('click',function(){
+                var modelname = $(this).text();
+                $('#dLabel').text(modelname);
+                var _json = {'modelname1':modelname};
+                ajaxFn(_json,'devis_lists_text');
+            });
+            //rollback callback
+            $('.rollback-menu li').on('click',function(){
+                var modelname = $(this).text();
+                $('#callbackLabel').text(modelname);
 
-            //     var _json = {'modelname1':modelname};
-            //     ajaxFn(_json,'devis_lists_text-callback');
-            // });
-            //click
+                var _json = {'modelname1':modelname};
+                ajaxFn(_json,'devis_lists_text-callback');
+            });
+            click
 
         });
 
 
-        $(".btn-online-back").click(function () {
-            var _rollback = Boolean($(this).attr('data-back'));
-            console.log(_rollback)
-            var name = $("#dLabel").text()
-            var modelname = $("#devis_lists_text").text();
-            var version = $("#ver").val();
-            var describe = $("#describe").val();
-            var liplists = '', hostnamestr = '';
-            $('.i_lip').each(function () {
-                liplists += $(this).attr('data-lip') + ',';
-                hostnamestr += $(this).attr('data-lname') + ',';
-            });
-            liplists = liplists.substring(0, liplists.length - 1);
-            hostnamestr = hostnamestr.substring(0, hostnamestr.length - 1);
-
-            var _param = {
-                'mode': 'deploy',
-                'name':name,
-                'modelname': modelname,
-                'liplists': liplists,
-                'hostname': hostnamestr,
-                'version': null,
-                'describe': describe
-            };
-            if (_rollback) {//back
-                _param = null;
-                _param = {
-                    'mode': 'rollback',
-                    'name':name,
-                    'modelname': modelname,
-                    'liplists': liplists,
-                    'hostname': hostnamestr,
-                    'version': null,
-                    'describe': null
+        $(".btn-online-back").click(function () { 
+            var _arr = pathFn();
+            var _path = _arr[0];
+            var _file_name = _arr[1];
+            _param = {
+                    'playbook_path': _path,
+                    'file_name':_file_name,
                 };
-            }
             $.post("/playbook_run/", _param, function (data) {
 
-                if (_rollback) {//back
-                    $('#result_back').html(data);
-                    $('#result_back').show(); //改变display: none
-                    alert("恭喜你回滚成功！！！");
-                } else {
-                    $('#result').html(data);
-                    $('#result').show(); //改变display: none
-                    alert("恭喜你执行成功！！！")
-                }
-
-
+                $('#result').html(data);
+                $('#result').show(); //改变display: none
+                alert("恭喜你执行成功！！！")
             });
 
         });
-
 
     </script>
 

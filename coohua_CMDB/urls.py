@@ -67,6 +67,7 @@ urlpatterns = [
     url(r'^playbook_data/$',playbook_data),
     url(r'^playbookfile/$',playbookfile),
     url(r'^playbook_update/$',playbook_update),
+    url(r'^playbook_run/$', playbook_run),
     url(r'^backup_config/$', backup_config),
     url(r'^mulfile/$', mulfile,name='mulfile'),
     url(r'^get_modelname/$', get_modelname),

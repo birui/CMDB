@@ -215,27 +215,11 @@ def playbook_update(request):
     return render(request, 'new/playbook_update.html', {'pagename': '配置同步'})
 
 def playbook_run(request):
-    mode = request.POST['mode']  # 执行模块
-    name = request.POST['name']
-    modelname = request.POST['modelname']  # 业务模块
-    jsondata = serializers.serialize("json", config.objects.all().filter(models_name=modelname))
-    listdata = json.loads(jsondata)
-    playbook_path = listdata[0]['fields']['playbook_path']
-
-    if mode == 'deploy':
-        # 改之前同步到old备份,而不是现在
-        cmd = 'cd %s; ansible-playbook %s' %(playbook_path,name)
-        print cmd
-
-    elif mode == 'rollback':
-        # 如果是回滚不用同步
-        cmd = 'cd %s; ansible-playbook %s' %(playbook_path,name)
-
-    else:
-        print 'ERROR NO ARGUMENT！！'
-
+    playbook_path = request.POST['playbook_path']
+    name = request.POST['file_name']
+    cmd = 'cd %s; ansible-playbook %s' %(playbook_path,name)
+    print cmd
     status1 = subprocess.check_output(cmd, shell=True)
-
     return HttpResponse(status1)
 
 def mulfile(request):
