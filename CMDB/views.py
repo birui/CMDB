@@ -1496,7 +1496,7 @@ def ajax_jed(request):
     print war_name
     war_path_src = search_maven(war_name)
     print war_path_src
-    e = re.compile(r'//')
+    e = re.compile(r'maven/')
     war_path = e.split(war_path_src)[1]
     print war_path
     war_url = 'http://172.16.11.1:8102/'+ war_path
