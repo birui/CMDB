@@ -1489,19 +1489,20 @@ def jed(request):
     )
 #将提交的json存在为k8s.json
 def ajax_jed(request):
-    # pass
     K8sTemplate = json.loads(request.POST['K8sTemplate'].encode('utf8'))
     k8sTemplate_dic = json.loads(K8sTemplate)
-    # print type(k8sTemplate_dic)
+    print type(k8sTemplate_dic)
     war_name = k8sTemplate_dic['war']['war_path']
-    # print war_name
+    print war_name
     war_path_src = search_maven(war_name)
+    print war_path_src
     e = re.compile(r'//')
     war_path = e.split(war_path_src)[1]
+    print war_path
     war_url = 'http://172.16.11.1:8102/'+ war_path
     k8sTemplate_dic['war']['war_url'] = war_url
     k8sTemplate_json = json.dumps(k8sTemplate_dic)
-    # print k8sTemplate_json
+    print k8sTemplate_json
     k8sjson = file('CMDB/scripts/playbooks/k8s/k8s.json', 'w+')
     k8sjson.write(k8sTemplate_json)
     k8sjson.flush()
