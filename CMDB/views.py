@@ -1497,7 +1497,7 @@ def ajax_jed(request):
     war_path_src = search_maven(war_name)
     print war_path_src
     e = re.compile(r'maven/')
-    war_path = e.split(war_path_src)[1]
+    war_path = e.split(war_path_src)[1].replace('\r','').replace('\n','').replace('\t','').replace(' ','_')
     print war_path
     war_url = 'http://172.16.11.1:8102/'+ war_path
     k8sTemplate_dic['war']['war_url'] = war_url
