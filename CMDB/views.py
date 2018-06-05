@@ -1481,31 +1481,48 @@ def zaker(request,id):
         context = {'title': title, 'author': author, 'content': content, 'source_site':source_site}
     return render(request,'zaker/zaker.html',context)
 
-#===k8s模板生成===
+#===k8s模板生成===========
 def jed(request):
     return render(
         request,
         'jed/docs/index.html',
     )
-
+#将提交的json存在为k8s.json
 def ajax_jed(request):
     # pass
     K8sTemplate = json.loads(request.POST['K8sTemplate'].encode('utf8'))
-    # K8sTemplate = request.POST['K8sTemplate'].encode('utf8')
-    print K8sTemplate
+    k8sTemplate_dic = json.loads(K8sTemplate)
+    # print type(k8sTemplate_dic)
+    war_name = k8sTemplate_dic['war']['war_path']
+    # print war_name
+    war_path_src = search_maven(war_name)
+    e = re.compile(r'//')
+    war_path = e.split(war_path_src)[1]
+    war_url = 'http://172.16.11.1:8102/'+ war_path
+    k8sTemplate_dic['war']['war_url'] = war_url
+    k8sTemplate_json = json.dumps(k8sTemplate_dic)
+    # print k8sTemplate_json
     k8sjson = file('CMDB/scripts/playbooks/k8s/k8s.json', 'w+')
-    k8sjson.write(K8sTemplate)
+    k8sjson.write(k8sTemplate_json)
     k8sjson.flush()
     k8sjson.close()
-    return HttpResponse(K8sTemplate)
-
+    return HttpResponse(k8sTemplate_json)
+#运行部署程序部署deployment
 def k8s_playbook_run(request):
     playbook_path = 'CMDB/scripts/playbooks/k8s/site.yml'
     cmd = 'ansible-playbook %s --extra-vars "@CMDB/scripts/playbooks/k8s/k8s.json"' %(playbook_path)
-    # cmd = 'ls'
-    print cmd
     try:
         status2 = subprocess.check_output(cmd, shell=True)
     except subprocess.CalledProcessError as e:
         status2 = e.output
     return HttpResponse(status2)
+#搜索war地址
+def search_maven(filename):
+    search_path = 'CMDB/scripts/maven/'
+    cmd = 'find %s -name %s' %(search_path,filename)
+    try:
+        status2 = subprocess.check_output(cmd, shell=True)
+    except subprocess.CalledProcessError as e:
+        status2 = e.output
+    return status2
+

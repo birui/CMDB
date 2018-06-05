@@ -544,11 +544,11 @@
                 <div>
                     <!-- <a href='#' id='direct_link'>Direct Link</a> (preserves schema, value, and options) -->
                 </div>
-                <h2>生成k8s模板</h2>
-                <p>更改模板后必须点击“生成模板”才能生效
-                    <button class='btn btn-primary' id='setvalue'>生成模板</button>
-                </p>
-                <textarea id='output' style='width: 100%; height: 700px; font-family: monospace;' class='form-control'></textarea>
+                <!-- <h2>生成k8s模板</h2>
+<p>更改模板后必须点击“生成模板”才能生效
+    <button class='btn btn-primary' id='setvalue'>生成模板</button>
+</p>
+<textarea id='output' style='width: 100%; height: 700px; font-family: monospace;' class='form-control'></textarea> -->
                 <!-- <h2>Options</h2> -->
                 <div id='options_holder'>
                     <div>
@@ -621,9 +621,14 @@
             </div>
             <div class='row2'>
                 <div class='span12 col-md-12 columns twelve large-12 col s12'>
+                    <h2>生成k8s模板</h2>
+                    <p>更改模板后必须点击“生成模板”才能生效
+                        <button class='btn btn-primary' id='setvalue'>生成模板</button>
+                    </p>
+                    <textarea id='output' style='width: 100%; height: 700px; font-family: monospace;' class='form-control'></textarea>
                     <h2></h2>
-                    <p>
-                        <button class='btn btn-primary' id='runplaybook'>runplaybook</button>
+                    <p>请先点击上面的“生成模板”，然后点击部署
+                        <button class='btn btn-primary' id='runplaybook'>部署</button>
                     </p>
                     <textarea id='playbook' style='width: 100%; height: 450px; font-family: monospace;' class='form-control'></textarea>
                 </div>
@@ -854,7 +859,7 @@ editor.on("change",  function() {
                                 },
                                 "serviceName": {
                                     "type": "string",
-                                    "description": "service名称",
+                                    "description": "service名称，可以和应用名称相同",
                                     "minLength": 1,
                                     "default": ""
                                 }
@@ -939,7 +944,29 @@ editor.on("change",  function() {
                                     }]
                                 }
                             }
+                        },
+                        "war": {
+                            "title": "tomcat_war",
+                            "type": "object",
+                            "properties": {
+                                "create_war": {
+                                    "type": "boolean",
+                                    "description": "是否下载war包",
+                                    "enum": [
+                                        false,
+                                        true
+                                    ],
+                                    "default": false
+                                },
+                                "war_path": {
+                                    "type": "string",
+                                    "description": "war包名",
+                                    "minLength": 1,
+                                    "default": "XXX.war"
+                                }
+                            }
                         }
+
                     }
                 }
             }
@@ -1015,6 +1042,7 @@ editor.on("change",  function() {
             $output.value = '';
 
             // When the 'update form' button is clicked, set the editor's value
+            //生成k8s模板
             $set_value_button.addEventListener('click', function() {
                 jsoneditor.setValue(JSON.parse($output.value));
                 K8sTemplate = JSON.stringify($output.value);
