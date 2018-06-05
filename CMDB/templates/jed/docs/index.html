@@ -814,7 +814,7 @@ editor.on("change",  function() {
                                 },
                                 "path": {
                                     "type": "string",
-                                    "description": "健康监测接口,tcp方式可以不写",
+                                    "description": "健康监测接口,一般是/api-name,tcp方式可以不写",
                                     "minLength": 1,
                                     "default": "/"
                                 },
@@ -963,6 +963,12 @@ editor.on("change",  function() {
                                     "description": "war包名",
                                     "minLength": 1,
                                     "default": "XXX.war"
+                                },
+                                "api_name": {
+                                    "type": "string",
+                                    "description": "接口名，服务的访问路径",
+                                    "minLength": 1,
+                                    "default": "api-name"
                                 }
                             }
                         }
