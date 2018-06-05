@@ -856,7 +856,7 @@ editor.on("change",  function() {
                                     "type": "string",
                                     "description": "service名称",
                                     "minLength": 1,
-                                    "default": "service.XXXX.com"
+                                    "default": ""
                                 }
                             }
                         },
@@ -912,7 +912,7 @@ editor.on("change",  function() {
                                     "type": "string",
                                     "description": "服务域名",
                                     "minLength": 1,
-                                    "default": "ingress.XXXX.com"
+                                    "default": "XXX.coohua-inc.com"
                                 },
                                 "locations": {
                                     "type": "array",
@@ -1044,7 +1044,7 @@ editor.on("change",  function() {
                 $.get("/k8s_playbook_run/", {}, function(ret) {
                     $('#playbook').html(ret)
                 })
-                reload();
+                // reload();
             });
 
             // Set the theme by loading the right stylesheets
