@@ -157,10 +157,6 @@ def config_syn(request):
     mode = request.POST['mode']  # 执行模块
     name = request.POST['name']
     modelname = request.POST['modelname']  # 业务模块
-    # version = request.POST['version']
-    # liplists = request.POST['liplists']
-    # describe = request.POST['describe']
-    # hostname = request.POST['hostname']
     jsondata = serializers.serialize("json", config.objects.all().filter(models_name=modelname))
     listdata = json.loads(jsondata)
     playbook_path = listdata[0]['fields']['playbook_path']
@@ -219,7 +215,10 @@ def playbook_run(request):
     name = request.POST['file_name']
     cmd = 'cd %s; ansible-playbook %s' %(playbook_path,name)
     print cmd
-    status1 = subprocess.check_output(cmd, shell=True)
+    try:
+        status1 = subprocess.check_output(cmd, shell=True)
+    except subprocess.CalledProcessError as e:
+        status1 = e.output
     return HttpResponse(status1)
 
 def mulfile(request):
@@ -1481,3 +1480,32 @@ def zaker(request,id):
         # print title,link,content,top_img,author,source_site
         context = {'title': title, 'author': author, 'content': content, 'source_site':source_site}
     return render(request,'zaker/zaker.html',context)
+
+#===k8s模板生成===
+def jed(request):
+    return render(
+        request,
+        'jed/docs/index.html',
+    )
+
+def ajax_jed(request):
+    # pass
+    K8sTemplate = json.loads(request.POST['K8sTemplate'].encode('utf8'))
+    # K8sTemplate = request.POST['K8sTemplate'].encode('utf8')
+    print K8sTemplate
+    k8sjson = file('CMDB/scripts/playbooks/k8s/k8s.json', 'w+')
+    k8sjson.write(K8sTemplate)
+    k8sjson.flush()
+    k8sjson.close()
+    return HttpResponse(K8sTemplate)
+
+def k8s_playbook_run(request):
+    playbook_path = 'CMDB/scripts/playbooks/k8s/site.yml'
+    cmd = 'ansible-playbook %s --extra-vars "@CMDB/scripts/playbooks/k8s/k8s.json"' %(playbook_path)
+    # cmd = 'ls'
+    print cmd
+    try:
+        status2 = subprocess.check_output(cmd, shell=True)
+    except subprocess.CalledProcessError as e:
+        status2 = e.output
+    return HttpResponse(status2)

@@ -110,5 +110,8 @@ urlpatterns = [
     url(r'^get_name_test/$',get_name),
     url(r'^oss_upload/$',oss_upload),
     url(r'^zaker/([0-9]+)/$',zaker),
+    url(r'^jed/$',jed),
+    url(r'^ajax_jed/$',ajax_jed),
+    url(r'^k8s_playbook_run/$',k8s_playbook_run)
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
