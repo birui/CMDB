@@ -26,6 +26,7 @@ from CMDB.redis_conn import redis_comm
 from CMDB.redis_rsync.dbsize import redis_dbsize
 from xmlrpclib import ServerProxy
 from CMDB.scripts.playbooks.ansicmd import *
+from CMDB.flushcdn.cdn import *
 from CMDB.scripts.playbooks.ansiplaybook import *
 from CMDB.scripts.weixin.weixin import *
 from CMDB.scripts.weixin.coohua_domain import *
@@ -45,7 +46,6 @@ import random
 import string
 import datetime
 from .forms import NameForm
-
 
 sup_backend = Backend()
 
@@ -1527,3 +1527,24 @@ def search_maven(filename):
         status2 = e.output
     return status2
 
+#=====flushcdn
+def flushcdn_act(request):
+    cdn_url = request.GET['a']
+    # p = re.compile(r'\n')
+    # domain_list = p.split(domain)
+    user_params = {'Action': 'RefreshObjectCaches', 'ObjectPath': cdn_url, 'ObjectType': 'File'}
+    print cdn_url
+    setup_credentials()
+    flushcdn_url = compose_url(user_params)
+    print flushcdn_url
+    request = urllib2.Request(flushcdn_url)
+    response = urllib2.urlopen(request)
+    html = response.read()
+    print html
+    return HttpResponse(html)
+
+def flushcdn(request):
+    return render(
+        request,
+        'weixin/flush_cdn.html',
+    )

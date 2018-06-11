@@ -1,17 +1,15 @@
 <!--在test.html文件夹下添加-->
-<!DOCTYPE html>
-{% load staticfiles %}
+<!DOCTYPE html> {% load staticfiles %}
 <html lang="zh-CN">
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>Bootstrap 101 Template</title>
-
     <!-- Bootstrap -->
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view tde page via file:// -->
     <!--[if lt IE 9]>
@@ -30,96 +28,80 @@
     <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'weixin/js/echarts.min.js' %}"></script>
+    {% block css %} {% endblock %}
+</head>
 
-    {% block css  %} {% endblock %}
-
-  </head>
-    <body>
-
-
-   <nav class="navbar navbar-inverse navbar-fixed-top">
-      
-       <!-- 弹出框 -->
-      <div id="myModal" class="reveal-modal ">  
-      <form method="get" action="/ajax_list/" >
-        <input type="hidden" name="hostname2" id="hostname2" value="">  </input>  
-      </form>
-          <h1 id="hostname1" >
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <!-- 弹出框 -->
+        <div id="myModal" class="reveal-modal ">
+            <form method="get" action="/ajax_list/">
+                <input type="hidden" name="hostname2" id="hostname2" value=""> </input>
+            </form>
+            <h1 id="hostname1">
           </h1>
-          <p>
-          </p>
-          <a class="close-reveal-modal">×</a>
-      </div>
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">CooHua CMDB</a>
+            <p>
+            </p>
+            <a class="close-reveal-modal">×</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <!-- <li><a href="/hostlist/">Dashboard</a></li> -->
-            <li><a href="/admin/">管理</a></li>
-            <li><a href="/fu/">值班</a></li>
-           
-          </ul>
-<!--           <form class="navbar-form navbar-right" action="/search/" method="get" >
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">CooHua CMDB</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- <li><a href="/hostlist/">Dashboard</a></li> -->
+                    <li><a href="/admin/">管理</a></li>
+                    <li><a href="/fu/">值班</a></li>
+                </ul>
+                <!--           <form class="navbar-form navbar-right" action="/search/" method="get" >
             <input type="text" class="form-control" placeholder="Search..." name="q"> -->
-          </form>
+                </form>
+            </div>
         </div>
-
-
-      </div>
     </nav>
-
     <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li><a href="/weixin/">微信</a></li>
-            <li><a href="/chanell_history/">渠道</a></li>
-            <li><a href="/monitordomain/">域名监控</a></li>
-            <li><a href="/monitordomain_qq/">qq域名监控</a></li>
-            <li><a href="/imdomain/">域名导入</a></li>
-            <li><a href="/show_mu_domain/">手动域名</a></li>
-            <li><a href="/domain_pool_web/">域名池</a></li>
-            <li><a href="/show_deny/">被封数量</a></li>
-            <li><a href="/oss_upload/">APK上传</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-            <li><a href=""></a></li>
-          </ul>
-        </div>
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li><a href="/weixin/">微信</a></li>
+                    <li><a href="/chanell_history/">渠道</a></li>
+                    <li><a href="/monitordomain/">域名监控</a></li>
+                    <li><a href="/monitordomain_qq/">qq域名监控</a></li>
+                    <li><a href="/imdomain/">域名导入</a></li>
+                    <li><a href="/show_mu_domain/">手动域名</a></li>
+                    <li><a href="/domain_pool_web/">域名池</a></li>
+                    <li><a href="/show_deny/">被封数量</a></li>
+                    <li><a href="/oss_upload/">APK上传</a></li>
+                    <li><a href="/flushcdn/">CDN刷新</a></li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li><a href=""></a></li>
+                    <li><a href=""></a></li>
+                    <li><a href=""></a></li>
+                    <li><a href=""></a></li>
+                    <li><a href=""></a></li>
+                </ul>
+                <ul class="nav nav-sidebar">
+                    <li><a href=""></a></li>
+                    <li><a href=""></a></li>
+                    <li><a href=""></a></li>
+                </ul>
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ">
+                <!-- 父模板 -->
+                {% block content %} {% endblock %}
+            </div>
+            <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+            <!-- <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
+            <!-- Include all compiled plugins (below), or include individual files as needed -->
+            {% block js %} {% endblock %}
+</body>
 
-
-
-
-
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main ">
-        <!-- 父模板 -->
-           {% block content %} {% endblock %} 
-        </div>
-
-           <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-           <!-- <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.1/jquery.min.js"></script> -->
-           <!-- Include all compiled plugins (below), or include individual files as needed -->
-
-        {% block js  %}  {% endblock %}
-
-  </body>
 </html>
-
-
