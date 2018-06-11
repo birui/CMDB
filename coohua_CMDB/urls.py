@@ -114,5 +114,7 @@ urlpatterns = [
     url(r'^ajax_jed/$',ajax_jed),
     url(r'^k8s_playbook_run/$',k8s_playbook_run),
     url(r'^flushcdn/$', flushcdn),
-    url(r'^flushcdn_act/$', flushcdn_act)
+    url(r'^flushcdn_act/$', flushcdn_act),
+    url(r'^flushcdn_dr/$', flushcdn_dr),
+    url(r'^flushcdn_dr_act/$', flushcdn_dr_act)
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

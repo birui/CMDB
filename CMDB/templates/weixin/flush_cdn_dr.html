@@ -3,7 +3,7 @@
 <html>
 
 <body>
-    <h4>CDN刷新页面</h4>
+    <h4>CDN刷新目录</h4>
     <form class="form-horizontal col-sm-5" role="form">
         <div class="form-group">
             <label for="inputEmail3" class="col-sm-3 control-label" style="text-align: left;">刷新url:</label>
@@ -30,7 +30,7 @@
         $("#sum").click(function() {
             // i++;
             var a = $("#a").val();
-            $.get("/flushcdn_act/", { 'a': a }, function(data) {
+            $.get("/flushcdn_dr_act/", { 'a': a }, function(data) {
 
                 // console.log(data)
 

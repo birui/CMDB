@@ -1540,10 +1540,31 @@ def flushcdn_act(request):
     context = ssl._create_unverified_context()
     r = urllib.urlopen(flushcdn_url, context=context)
     print r
+    print user_params
     return HttpResponse(r)
 
 def flushcdn(request):
     return render(
         request,
         'weixin/flush_cdn.html',
+    )
+
+def flushcdn_dr_act(request):
+    cdn_url = request.GET['a']
+    # p = re.compile(r'\n')
+    # domain_list = p.split(domain)
+    user_params = {'Action': 'RefreshObjectCaches', 'ObjectPath': cdn_url, 'ObjectType': 'Directory'}
+    print cdn_url
+    setup_credentials()
+    flushcdn_url = compose_url(user_params)
+    print flushcdn_url
+    context = ssl._create_unverified_context()
+    r = urllib.urlopen(flushcdn_url, context=context)
+    print r
+    return HttpResponse(r)
+
+def flushcdn_dr(request):
+    return render(
+        request,
+        'weixin/flush_cdn_dr.html',
     )
