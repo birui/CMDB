@@ -13,6 +13,7 @@ import json
 import re
 import time
 import urllib2
+import ssl
 from django.core import serializers
 import urllib2
 from django.http import JsonResponse
@@ -41,7 +42,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.csrf import csrf_protect
 from django.core.files.storage import FileSystemStorage
 from django.db import connection
-
 import random
 import string
 import datetime
@@ -1537,11 +1537,10 @@ def flushcdn_act(request):
     setup_credentials()
     flushcdn_url = compose_url(user_params)
     print flushcdn_url
-    request = urllib2.Request(flushcdn_url)
-    response = urllib2.urlopen(request)
-    html = response.read()
-    print html
-    return HttpResponse(html)
+    context = ssl._create_unverified_context()
+    r = urllib.urlopen(flushcdn_url, context=context)
+    print r
+    return HttpResponse(r)
 
 def flushcdn(request):
     return render(
