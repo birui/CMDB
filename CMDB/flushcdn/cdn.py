@@ -62,7 +62,7 @@ def compose_url(user_params):
     signature = compute_signature(parameters, access_key_secret)
     parameters['Signature'] = signature
     url = cdn_server_address + "/?" + urllib.urlencode(parameters)
-    print "---->" + CONFIGFILE
+    # print "---->" + CONFIGFILE
     return url
 
 def make_request(user_params, quiet=False):
@@ -127,6 +127,6 @@ if __name__ == '__main__':
         except ValueError, e:
             print(e.read().strip())
             raise SystemExit(e)
-    print user_params
+    # print user_params
     make_request(user_params)
 

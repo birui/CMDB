@@ -622,6 +622,15 @@
                 <!-- <p>This will update whenever the form changes to show validation errors if there are any.</p> -->
                 <!-- <textarea id='validate' style='width: 100%; height: 100px; font-family: monospace;' readonly disabled class='form-control'></textarea> -->
             </div>
+            <div class='row'>
+                <div class='span12 col-md-12 columns twelve large-12 col s12'>
+                    <h2></h2>
+                    <p>
+                        <button class='btn btn-primary' id='setschema'>Update Schema</button>
+                    </p>
+                    <textarea id='schema' style='width: 100%; height: 450px; font-family: monospace;' class='form-control'></textarea>
+                </div>
+            </div>
             <div class='row2'>
                 <div class='span12 col-md-12 columns twelve large-12 col s12'>
                     <h2>生成k8s模板</h2>
@@ -634,15 +643,6 @@
                         <button class='btn btn-primary' id='runplaybook'>部署</button>
                     </p>
                     <textarea id='playbook' style='width: 100%; height: 450px; font-family: monospace;' class='form-control'></textarea>
-                </div>
-            </div>
-            <div class='row'>
-                <div class='span12 col-md-12 columns twelve large-12 col s12'>
-                    <h2></h2>
-                    <p>
-                        <button class='btn btn-primary' id='setschema'>Update Schema</button>
-                    </p>
-                    <textarea id='schema' style='width: 100%; height: 450px; font-family: monospace;' class='form-control'></textarea>
                 </div>
             </div>
             <!-- <div class='row'>
@@ -682,8 +682,7 @@ editor.on("change",  function() {
 });</code></pre>
     </div>
 </div>
-</div> -->
-        </div>
+</div> --></div>
         <script>
         document.getElementById("schema").style.display = "none";
         document.getElementById("setschema").style.display = "none";
@@ -948,33 +947,33 @@ editor.on("change",  function() {
                                 }
                             }
                         },
-                        "war": {
-                            "title": "tomcat_war",
-                            "type": "object",
-                            "properties": {
-                                "create_war": {
-                                    "type": "boolean",
-                                    "description": "是否下载war包",
-                                    "enum": [
-                                        false,
-                                        true
-                                    ],
-                                    "default": false
-                                },
-                                "war_path": {
-                                    "type": "string",
-                                    "description": "war包名",
-                                    "minLength": 1,
-                                    "default": "XXX.war"
-                                },
-                                "api_name": {
-                                    "type": "string",
-                                    "description": "接口名，服务的访问路径",
-                                    "minLength": 1,
-                                    "default": "api-name"
-                                }
-                            }
-                        }
+                        // "war": {
+                        //     "title": "tomcat_war",
+                        //     "type": "object",
+                        //     "properties": {
+                        //         "create_war": {
+                        //             "type": "boolean",
+                        //             "description": "是否下载war包",
+                        //             "enum": [
+                        //                 false,
+                        //                 true
+                        //             ],
+                        //             "default": false
+                        //         },
+                        //         "war_path": {
+                        //             "type": "string",
+                        //             "description": "war包名",
+                        //             "minLength": 1,
+                        //             "default": "XXX.war"
+                        //         },
+                        //         "api_name": {
+                        //             "type": "string",
+                        //             "description": "接口名，服务的访问路径",
+                        //             "minLength": 1,
+                        //             "default": "api-name"
+                        //         }
+                        //     }
+                        // }
 
                     }
                 }
@@ -1077,8 +1076,11 @@ editor.on("change",  function() {
 
             // runplaybook when the button is clicked
             $set_runplaybook_button.addEventListener('click', function() {
+                K8sTemplate_1 = JSON.parse($output.value);
+                k8sPod_name = K8sTemplate_1.global.name;
+                console.log(k8sPod_name);
 
-                $.get("/k8s_playbook_run/", {}, function(ret) {
+                $.post("/k8s_playbook_run/", { 'k8sPod_name': k8sPod_name }, function(ret) {
                     $('#playbook').html(ret)
                 })
                 // reload();

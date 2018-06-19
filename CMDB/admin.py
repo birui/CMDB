@@ -129,6 +129,14 @@ class playbook_show(admin.ModelAdmin):
     # 指定要搜索的字段
     search_fields = ('name', 'describe')
 
+class k8s_depoloy_show(admin.ModelAdmin):
+    #显示字段
+    list_display = ('name','lead','json_path','img_address','image','img_version','war_path','remark')
+    #指定列表过滤器,页面右边
+    list_filter = ('name',)
+    # 指定要搜索的字段
+    search_fields = ('name', 'lead','image')
+
 #admin里面显示哪些表：
 admin.site.register(Brothers)
 admin.site.register(History)
@@ -150,3 +158,4 @@ admin.site.register(monitordomain_qq,monitordomain_qq_show)
 admin.site.register(ngx_ip,ngx_ip_show)
 admin.site.register(supervisor_ip,supervisor_ip_show)
 admin.site.register(playbook,playbook_show)
+admin.site.register(k8s_depoloy,k8s_depoloy_show)

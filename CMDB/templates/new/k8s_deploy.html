@@ -91,20 +91,20 @@
         </div>
         <div class="row devis_lists" style='margin-top:10px'>
             <div class="col-lg-1">
-                <p> 服务器组：</p>
+                <p> 镜像名称：</p>
             </div>
             <div class="col-lg-6">
                 <div id='devis_lists_text'></div>
             </div>
         </div>
-        <div class="row" style='margin-top:10px'>
-            <div class="col-lg-1">
-                <p> 版本号：</p>
-            </div>
-            <div class="col-lg-6">
-                <input type="text" class="form-control" aria-label="..." id="ver">
-            </div>
-        </div>
+<!-- <div class="row" style='margin-top:10px'>
+    <div class="col-lg-1">
+        <p> 版本号：</p>
+    </div>
+    <div class="col-lg-6">
+        <input type="text" class="form-control" aria-label="..." id="ver">
+    </div>
+</div> -->
         <!-- 描述 -->
         <div class="row" style='margin-top:10px'>
             <div class="col-lg-1">
@@ -178,14 +178,14 @@
 {% endblock %} {% block js %}
 <script type="text/javascript">
 $(document).ready(function() {
-    $.get("/get_modelname/", null, function(data) {
+    $.get("/get_k8s_modelname/", null, function(data) {
         var _li = '',
             groupNameArr = [],
             listsArr = [];
-        console.log(data)
-        for (var i = 0; i < data.length; i++) {
-            groupNameArr.push(data[i].groupName);
-            listsArr.push(data[i].lists);
+        console.log(groupNameArr)
+        for (var key in data) {
+            groupNameArr.push(key);
+            listsArr.push(data[key]);
         };
         for (var j = 0; j < groupNameArr.length; j++) {
             _li = '<li><a href="#" value="' + groupNameArr[j] + '">' + groupNameArr[j] + '</a></li>';
@@ -198,36 +198,23 @@ $(document).ready(function() {
         $('.online-menu li').on('click', function() {
             var modelname = $(this).text();
             var param = { 'modelname1': modelname };
-            console.log(param);
+            // console.log(param);
             $('#dLabel').text(modelname);
-            $.get("/ajax_online/", param, function(data) {
-                console.log(modelname);
+            $.get("/ajax_k8s_deploy/", param, function(data) {
+                console.log(data);
                 var _hostnameArr = [];
 
                 var _htmlsubdom = '';
 
-                data = $.parseJSON(data); //拿到后台传过来的数据data
+                // data = $.parseJSON(data); //拿到后台传过来的数据data
 
-                console.log(data)
+                console.log(data.image)
                 for (var i = 0; i < data.length; i++) {
-                    _hostnameArr.push({ hostname: data[i]['fields'].hostname, lip: data[i]['fields'].lip });
+                    _hostnameArr.push({});
                 }
-                for (var j = 0; j < _hostnameArr.length; j++) { //算行
-                    if (j % 6 == 0) { //6个元素一行
-                        _htmlsubdom += '<div class="row">';
-
-                    }
-                    _htmlsubdom += '<div class="col-md-2">' +
-                        '<i class="glyphicon glyphicon-tasks i_lip btn-lg" style="color:#0864b3"; data-lname="' + _hostnameArr[j].hostname + '" data-lip="' + _hostnameArr[j].lip + '"></i>' +
-                        '<p>' + _hostnameArr[j].hostname + '</p></div>';
-                    if (j % 6 == 5) { //最后一行
-                        _htmlsubdom += '</div>';
-                    }
-
-                }
-                if (_hostnameArr.length % 6 != 5) {
-                    _htmlsubdom += '</div>';
-                }
+                _htmlsubdom += '<div class="col-md-2">' +
+                    '<i  data-lname="' + data.image + '"></i>' +
+                    '<p id="image-name" value="' + data.image + '" >' + data.image + data.imgversion + '</p></div>';
                 $('#devis_lists_text').html(_htmlsubdom);
             });
         });
@@ -236,7 +223,7 @@ $(document).ready(function() {
 
 
     //rollback callback
-    $.get("/get_modelname/", null, function(data) {
+    $.get("/get_k8s_modelname/", null, function(data) {
         var _li = '',
             groupNameArr = [],
             listsArr = [];
@@ -253,7 +240,7 @@ $(document).ready(function() {
         $('.rollback-menu li').on('click', function() {
             var modelname = $(this).text();
             $('#callbackLabel').text(modelname);
-            $.get("/ajax_online/", { 'modelname1': modelname }, function(data) {
+            $.get("/ajax_k8s_deploy/", { 'modelname1': modelname }, function(data) {
                 var _hostnameArr = [];
 
                 var _htmlsubdom = '';
@@ -306,6 +293,7 @@ $(".btn-online-back").click(function() {
     } else if (btnText.indexOf('提交回滚') != -1) {
         var modelname = $("#callbackLabel").text();
     }
+    var imagename = $("#image-name").text();
     var version = $("#ver").val();
     var describe = $("#describe").val();
     var liplists = '',
@@ -317,58 +305,10 @@ $(".btn-online-back").click(function() {
     liplists = liplists.substring(0, liplists.length - 1);
     hostnamestr = hostnamestr.substring(0, hostnamestr.length - 1);
 
-
-    var timer = null;
-    timer = setInterval(function() {
-        $.post("/fre_host/", null, function(data) {
-            // console.log(data)
-            if (data) {
-
-                if (_rollback) {
-                    $('#devis_lists_text-callback .col-md-2').find('p').css('color', '#0864b3').removeClass('breath_light');
-                    $('#devis_lists_text-callback .col-md-2').find('i').css('color', '#0864b3').removeClass('breath_light');
-
-                    $('#devis_lists_text-callback .col-md-2 i[data-lname="' + data + '"]').css('color', 'red').addClass('breath_light');
-                    $('#devis_lists_text-callback .col-md-2 i[data-lname="' + data + '"]').next().css('color', 'red').addClass('breath_light');
-                } else {
-                    $('#devis_lists_text .col-md-2').find('p').css('color', '#0864b3').removeClass('breath_light');
-                    $('#devis_lists_text .col-md-2').find('i').css('color', '#0864b3').removeClass('breath_light');
-
-                    $('#devis_lists_text .col-md-2 i[data-lname="' + data + '"]').css('color', 'red').addClass('breath_light');
-                    $('#devis_lists_text .col-md-2 i[data-lname="' + data + '"]').next().css('color', 'red').addClass('breath_light');
-                }
-
-
-            } else {
-                alert('error')
-            }
-
-        });
-
-        $.post("/fre_log/", null, function(data) {
-            // console.log(data)
-            if (data) {
-
-                //var _text = $('#result').text();
-                if (_rollback) {
-                    $('#result_back').html(data).show();
-                } else {
-                    $('#result').html(data).show();
-                }
-
-            } else {
-
-            }
-
-        });
-
-    }, 500);
+    console.log(imagename);
     var _param = {
-        'mode': 'deploy',
         'modelname': modelname,
-        'liplists': liplists,
-        'hostname': hostnamestr,
-        'version': version,
+        'imagename': imagename,
         'describe': describe
     };
     if (_rollback) { //back
@@ -382,16 +322,8 @@ $(".btn-online-back").click(function() {
             'describe': null
         };
     }
-    $.post("/online_app/", _param, function(data) {
+    $.post("/k8s_deploy_action/", _param, function(data) {
 
-
-        //alert(data.length)
-        clearInterval(timer);
-        //
-        $('#devis_lists_text-callback .col-md-2').find('p').css('color', '#0864b3').removeClass('breath_light');
-        $('#devis_lists_text-callback .col-md-2').find('i').css('color', '#0864b3').removeClass('breath_light');
-        $('#devis_lists_text .col-md-2').find('p').css('color', '#0864b3').removeClass('breath_light');
-        $('#devis_lists_text .col-md-2').find('i').css('color', '#0864b3').removeClass('breath_light');
         if (_rollback) { //back
             $('#result_back').html(data);
             $('#result_back').show(); //改变display: none

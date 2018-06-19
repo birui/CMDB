@@ -294,3 +294,19 @@ class supervisor_ip(models.Model):
     su_remark = models.CharField(max_length=200)
     def __unicode__(self):
         return str(self.id)
+
+class k8s_depoloy(models.Model):
+    name = models.CharField(max_length=70)
+    lead = models.CharField(max_length=50)
+    #ansible参数文件位置
+    json_path = models.CharField(max_length=200)
+    img_address = models.CharField(max_length=250,default='registry.cn-beijing.aliyuncs.com/coohua_img/')
+    #不包含version的镜像名称
+    image = models.CharField(max_length=100,default='')
+    #镜像版本
+    img_version = models.CharField(max_length=20, default='')
+    # war包在maven目录路径到版本号上层
+    war_path = models.CharField(max_length=200, default='')
+    remark = models.CharField(max_length=250,default='')
+    def __unicode__(self):
+        return self.name

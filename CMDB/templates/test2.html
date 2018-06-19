@@ -1,31 +1,9 @@
 <!DOCTYPE html>
 <html>
-<body>
-<p>请输入两个数字</p>
- 
- 
-    a: <input type="text" name="a" id="a" > <br>
-    b: <input type="text" name="b" id="b" > <br>
-    
-    <p>result: <span id='result'></span></p>
-    <button type="button" id='sum'>提交</button>
+<form action="http://127.0.0.1:8081/test_input" method="post">
+    <input type="text" name="Username" />
+    <input type="password" name="password" />
+    <input type="submit" value="提交" />
+</form>
 
- 
- <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
-
-<script>
-    $(document).ready(function(){
-      $("#sum").click(function(){
-        var a = $("#a").val();
-        var b = $("#b").val();
- 
-        $.get("/add/",{'a':a,'b':b}, function(ret){ //提交给add 数据a，b；获得的数据命名为ret
-            $('#result').html(ret)
-        })
-      });
-    });
-</script>
-
-
-</body>
 </html>

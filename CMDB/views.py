@@ -302,6 +302,7 @@ def get_modelname(request):
 
             hostlist.append(hostname_list)  # 组合成字典
 
+    print hostlist
     return HttpResponse(json.dumps(hostlist), content_type='application/json')
 
 
@@ -1481,53 +1482,8 @@ def zaker(request,id):
         context = {'title': title, 'author': author, 'content': content, 'source_site':source_site}
     return render(request,'zaker/zaker.html',context)
 
-#===k8s模板生成===========
-def jed(request):
-    return render(
-        request,
-        'jed/docs/index.html',
-    )
-#将提交的json存在为k8s.json
-def ajax_jed(request):
-    K8sTemplate = json.loads(request.POST['K8sTemplate'].encode('utf8'))
-    k8sTemplate_dic = json.loads(K8sTemplate)
-    print type(k8sTemplate_dic)
-    war_name = k8sTemplate_dic['war']['war_path']
-    print war_name
-    war_path_src = search_maven(war_name)
-    print war_path_src
-    e = re.compile(r'maven/')
-    war_path = e.split(war_path_src)[1].replace('\r','').replace('\n','').replace('\t','').replace(' ','_')
-    print war_path
-    war_url = 'http://172.16.11.1:8102/'+ war_path
-    k8sTemplate_dic['war']['war_url'] = war_url
-    k8sTemplate_json = json.dumps(k8sTemplate_dic)
-    print k8sTemplate_json
-    k8sjson = file('CMDB/scripts/playbooks/k8s/k8s.json', 'w+')
-    k8sjson.write(k8sTemplate_json)
-    k8sjson.flush()
-    k8sjson.close()
-    return HttpResponse(k8sTemplate_json)
-#运行部署程序部署deployment
-def k8s_playbook_run(request):
-    playbook_path = 'CMDB/scripts/playbooks/k8s/site.yml'
-    cmd = 'ansible-playbook %s --extra-vars "@CMDB/scripts/playbooks/k8s/k8s.json"' %(playbook_path)
-    try:
-        status2 = subprocess.check_output(cmd, shell=True)
-    except subprocess.CalledProcessError as e:
-        status2 = e.output
-    return HttpResponse(status2)
-#搜索war地址
-def search_maven(filename):
-    search_path = 'CMDB/scripts/maven/'
-    cmd = 'find %s -name %s' %(search_path,filename)
-    try:
-        status2 = subprocess.check_output(cmd, shell=True)
-    except subprocess.CalledProcessError as e:
-        status2 = e.output
-    return status2
-
 #=====flushcdn
+#刷新页面
 def flushcdn_act(request):
     cdn_url = request.GET['a']
     # p = re.compile(r'\n')
@@ -1549,6 +1505,7 @@ def flushcdn(request):
         'weixin/flush_cdn.html',
     )
 
+#刷新目录
 def flushcdn_dr_act(request):
     cdn_url = request.GET['a']
     # p = re.compile(r'\n')
@@ -1568,3 +1525,195 @@ def flushcdn_dr(request):
         request,
         'weixin/flush_cdn_dr.html',
     )
+#cdn刷新余量查询
+def RefreshQuota(request):
+    flush_cmd = 'python CMDB/flushcdn/cdn.py Action=DescribeRefreshQuota'
+    try:
+        RefreshQuota_url = subprocess.check_output(flush_cmd, shell=True)
+    except subprocess.CalledProcessError as e:
+        RefreshQuota_url = e.output
+    # print RefreshQuota_url
+    context = ssl._create_unverified_context()
+    r = urllib.urlopen(RefreshQuota_url, context=context)
+    return HttpResponse(r)
+
+
+#===k8s模板生成===========
+def jed(request):
+    return render(
+        request,
+        'jed/docs/index.html',
+    )
+#将提交的json存在为k8s.json,需要将信息写入K8s_depoloys表,方便以后部署
+def ajax_jed(request):
+    K8sTemplate = json.loads(request.POST['K8sTemplate'].encode('utf8'))
+    k8sTemplate_dic = json.loads(K8sTemplate)
+    print type(k8sTemplate_dic)
+    war_name = k8sTemplate_dic['war']['war_path']
+    print war_name
+    war_path_src = search_maven(war_name)
+    print war_path_src
+    e = re.compile(r'maven/')
+    war_path = e.split(war_path_src)[1].replace('\r','').replace('\n','').replace('\t','').replace(' ','_')
+    print war_path
+    war_url = 'http://172.16.11.1:8102/'+ war_path
+    k8sTemplate_dic['war']['war_url'] = war_url
+    k8sPod_name = k8sTemplate_dic['global']['name']
+    k8sTemplate_json = json.dumps(k8sTemplate_dic)
+    print k8sPod_name
+    k8sjson = file('CMDB/scripts/playbooks/k8s/vars-json/%s.json' %(k8sPod_name), 'w+')
+    k8sjson.write(k8sTemplate_json)
+    k8sjson.flush()
+    k8sjson.close()
+    return HttpResponse(k8sTemplate_json)
+#运行部署程序部署deployment
+def k8s_playbook_run(request):
+    k8sPod_name = request.POST['k8sPod_name']
+    print k8sPod_name
+    playbook_path = 'CMDB/scripts/playbooks/k8s/site.yml'
+    cmd = 'ansible-playbook %s --extra-vars "@CMDB/scripts/playbooks/k8s/vars-json/%s.json"' %(playbook_path,k8sPod_name)
+    print cmd
+    try:
+        status2 = subprocess.check_output(cmd, shell=True)
+    except subprocess.CalledProcessError as e:
+        status2 = e.output
+    return HttpResponse(status2)
+#搜索war地址
+def search_maven(filename):
+    search_path = 'CMDB/scripts/maven/'
+    cmd = 'find %s -name %s' %(search_path,filename)
+    try:
+        status2 = subprocess.check_output(cmd, shell=True)
+    except subprocess.CalledProcessError as e:
+        status2 = e.output
+    return status2
+
+#====k8s 线上部署====
+def k8s_deploy_web(request):
+    return render(request, 'new/k8s_deploy.html', {'pagename': 'k8s线上部署'})
+def get_k8s_modelname(request):
+    k8s_depoloy_data = k8s_depoloy.objects.all()
+
+    # print k8s_depoloy_data
+    podname_dic = {}
+    for i in k8s_depoloy_data:
+        iname = i.name  # k8s_depoloy表里面的name字段
+        image = i.image
+        print iname,image
+        podname_dic[iname] = image
+
+
+    print podname_dic
+    return HttpResponse(json.dumps(podname_dic), content_type='application/json')
+
+def ajax_k8s_deploy(request):
+
+    k8s_img_ver_dic = {}
+    modelname1 = request.GET['modelname1']  # 获取提交过来的数据
+    img_name = k8s_depoloy.objects.filter(name=modelname1).values('image')
+    imgversion = k8s_depoloy.objects.filter(name=modelname1).values('img_version')
+    print img_name,imgversion
+    k8s_img_ver_dic['image'] = img_name[0]['image']
+    k8s_img_ver_dic['imgversion'] = imgversion[0]['img_version']
+    # print '----->' ,k8s_img_ver_dic
+
+    return HttpResponse(json.dumps(k8s_img_ver_dic), content_type='application/json')
+
+def k8s_deploy_action(request):
+    k8sPod_name = request.POST['modelname']
+    # k8s_image = request.POST['imagename']
+    k8sPod_describe = request.POST['describe']
+    img_name = k8s_depoloy.objects.filter(name=k8sPod_name).values('image')[0]['image']
+    k8s_img_address = k8s_depoloy.objects.filter(name=k8sPod_name).values('img_address')[0]['img_address']
+    imgversion = k8s_depoloy.objects.filter(name=k8sPod_name).values('img_version')[0]['img_version']
+    print img_name ,k8s_img_address
+    # k8s_image_url = k8s_img_address[0]['img_address'] + img_name[0]['image']
+    jsonpath = k8s_depoloy.objects.filter(name=k8sPod_name).values('json_path')[0]['json_path']
+
+    print "---->>>",k8sPod_name,k8sPod_describe
+    with open(jsonpath, 'r') as load_f:
+        load_dict = json.load(load_f)
+
+    load_dict['global']['registry'] = k8s_img_address
+    load_dict['tomcat']['image'] = img_name
+    load_dict['tomcat']['version'] = imgversion
+    print(load_dict)
+    with open(jsonpath, "w") as dump_f:
+        json.dump(load_dict, dump_f)
+    playbook_path = 'CMDB/scripts/playbooks/k8s/site.yml'
+    cmd = 'ansible-playbook %s --extra-vars "@CMDB/scripts/playbooks/k8s/vars-json/%s.json"' % (
+    playbook_path, k8sPod_name)
+    print cmd
+    try:
+        status2 = subprocess.check_output(cmd, shell=True)
+    except subprocess.CalledProcessError as e:
+        status2 = e.output
+    return HttpResponse(status2)
+
+#镜像创建
+def k8s_img(request):
+    return render(request, 'new/k8s_dockerfile.html', {'pagename': '镜像创建'})
+
+def new_war(filepath):
+    search_path = 'CMDB/scripts/maven' + filepath
+    print search_path
+    #mac test
+    # cmd = 'find %s -type f |grep ".war$" |head -1 ' % (search_path)
+    cmd = 'find %s -mtime +7 -type f |grep ".war$" |head -1 ' %(search_path)
+
+    try:
+        status2 = subprocess.check_output(cmd, shell=True)
+    except subprocess.CalledProcessError as e:
+        status2 = e.output
+    return status2
+
+def k8s_dockerfile(request):
+    k8sPod_name = request.GET['name']
+    # k8simg_warname = request.GET['warname']
+    war_path_db = k8s_depoloy.objects.filter(name=k8sPod_name).values('war_path')[0]['war_path']
+    print '=====+++++>', k8sPod_name ,war_path_db
+    war_path_src = new_war(war_path_db)
+    print '000000000>' ,war_path_src
+
+    e = re.compile(r'maven/')
+    war_path = e.split(war_path_src)[1].replace('\r','').replace('\n','').replace('\t','').replace(' ','_')
+    print war_path
+    e = re.compile(r'/')
+    war_version_sr = e.split(war_path)[-2]
+    e2 = re.compile(r'-RELEASE')
+    war_version = e2.split(war_version_sr)
+    war_url = 'http://172.16.11.1:8102/'+ war_path
+    print k8sPod_name,war_version,war_url
+    dokerfile_var = {'k8sPod_name':k8sPod_name,'war_version':war_version,'war_url':war_url}
+
+    return HttpResponse(json.dumps(dokerfile_var), content_type='application/json')
+
+def k8s_dockerfile_act(request):
+    k8sPod_name = request.GET['modelname']
+    k8simg_warname = request.GET['warname']
+    war_path_db = k8s_depoloy.objects.filter(name=k8sPod_name).values('war_path')[0]['war_path']
+    print '=====+++++>', k8sPod_name ,war_path_db
+    war_path_src = new_war(war_path_db)
+    print '000000000>' ,war_path_src
+
+    e = re.compile(r'maven/')
+    war_path = e.split(war_path_src)[1].replace('\r','').replace('\n','').replace('\t','').replace(' ','_')
+    print war_path
+    e = re.compile(r'/')
+    war_version_sr = e.split(war_path)[-2]
+    e2 = re.compile(r'-RELEASE')
+    war_version = e2.split(war_version_sr)
+    war_url = 'http://172.16.11.1:8102/'+ war_path
+    print k8sPod_name,war_version,war_url
+    if not war_version:
+        k8s_depoloy.objects.filter(name=k8sPod_name).update(img_version=war_version)
+    else:
+        print 'img_version is None'
+
+    cmd = 'deploy-images.sh %s %s %s %s ' % (k8sPod_name,war_version,war_url,k8simg_warname)
+    print cmd
+    try:
+        status2 = subprocess.check_output(cmd, shell=True)
+    except subprocess.CalledProcessError as e:
+        status2 = e.output
+    return HttpResponse(status2)
