@@ -1544,7 +1544,7 @@ def jed(request):
         request,
         'jed/docs/index.html',
     )
-#将提交的json存在为k8s.json,需要将信息写入K8s_depoloys表,方便以后部署
+#将提交的json存在为【name】.json,需要将信息写入K8s_depoloys表,方便以后部署
 def ajax_jed(request):
     K8sTemplate = json.loads(request.POST['K8sTemplate'].encode('utf8'))
     k8sTemplate_dic = json.loads(K8sTemplate)
@@ -1561,10 +1561,15 @@ def ajax_jed(request):
     k8sPod_name = k8sTemplate_dic['global']['name']
     k8sTemplate_json = json.dumps(k8sTemplate_dic)
     print k8sPod_name
-    k8sjson = file('CMDB/scripts/playbooks/k8s/vars-json/%s.json' %(k8sPod_name), 'w+')
+    jsonpath = 'CMDB/scripts/playbooks/k8s/vars-json/%s.json' %(k8sPod_name)
+    k8sjson = file(jsonpath, 'w+')
     k8sjson.write(k8sTemplate_json)
     k8sjson.flush()
     k8sjson.close()
+
+    if not k8sPod_name:
+        k8s_depoloy.objects.filter(name=k8sPod_name).update(json_path=jsonpath)
+
     return HttpResponse(k8sTemplate_json)
 #运行部署程序部署deployment
 def k8s_playbook_run(request):
@@ -1643,6 +1648,7 @@ def k8s_deploy_action(request):
     playbook_path = 'CMDB/scripts/playbooks/k8s/site.yml'
     cmd = 'ansible-playbook %s --extra-vars "@CMDB/scripts/playbooks/k8s/vars-json/%s.json"' % (
     playbook_path, k8sPod_name)
+
     print cmd
     try:
         status2 = subprocess.check_output(cmd, shell=True)
@@ -1657,10 +1663,10 @@ def k8s_img(request):
 def new_war(filepath):
     search_path = 'CMDB/scripts/maven' + filepath
     print search_path
-    #mac test
-    # cmd = 'find %s -type f |grep ".war$" |head -1 ' % (search_path)
-    cmd = 'find %s -mtime +7 -type f |grep ".war$" |head -1 ' %(search_path)
 
+    # cmd = 'find %s -mtime +7 -type f |grep ".war$" |head -1 ' %(search_path)
+    #test mac
+    cmd = 'find %s -type f |grep ".war$" |head -1 ' % (search_path)
     try:
         status2 = subprocess.check_output(cmd, shell=True)
     except subprocess.CalledProcessError as e:
@@ -1671,6 +1677,7 @@ def k8s_dockerfile(request):
     k8sPod_name = request.GET['name']
     # k8simg_warname = request.GET['warname']
     war_path_db = k8s_depoloy.objects.filter(name=k8sPod_name).values('war_path')[0]['war_path']
+    warname = k8s_depoloy.objects.filter(name=k8sPod_name).values('war_name')[0]['war_name']
     print '=====+++++>', k8sPod_name ,war_path_db
     war_path_src = new_war(war_path_db)
     print '000000000>' ,war_path_src
@@ -1683,8 +1690,8 @@ def k8s_dockerfile(request):
     e2 = re.compile(r'-RELEASE')
     war_version = e2.split(war_version_sr)
     war_url = 'http://172.16.11.1:8102/'+ war_path
-    print k8sPod_name,war_version,war_url
-    dokerfile_var = {'k8sPod_name':k8sPod_name,'war_version':war_version,'war_url':war_url}
+    print k8sPod_name,war_version,war_url,warname
+    dokerfile_var = {'k8sPod_name':k8sPod_name,'war_version':war_version,'war_url':war_url,'warname':warname}
 
     return HttpResponse(json.dumps(dokerfile_var), content_type='application/json')
 
@@ -1704,7 +1711,7 @@ def k8s_dockerfile_act(request):
     e2 = re.compile(r'-RELEASE')
     war_version = e2.split(war_version_sr)
     war_url = 'http://172.16.11.1:8102/'+ war_path
-    print k8sPod_name,war_version,war_url
+    print k8sPod_name,war_version,war_url,k8simg_warname
     if not war_version:
         k8s_depoloy.objects.filter(name=k8sPod_name).update(img_version=war_version)
     else:

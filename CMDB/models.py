@@ -297,16 +297,17 @@ class supervisor_ip(models.Model):
 
 class k8s_depoloy(models.Model):
     name = models.CharField(max_length=70)
-    lead = models.CharField(max_length=50)
+    lead = models.CharField(max_length=50,blank=True,null=True)
     #ansible参数文件位置
-    json_path = models.CharField(max_length=200)
+    json_path = models.CharField(max_length=200,default='CMDB/scripts/playbooks/k8s/vars-json/')
     img_address = models.CharField(max_length=250,default='registry.cn-beijing.aliyuncs.com/coohua_img/')
     #不包含version的镜像名称
-    image = models.CharField(max_length=100,default='')
+    image = models.CharField(max_length=100,blank=True,null=True)
     #镜像版本
-    img_version = models.CharField(max_length=20, default='')
+    img_version = models.CharField(max_length=20 ,blank=True,null=True)
     # war包在maven目录路径到版本号上层
-    war_path = models.CharField(max_length=200, default='')
-    remark = models.CharField(max_length=250,default='')
+    war_path = models.CharField(max_length=200,blank=True,null=True)
+    war_name = models.CharField(max_length=20,blank=True,null=True)
+    remark = models.CharField(max_length=250,blank=True,null=True)
     def __unicode__(self):
         return self.name

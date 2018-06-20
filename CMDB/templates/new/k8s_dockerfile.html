@@ -91,7 +91,7 @@
         </div>
         <div class="row devis_lists" style='margin-top:10px'>
             <div class="col-lg-1">
-                <p> 镜像名称：</p>
+                <p> 镜像url：</p>
             </div>
             <div class="col-lg-40">
                 <div id='devis_lists_text'></div>
@@ -197,6 +197,7 @@ $(document).ready(function() {
                     '<p id="image-name" value="' + data.war_url + '" >' + data.war_url + '</p></div>';
 
                 $('#devis_lists_text').html(_htmlsubdom);
+                $('#ver').val(data.warname)
             });
         });
 
