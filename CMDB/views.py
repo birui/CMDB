@@ -1721,7 +1721,7 @@ def k8s_dockerfile_act(request):
     else:
         print 'img_version is None'
 
-    cmd = 'CMDB/scripts/deploy-images.sh %s %s %s %s ' % (k8sPod_name,war_version,war_url,k8simg_warname)
+    cmd = 'CMDB/scripts/deploy-images.sh %s %s %s %s ' % (k8sPod_name,war_version[0],war_url,k8simg_warname)
     print cmd
     try:
         status2 = subprocess.check_output(cmd, shell=True)
