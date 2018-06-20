@@ -123,5 +123,6 @@ urlpatterns = [
                   url(r'^ajax_k8s_deploy/$', ajax_k8s_deploy),
                   url(r'^k8s_deploy_action/$', k8s_deploy_action),
                   url(r'^k8s_dockerfile/$', k8s_dockerfile),
-                  url(r'^k8s_img/$', k8s_img)
+                  url(r'^k8s_img/$', k8s_img),
+                  url(r'^k8s_dockerfile_act/$', k8s_dockerfile_act)
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
