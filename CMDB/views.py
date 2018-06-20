@@ -1549,15 +1549,15 @@ def ajax_jed(request):
     K8sTemplate = json.loads(request.POST['K8sTemplate'].encode('utf8'))
     k8sTemplate_dic = json.loads(K8sTemplate)
     print type(k8sTemplate_dic)
-    war_name = k8sTemplate_dic['war']['war_path']
-    print war_name
-    war_path_src = search_maven(war_name)
-    print war_path_src
-    e = re.compile(r'maven/')
-    war_path = e.split(war_path_src)[1].replace('\r','').replace('\n','').replace('\t','').replace(' ','_')
-    print war_path
-    war_url = 'http://172.16.11.1:8102/'+ war_path
-    k8sTemplate_dic['war']['war_url'] = war_url
+    # war_name = k8sTemplate_dic['war']['war_path']
+    # print war_name
+    # war_path_src = search_maven(war_name)
+    # print war_path_src
+    # e = re.compile(r'maven/')
+    # war_path = e.split(war_path_src)[1].replace('\r','').replace('\n','').replace('\t','').replace(' ','_')
+    # print war_path
+    # war_url = 'http://172.16.11.1:8102/'+ war_path
+    # k8sTemplate_dic['war']['war_url'] = war_url
     k8sPod_name = k8sTemplate_dic['global']['name']
     k8sTemplate_json = json.dumps(k8sTemplate_dic)
     print k8sPod_name
