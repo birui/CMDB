@@ -1664,9 +1664,10 @@ def new_war(filepath):
     search_path = 'CMDB/scripts/maven' + filepath
     print search_path
 
-    cmd = 'find %s -mtime +7 -type f |grep ".war$" |head -1 ' %(search_path)
+    # cmd = 'find %s -mtime +7 -type f |grep ".war$" |head -1 ' %(search_path)
     #test mac
     # cmd = 'find %s -type f |grep ".war$" |head -1 ' % (search_path)
+    cmd = 'ls -rt $(find %s  |grep ".war$" )|tail -n 1' % (search_path)
     try:
         status2 = subprocess.check_output(cmd, shell=True)
     except subprocess.CalledProcessError as e:
