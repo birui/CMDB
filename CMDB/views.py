@@ -1701,7 +1701,7 @@ def k8s_dockerfile_act(request):
     k8simg_warname = request.POST['warname']
 
     print "==================>",k8sPod_name,k8simg_warname
-    
+
     war_path_db = k8s_depoloy.objects.filter(name=k8sPod_name).values('war_path')[0]['war_path']
     print '=====+++++>', k8sPod_name ,war_path_db
     war_path_src = new_war(war_path_db)
@@ -1721,7 +1721,7 @@ def k8s_dockerfile_act(request):
     else:
         print 'img_version is None'
 
-    cmd = 'deploy-images.sh %s %s %s %s ' % (k8sPod_name,war_version,war_url,k8simg_warname)
+    cmd = 'CMDB/scripts/deploy-images.sh %s %s %s %s ' % (k8sPod_name,war_version,war_url,k8simg_warname)
     print cmd
     try:
         status2 = subprocess.check_output(cmd, shell=True)
