@@ -1697,8 +1697,11 @@ def k8s_dockerfile(request):
     return HttpResponse(json.dumps(dokerfile_var), content_type='application/json')
 
 def k8s_dockerfile_act(request):
-    k8sPod_name = request.GET['modelname']
-    k8simg_warname = request.GET['warname']
+    k8sPod_name = request.POST['modelname']
+    k8simg_warname = request.POST['warname']
+
+    print "==================>",k8sPod_name,k8simg_warname
+    
     war_path_db = k8s_depoloy.objects.filter(name=k8sPod_name).values('war_path')[0]['war_path']
     print '=====+++++>', k8sPod_name ,war_path_db
     war_path_src = new_war(war_path_db)
