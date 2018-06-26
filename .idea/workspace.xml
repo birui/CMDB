@@ -2,42 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bdd5571d-1775-40d8-8711-e4db9207f0be" name="Default" comment="test">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0002_auto_20160201_0628.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0003_auto_20160223_0358.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0004_calendarevent_iterms.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0005_auto_20160318_0235.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0006_auto_20160324_0826.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0007_auto_20160326_0901.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0008_online.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0009_auto_20160526_0941.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0010_auto_20160624_1012.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0011_auto_20160726_0616.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0012_auto_20160726_0620.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0013_auto_20160726_0638.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0015_auto_20160805_0705.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0016_auto_20160805_0849.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0017_auto_20160805_0900.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0018_auto_20160817_0644.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0019_picture.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0020_auto_20160830_0337.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0021_user.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0022_auto_20160831_0837.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0023_document.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0024_auto_20160914_0212.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0025_auto_20161030_0434.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0026_auto_20161107_0908.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0027_auto_20161107_0917.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0028_auto_20161107_0957.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0029_auto_20161120_1541.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0030_mysql_count.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0031_mysql_count_database_name.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0032_auto_20161123_0057.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0033_dbsize_bj_status.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0034_auto_20161123_0811.py" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/migrations/0035_auto_20161123_1624.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/migrations/0001_initial.py" afterPath="$PROJECT_DIR$/CMDB/migrations/0001_initial.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/views.py" afterPath="$PROJECT_DIR$/CMDB/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/templates/new/k8s_dockerfile.html" afterPath="$PROJECT_DIR$/CMDB/templates/new/k8s_dockerfile.html" />
     </list>
     <ignored path="coohua_CMDB.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -61,11 +28,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/coohua_CMDB/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1845">
-              <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
+            <state relative-caret-position="652">
+              <caret line="112" column="28" selection-start-line="112" selection-start-column="25" selection-end-line="112" selection-end-column="28" />
               <folding>
                 <element signature="e#35#50#0" expanded="true" />
               </folding>
@@ -73,11 +40,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMDB/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="567">
-              <caret line="1710" column="58" selection-start-line="1710" selection-start-column="58" selection-end-line="1710" selection-end-column="58" />
+            <state relative-caret-position="892">
+              <caret line="1713" column="32" selection-start-line="1713" selection-start-column="32" selection-end-line="1713" selection-end-column="32" />
               <folding>
                 <element signature="e#15#29#0" expanded="true" />
                 <marker date="1529571538325" expanded="true" signature="32672:32880" ph="select domai... CMDB_coohua_share_domain" />
@@ -93,7 +60,7 @@
       <file leaf-file-name="defaulttags.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/../lib/python2.7/site-packages/django/template/defaulttags.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
+            <state relative-caret-position="600">
               <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
               <folding />
             </state>
@@ -103,7 +70,7 @@
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMDB/models.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="654">
+            <state relative-caret-position="4635">
               <caret line="313" column="0" selection-start-line="313" selection-start-column="0" selection-end-line="313" selection-end-column="0" />
               <folding />
             </state>
@@ -113,7 +80,7 @@
       <file leaf-file-name="admin.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMDB/admin.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="309">
+            <state relative-caret-position="2055">
               <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
               <folding />
             </state>
@@ -258,38 +225,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="External Dependencies">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="/">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="Users">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="admin">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -338,6 +273,38 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="backends" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="External Dependencies">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="/">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="Users">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="admin">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -641,24 +608,24 @@
     <frame x="-172" y="-1080" width="1920" height="1080" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.072949946" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07401491" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17909002" sideWeight="0.2109375" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.25049505" sideWeight="0.7890625" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39976552" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3048193" sideWeight="0.7890625" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39976552" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1044,19 +1011,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/coohua_CMDB/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1845">
-          <caret line="128" column="0" selection-start-line="128" selection-start-column="0" selection-end-line="128" selection-end-column="0" />
-          <folding>
-            <element signature="e#35#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/../lib/python2.7/site-packages/django/template/defaulttags.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="243">
+        <state relative-caret-position="600">
           <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
           <folding />
         </state>
@@ -1064,7 +1021,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CMDB/admin.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="309">
+        <state relative-caret-position="2055">
           <caret line="138" column="0" selection-start-line="138" selection-start-column="0" selection-end-line="138" selection-end-column="0" />
           <folding />
         </state>
@@ -1072,7 +1029,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CMDB/models.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="654">
+        <state relative-caret-position="4635">
           <caret line="313" column="0" selection-start-line="313" selection-start-column="0" selection-end-line="313" selection-end-column="0" />
           <folding />
         </state>
@@ -1080,8 +1037,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CMDB/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="567">
-          <caret line="1710" column="58" selection-start-line="1710" selection-start-column="58" selection-end-line="1710" selection-end-column="58" />
+        <state relative-caret-position="892">
+          <caret line="1713" column="32" selection-start-line="1713" selection-start-column="32" selection-end-line="1713" selection-end-column="32" />
           <folding>
             <element signature="e#15#29#0" expanded="true" />
             <marker date="1529571538325" expanded="true" signature="32672:32880" ph="select domai... CMDB_coohua_share_domain" />
@@ -1089,6 +1046,16 @@
             <marker date="1529571538325" expanded="true" signature="33672:33904" ph="select domai... CMDB_coohua_share_domain" />
             <marker date="1529571538325" expanded="true" signature="42913:43102" ph="select model... CMDB_coohua_share_domain" />
             <marker date="1529571538325" expanded="true" signature="43563:43715" ph="select count... CMDB_coohua_share_domain" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/coohua_CMDB/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="112" column="28" selection-start-line="112" selection-start-column="25" selection-end-line="112" selection-end-column="28" />
+          <folding>
+            <element signature="e#35#50#0" expanded="true" />
           </folding>
         </state>
       </provider>

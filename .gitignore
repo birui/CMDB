@@ -9,6 +9,8 @@
 *.tar
 *.txt
 .idea/*
+__ pycache __
+.DS_Store
 !requirements.txt
 settings.py
 mail.py
