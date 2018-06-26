@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bdd5571d-1775-40d8-8711-e4db9207f0be" name="Default" comment="test">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/templates/new/k8s_dockerfile.html" afterPath="$PROJECT_DIR$/CMDB/templates/new/k8s_dockerfile.html" />
-    </list>
+    <list default="true" id="bdd5571d-1775-40d8-8711-e4db9207f0be" name="Default" comment="test" />
     <ignored path="coohua_CMDB.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -28,7 +24,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="urls.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/coohua_CMDB/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="652">
@@ -40,11 +36,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CMDB/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="892">
-              <caret line="1713" column="32" selection-start-line="1713" selection-start-column="32" selection-end-line="1713" selection-end-column="32" />
+            <state relative-caret-position="652">
+              <caret line="1645" column="46" selection-start-line="1645" selection-start-column="46" selection-end-line="1645" selection-end-column="46" />
               <folding>
                 <element signature="e#15#29#0" expanded="true" />
                 <marker date="1529571538325" expanded="true" signature="32672:32880" ph="select domai... CMDB_coohua_share_domain" />
@@ -1035,10 +1031,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/coohua_CMDB/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="112" column="28" selection-start-line="112" selection-start-column="25" selection-end-line="112" selection-end-column="28" />
+          <folding>
+            <element signature="e#35#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CMDB/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="892">
-          <caret line="1713" column="32" selection-start-line="1713" selection-start-column="32" selection-end-line="1713" selection-end-column="32" />
+        <state relative-caret-position="652">
+          <caret line="1645" column="46" selection-start-line="1645" selection-start-column="46" selection-end-line="1645" selection-end-column="46" />
           <folding>
             <element signature="e#15#29#0" expanded="true" />
             <marker date="1529571538325" expanded="true" signature="32672:32880" ph="select domai... CMDB_coohua_share_domain" />
@@ -1046,16 +1052,6 @@
             <marker date="1529571538325" expanded="true" signature="33672:33904" ph="select domai... CMDB_coohua_share_domain" />
             <marker date="1529571538325" expanded="true" signature="42913:43102" ph="select model... CMDB_coohua_share_domain" />
             <marker date="1529571538325" expanded="true" signature="43563:43715" ph="select count... CMDB_coohua_share_domain" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/coohua_CMDB/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="652">
-          <caret line="112" column="28" selection-start-line="112" selection-start-column="25" selection-end-line="112" selection-end-column="28" />
-          <folding>
-            <element signature="e#35#50#0" expanded="true" />
           </folding>
         </state>
       </provider>
