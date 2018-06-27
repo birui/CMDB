@@ -93,8 +93,7 @@
             <div class="col-lg-1">
                 <p> 镜像名称：</p>
             </div>
-            <div class="col-lg-6">
-                <input type="text" class="form-control" aria-label="..." id="devis_lists_text">
+            <div class="col-lg-6" id='devis_lists_text'>
             </div>
         </div>
         <!-- <div class="row" style='margin-top:10px'>
@@ -215,8 +214,10 @@ $(document).ready(function() {
                 // _htmlsubdom += '<div class="col-md-2">' +
                 //     '<i  data-lname="' + data.image + '"></i>' +
                 //     '<p id="image-name" value="' + data.image + '" >' + data.image + data.imgversion + '</p></div>';
-                // $('#devis_lists_text').html(_htmlsubdom);
-                $('#devis_lists_text').val(data.image + data.imgversion)
+                _htmlsubdom +=
+                    '<input type="text" class="form-control" id="image-name" value="' + data.image + data.imgversion + '" >';
+                $('#devis_lists_text').html(_htmlsubdom);
+
             });
         });
 
