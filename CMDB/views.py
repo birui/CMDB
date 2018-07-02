@@ -1617,7 +1617,6 @@ def ajax_k8s_deploy(request):
 
 def k8s_deploy_action(request):
     k8sPod_name = request.POST['modelname']
-    # k8s_image = request.POST['imagename']
     k8sPod_describe = request.POST['describe']
     img_name = k8s_depoloy.objects.filter(name=k8sPod_name).values('image')[0]['image']
     k8s_img_address = k8s_depoloy.objects.filter(name=k8sPod_name).values('img_address')[0]['img_address']
@@ -1626,7 +1625,7 @@ def k8s_deploy_action(request):
     # k8s_image_url = k8s_img_address[0]['img_address'] + img_name[0]['image']
     jsonpath = k8s_depoloy.objects.filter(name=k8sPod_name).values('json_path')[0]['json_path']
 
-    print "---->>>",k8sPod_name,k8sPod_describe
+    # print "---->>>",k8sPod_name,k8sPod_describe
     with open(jsonpath, 'r') as load_f:
         load_dict = json.load(load_f)
 
