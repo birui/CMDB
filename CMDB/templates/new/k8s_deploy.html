@@ -181,7 +181,7 @@ $(document).ready(function() {
         var _li = '',
             groupNameArr = [],
             listsArr = [];
-        console.log(groupNameArr)
+        // console.log(groupNameArr)
         for (var key in data) {
             groupNameArr.push(key);
             listsArr.push(data[key]);
@@ -200,14 +200,14 @@ $(document).ready(function() {
             // console.log(param);
             $('#dLabel').text(modelname);
             $.get("/ajax_k8s_deploy/", param, function(data) {
-                console.log(data);
+                // console.log(data);
                 var _hostnameArr = [];
 
                 var _htmlsubdom = '';
 
                 // data = $.parseJSON(data); //拿到后台传过来的数据data
 
-                console.log(data.image)
+                // console.log(data.image)
                 for (var i = 0; i < data.length; i++) {
                     _hostnameArr.push({});
                 }
@@ -215,7 +215,7 @@ $(document).ready(function() {
                 //     '<i  data-lname="' + data.image + '"></i>' +
                 //     '<p id="image-name" value="' + data.image + '" >' + data.image + data.imgversion + '</p></div>';
                 _htmlsubdom +=
-                    '<input type="text" class="form-control" id="image-name" value="' + data.image + data.imgversion + '" >';
+                    '<input type="text" class="form-control" id="image-name" value="' + data.image + ":" + data.imgversion + '" >';
                 $('#devis_lists_text').html(_htmlsubdom);
 
             });
@@ -229,7 +229,7 @@ $(document).ready(function() {
         var _li = '',
             groupNameArr = [],
             listsArr = [];
-        console.log(data)
+        // console.log(data)
         for (var i = 0; i < data.length; i++) {
             groupNameArr.push(data[i].groupName);
             listsArr.push(data[i].lists);
@@ -289,13 +289,13 @@ $(".btn-online-back").click(function() {
     $(this).attr("disabled", true);
     var _rollback = Boolean($(this).attr('data-back'));
     var btnText = $(this).text();
-    console.log(btnText)
+    // console.log(btnText)
     if (btnText.indexOf('提交上线') != -1) {
         var modelname = $("#dLabel").text();
     } else if (btnText.indexOf('提交回滚') != -1) {
         var modelname = $("#callbackLabel").text();
     }
-    var imagename = $("#image-name").text();
+    var imagename = $("#image-name").val();
     var version = $("#ver").val();
     var describe = $("#describe").val();
     var liplists = '',

@@ -235,12 +235,9 @@ $(".btn-online-back").click(function() {
     if (_rollback) { //back
         _param = null;
         _param = {
-            // 'mode': 'rollback',
             'modelname': modelname,
-            'liplists': liplists,
-            'hostname': hostnamestr,
-            'version': null,
-            'describe': null
+            'warname': warname,
+            'describe': describe
         };
     }
     $.post("/k8s_dockerfile_act/", _param, function(data) {

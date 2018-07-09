@@ -1616,15 +1616,24 @@ def ajax_k8s_deploy(request):
     return HttpResponse(json.dumps(k8s_img_ver_dic), content_type='application/json')
 
 def k8s_deploy_action(request):
-    k8sPod_name = request.POST['modelname']
-    k8sPod_describe = request.POST['describe']
-    img_name = k8s_depoloy.objects.filter(name=k8sPod_name).values('image')[0]['image']
-    k8s_img_address = k8s_depoloy.objects.filter(name=k8sPod_name).values('img_address')[0]['img_address']
-    imgversion = k8s_depoloy.objects.filter(name=k8sPod_name).values('img_version')[0]['img_version']
-    print img_name ,k8s_img_address
-    # k8s_image_url = k8s_img_address[0]['img_address'] + img_name[0]['image']
-    jsonpath = k8s_depoloy.objects.filter(name=k8sPod_name).values('json_path')[0]['json_path']
+    if request.method == 'POST':
+        k8sPod_name = request.POST['modelname']
+        imagename = request.POST['imagename']
+        k8sPod_describe = request.POST['describe']
+    else:
+        k8sPod_name = request.GET['modelname']
+        imagename = request.GET['imagename']
+        k8sPod_describe = request.GET['describe']
 
+    k8s_img_address = k8s_depoloy.objects.filter(name=k8sPod_name).values('img_address')[0]['img_address']
+
+    img_e = re.compile(r':')
+    img_version = img_e.split(imagename)
+    img_name = img_version[0]
+    imgversion = img_version[1]
+
+    print img_version,img_name,imgversion
+    jsonpath = k8s_depoloy.objects.filter(name=k8sPod_name).values('json_path')[0]['json_path']
     # print "---->>>",k8sPod_name,k8sPod_describe
     with open(jsonpath, 'r') as load_f:
         load_dict = json.load(load_f)
