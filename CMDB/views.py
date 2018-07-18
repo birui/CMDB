@@ -1549,14 +1549,22 @@ def ajax_jed(request):
     K8sTemplate = json.loads(request.POST['K8sTemplate'].encode('utf8'))
     k8sTemplate_dic = json.loads(K8sTemplate)
     # print type(k8sTemplate_dic)
+    img_addr = k8sTemplate_dic['global']['registry']
+    img_version = k8sTemplate_dic['tomcat']['version']
     k8sPod_name = k8sTemplate_dic['global']['name']
+    war_name = k8sTemplate_dic['tomcat']['path']
+
+    if war_name == "/":
+        war_name = "ROOT"
+    print war_name
     k8sTemplate_json = json.dumps(k8sTemplate_dic)
     jsonpath = 'CMDB/scripts/playbooks/k8s/vars-json/%s.json' %(k8sPod_name)
-    try:
-        k8s_depoloy.objects.filter(name=k8sPod_name).update(json_path=jsonpath)
-    except:
-        insert_data = k8s_depoloy(name=k8sPod_name,json_path=jsonpath,image=k8sPod_name)
+
+    if not k8s_depoloy.objects.filter(name=k8sPod_name):
+        insert_data = k8s_depoloy(name=k8sPod_name,json_path=jsonpath,image=k8sPod_name,img_address=img_addr,img_version=img_version,war_name=war_name)
         insert_data.save()
+    else:
+        k8s_depoloy.objects.filter(name=k8sPod_name).update(json_path=jsonpath)
 
     k8sjson = file(jsonpath, 'w+')
     k8sjson.write(k8sTemplate_json)
