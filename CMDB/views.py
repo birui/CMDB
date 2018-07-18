@@ -1552,7 +1552,12 @@ def ajax_jed(request):
     k8sPod_name = k8sTemplate_dic['global']['name']
     k8sTemplate_json = json.dumps(k8sTemplate_dic)
     jsonpath = 'CMDB/scripts/playbooks/k8s/vars-json/%s.json' %(k8sPod_name)
-    k8s_depoloy.objects.filter(name=k8sPod_name).update(json_path=jsonpath)
+    try:
+        k8s_depoloy.objects.filter(name=k8sPod_name).update(json_path=jsonpath)
+    except:
+        insert_data = k8s_depoloy(name=k8sPod_name,json_path=jsonpath,image=k8sPod_name)
+        insert_data.save()
+
     k8sjson = file(jsonpath, 'w+')
     k8sjson.write(k8sTemplate_json)
     k8sjson.flush()
