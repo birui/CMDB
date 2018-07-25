@@ -28,6 +28,7 @@ from CMDB.redis_rsync.dbsize import redis_dbsize
 from xmlrpclib import ServerProxy
 from CMDB.scripts.playbooks.ansicmd import *
 from CMDB.flushcdn.cdn import *
+from CMDB.flushcdn.qiniucdn import *
 from CMDB.scripts.playbooks.ansiplaybook import *
 from CMDB.scripts.weixin.weixin import *
 from CMDB.scripts.weixin.coohua_domain import *
@@ -1537,6 +1538,43 @@ def RefreshQuota(request):
     r = urllib.urlopen(RefreshQuota_url, context=context)
     return HttpResponse(r)
 
+#七牛CDN刷新
+
+def qiniuflushcdn(request):
+    return render(
+        request,
+        'weixin/qiniuflush_cdn.html',
+    )
+
+def qiniuflushcdn_dr(request):
+    return render(
+        request,
+        'weixin/qiniuflush_cdn_dr.html',
+    )
+
+def qiniuflushcdn_act(request):
+    # cdn_url = request.GET['a']
+    if request.method == 'POST':
+        cdn_url = request.POST.get('a')
+    e = re.compile(r'\n')
+    url_list = e.split(cdn_url)
+    print url_list
+    cdn_status = qiniuflush_cdn(url_list)
+    cdn_status_dic = cdn_status[0]
+    print cdn_status_dic
+    return HttpResponse(json.dumps(cdn_status_dic), content_type='application/json')
+
+def qiniuflushcdn_dr_act(request):
+    if request.method == 'POST':
+        cdn_url_dr = request.POST.get('a')
+    e = re.compile(r'\n')
+    url_dr_list = e.split(cdn_url_dr)
+    print url_dr_list
+    cdn_status = qiniuflush_cdn_dr(url_dr_list)
+    cdn_status_dic = cdn_status[0]
+    print cdn_status_dic
+    return HttpResponse(json.dumps(cdn_status_dic), content_type='application/json')
+
 
 #===k8s模板生成===========
 def jed(request):
@@ -1570,9 +1608,6 @@ def ajax_jed(request):
     k8sjson.write(k8sTemplate_json)
     k8sjson.flush()
     k8sjson.close()
-
-    if k8sPod_name:
-        k8s_depoloy.objects.filter(name=k8sPod_name).update(json_path=jsonpath)
 
     return HttpResponse(k8sTemplate_json)
 #运行部署程序部署deployment
@@ -1733,3 +1768,4 @@ def k8s_dockerfile_act(request):
     except subprocess.CalledProcessError as e:
         status2 = e.output
     return HttpResponse(status2)
+

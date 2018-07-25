@@ -1,1 +1,0 @@
-curl -H "Content-Type:application/json" -X POST -d '{"modelname": "tap-api", "imagename":"browser-api:10", "describe":""}' http://cmdb.coohua.top/k8s_deploy_action
