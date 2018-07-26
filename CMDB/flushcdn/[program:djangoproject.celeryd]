@@ -1,0 +1,38 @@
+[program:djangoproject.celeryd]
+command=/data/cmdb/.venv/bin/python /data/cmdb/coohua_CMDB/manage.py celeryd --concurrency=1
+user=root
+numprocs=1
+directory=/data/cmdb/coohua_CMDB
+stdout_logfile=/var/log/celery_worker.log
+stderr_logfile=/var/log/celery_worker.log
+autostart=true
+autorestart=true
+startsecs=10
+stopwaitsecs = 120
+priority=998
+ 
+[program:djangoproject.celerybeat]
+command=/data/cmdb/.venv/bin/python /data/cmdb/coohua_CMDB/manage.py celery beat --schedule=/tmp/celerybeat-schedule --pidfile=/tmp/django_celerybeat.pid --loglevel=INFO
+user=root
+numprocs=1
+directory=/data/cmdb/coohua_CMDB
+stdout_logfile=/var/log/celery_beat.log
+stderr_logfile=/var/log/celery_beat.log
+autostart=true
+autorestart=true
+startsecs=10
+stopwaitsecs = 120
+priority=998
+ 
+[program:djangoproject.celerycam]
+command=/data/cmdb/.venv/bin/python /data/cmdb/coohua_CMDB/manage.py celerycam --frequency=10.0
+user=root
+numprocs=1
+directory=/data/cmdb/coohua_CMDB
+stdout_logfile=/var/log/celerycam.log
+stderr_logfile=/var/log/celerycam.log
+autostart=true
+autorestart=true
+startsecs=10
+stopwaitsecs = 120
+priority=998

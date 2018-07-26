@@ -44,6 +44,19 @@ def compute_signature(parameters, access_key_secret):
     return signature
 
 def compose_url(user_params):
+    config = ConfigParser.ConfigParser()
+    try:
+        config.read(CONFIGFILE)
+        global access_key_id
+        global access_key_secret
+        access_key_id = config.get(CONFIGSECTION, 'accesskeyid')
+        access_key_secret = config.get(CONFIGSECTION, 'accesskeysecret')
+        # print access_key_id,access_key_secret
+    except Exception, e:
+        print traceback.format_exc()
+        print("can't get access key pair, use config --id=[access_key] --secret=[secret_key] to setup")
+        sys.exit(1)
+
     timestamp = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
 
     parameters = { \
@@ -87,7 +100,7 @@ def setup_credentials():
         global access_key_id
         global access_key_secret
         access_key_id = config.get(CONFIGSECTION, 'accesskeyid')
-        access_key_secret = config.get(CONFIGSECTION, 'accesskeysecret')
+        access_key_secret = config.get(CONFIGSECTION, 'accesskeysecret')        
     except Exception, e:
 		print traceback.format_exc()
 		print("can't get access key pair, use config --id=[accesskeyid] --secret=[accesskeysecret] to setup")
