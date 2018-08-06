@@ -311,3 +311,8 @@ class k8s_depoloy(models.Model):
     remark = models.CharField(max_length=250,blank=True,null=True)
     def __unicode__(self):
         return self.name
+class clear_log(models.Model):
+    group_name = models.CharField(max_length=50)
+    log_path = models.CharField(max_length=200)
+    keep_date = models.IntegerField(blank=True, null=True,default=3)
+    recycled_date = models.IntegerField(blank=True, null=True, default=7)

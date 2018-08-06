@@ -137,6 +137,14 @@ class k8s_depoloy_show(admin.ModelAdmin):
     # 指定要搜索的字段
     search_fields = ('name', 'lead','image')
 
+class clear_log_show(admin.ModelAdmin):
+    #显示字段
+    list_display = ('group_name','log_path','keep_date','recycled_date')
+    #指定列表过滤器,页面右边
+    list_filter = ('group_name',)
+    # 指定要搜索的字段
+    search_fields = ('group_name',)
+
 #admin里面显示哪些表：
 admin.site.register(Brothers)
 admin.site.register(History)
@@ -159,3 +167,4 @@ admin.site.register(ngx_ip,ngx_ip_show)
 admin.site.register(supervisor_ip,supervisor_ip_show)
 admin.site.register(playbook,playbook_show)
 admin.site.register(k8s_depoloy,k8s_depoloy_show)
+admin.site.register(clear_log,clear_log_show)
