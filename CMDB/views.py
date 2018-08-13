@@ -1590,11 +1590,17 @@ def ajax_jed(request):
     img_addr = k8sTemplate_dic['global']['registry']
     img_version = k8sTemplate_dic['tomcat']['version']
     k8sPod_name = k8sTemplate_dic['global']['name']
-    war_name = k8sTemplate_dic['tomcat']['path']
+    try:
+        war_name = k8sTemplate_dic['tomcat']['path']
+    except Exception:
+        war_name = "ROOT"
 
     if war_name == "/":
         war_name = "ROOT"
-    print war_name
+    elif war_name is None:
+        war_name = "ROOT"
+    # print war_name
+
     k8sTemplate_json = json.dumps(k8sTemplate_dic)
     jsonpath = 'CMDB/scripts/playbooks/k8s/vars-json/%s.json' %(k8sPod_name)
 

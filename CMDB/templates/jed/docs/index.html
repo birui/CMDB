@@ -808,20 +808,11 @@ editor.on("change",  function() {
                                     "minLength": 1,
                                     "default": "tomcat"
                                 },
-                                "check": {
+                                "port": {
                                     "type": "string",
-                                    "description": "健康监测方式",
-                                    "enum": [
-                                        "tcp",
-                                        "http"
-                                    ],
-                                    "default": "http"
-                                },
-                                "path": {
-                                    "type": "string",
-                                    "description": "健康监测接口,一般是/api-name,tcp方式可以不写",
-                                    "minLength": 1,
-                                    "default": "/"
+                                    "description": "应用端口",
+                                    "minLength": 3,
+                                    "default": "8080"
                                 },
                                 "jvm_xmx": {
                                     "type": "string",
@@ -847,6 +838,36 @@ editor.on("change",  function() {
                                     "minLength": 1,
                                     "default": "500m"
                                 }
+                            }
+                        },
+                        "check_tomcat": {
+                            "title": "check_tomcat",
+                            "type": "object",
+                            "properties": {
+                                "check_tomcat": {
+                                    "type": "boolean",
+                                    "description": "是否创建启动健康监测",
+                                    "enum": [
+                                        false,
+                                        true
+                                    ],
+                                    "default": true
+                                },
+                                "check": {
+                                    "type": "string",
+                                    "description": "健康监测方式",
+                                    "enum": [
+                                        "tcp",
+                                        "http"
+                                    ],
+                                    "default": "http"
+                                },
+                                "path": {
+                                    "type": "string",
+                                    "description": "健康监测接口,一般是/api-name,tcp方式可以不写",
+                                    "minLength": 1,
+                                    "default": "/"
+                                },
                             }
                         },
                         "service": {
