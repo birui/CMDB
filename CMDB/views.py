@@ -1594,7 +1594,11 @@ def ajax_jed(request):
     k8sTemplate_dic = json.loads(K8sTemplate)
     # print type(k8sTemplate_dic)
     img_addr = k8sTemplate_dic['global']['registry']
-    img_version = k8sTemplate_dic['tomcat']['version']
+    try:
+        img_version = k8sTemplate_dic['tomcat']['version']
+    except Exception:
+        img_version = k8sTemplate_dic['nginx']['version']
+
     k8sPod_name = k8sTemplate_dic['global']['name']
     try:
         war_name = k8sTemplate_dic['tomcat']['path']
