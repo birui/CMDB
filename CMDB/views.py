@@ -1577,6 +1577,12 @@ def qiniuflushcdn_dr_act(request):
 
 
 #===k8s模板生成===========
+def nginx_jed(request):
+    return render(
+        request,
+        'nginx_jed/docs/index.html',
+    )
+
 def jed(request):
     return render(
         request,

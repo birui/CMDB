@@ -112,6 +112,7 @@ urlpatterns = [
                   url(r'^zaker/([0-9]+)/$', zaker),
                   url(r'^jed/$', jed),
                   url(r'^ajax_jed/$', ajax_jed),
+                  url(r'^nginx_jed/$', nginx_jed),
                   url(r'^k8s_playbook_run/$', k8s_playbook_run),
                   url(r'^flushcdn/$', flushcdn),
                   url(r'^flushcdn_act/$', flushcdn_act),

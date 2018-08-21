@@ -103,6 +103,18 @@ class iterms(models.Model):
        return str(self.hostname) #返回的数据
        # return self.hostname
 
+class host_metrics(models.Model):
+    instance_id = models.CharField(blank=True, max_length=100)
+    hostname = models.CharField(blank=True, max_length=100)
+    memory = models.IntegerField(default=1)
+    cpu_max_percent = models.IntegerField(default=1)
+    loadaverage_max = models.IntegerField(default=1)
+    memory_max_percent = models.IntegerField(default=1)
+    wlan_max_in = models.IntegerField(default=1)
+    wlan_max_out = models.IntegerField(default=1)
+    lan_max_in = models.IntegerField(default=1)
+    lan_max_out = models.IntegerField(default=1)
+
 class online(models.Model):
     models_name = models.CharField(blank=True,max_length=20)
     version = models.CharField(blank=True,max_length=20)

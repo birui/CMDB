@@ -1,0 +1,52 @@
+{
+  "name": "@json-editor/json-editor",
+  "title": "JSONEditor",
+  "description": "JSON Schema based editor",
+  "version": "1.0.0",
+  "main": "dist/jsoneditor.js",
+  "author": {
+    "name": "Jeremy Dorn",
+    "email": "jeremy@jeremydorn.com",
+    "url": "http://jeremydorn.com"
+  },
+  "bugs": {
+    "url": "https://github.com/json-editor/json-editor/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/json-editor/json-editor.git"
+  },
+  "keywords": [
+    "json",
+    "schema",
+    "jsonschema",
+    "editor"
+  ],
+  "scripts": {
+    "build": "npm install && grunt",
+    "start": "grunt watch",
+    "test": "grunt test",
+    "serve-test": "grunt serve-test",
+    "docker-test": "cd tests && docker-compose run --rm node npm run build && docker-compose up -d && docker-compose ps && docker-compose exec node npm test",
+    "preversion": "npm run docker-test",
+    "version": "",
+    "postversion": "git push && git push --tags && npm publish ./ --access public"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "devDependencies": {
+    "chromedriver": "^2.36.0",
+    "grunt": "^1.0.2",
+    "grunt-contrib-concat": "~1.0.0",
+    "grunt-contrib-connect": "~1.0.0",
+    "grunt-contrib-jshint": "~1.0.0",
+    "grunt-contrib-uglify": "~1.0.0",
+    "grunt-contrib-watch": "~1.0.0",
+    "grunt-run": "^0.7.0",
+    "mocha": "^2.5.3",
+    "selenium-webdriver": "^2.53.3"
+  },
+  "dependencies": {}
+}

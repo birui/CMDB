@@ -145,6 +145,14 @@ class clear_log_show(admin.ModelAdmin):
     # 指定要搜索的字段
     search_fields = ('group_name',)
 
+class host_metrics_show(admin.ModelAdmin):
+    #显示字段
+    list_display = ('instance_id','hostname','memory','cpu_max_percent','loadaverage_max','memory_max_percent','wlan_max_in','wlan_max_out','lan_max_in','lan_max_out')
+    #指定列表过滤器,页面右边
+    list_filter = ('hostname','instance_id')
+    # 指定要搜索的字段
+    search_fields = ('hostname','instance_id')
+
 #admin里面显示哪些表：
 admin.site.register(Brothers)
 admin.site.register(History)
@@ -168,3 +176,4 @@ admin.site.register(supervisor_ip,supervisor_ip_show)
 admin.site.register(playbook,playbook_show)
 admin.site.register(k8s_depoloy,k8s_depoloy_show)
 admin.site.register(clear_log,clear_log_show)
+admin.site.register(host_metrics,host_metrics_show)
