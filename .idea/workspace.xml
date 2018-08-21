@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bdd5571d-1775-40d8-8711-e4db9207f0be" name="Default" comment="test">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/views.py" afterPath="$PROJECT_DIR$/CMDB/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/templates/nginx_jed/docs/index.html" afterPath="$PROJECT_DIR$/CMDB/templates/nginx_jed/docs/index.html" />
     </list>
     <ignored path="coohua_CMDB.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -41,7 +41,7 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CMDB/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
+            <state relative-caret-position="239">
               <caret line="1599" column="57" selection-start-line="1599" selection-start-column="57" selection-end-line="1599" selection-end-column="57" />
               <folding>
                 <element signature="e#15#29#0" expanded="true" />
@@ -1024,7 +1024,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/CMDB/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
+        <state relative-caret-position="239">
           <caret line="1599" column="57" selection-start-line="1599" selection-start-column="57" selection-end-line="1599" selection-end-column="57" />
           <folding>
             <element signature="e#15#29#0" expanded="true" />

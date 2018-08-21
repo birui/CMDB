@@ -723,7 +723,7 @@ editor.on("change",  function() {
                                 },
                                 "name": {
                                     "type": "string",
-                                    "description": "应用名称",
+                                    "description": "应用名称，注意：必须小写",
                                     "minLength": 3,
                                     "default": ""
                                 },
@@ -810,7 +810,7 @@ editor.on("change",  function() {
                                 },
                                 "port": {
                                     "type": "string",
-                                    "description": "应用端口",
+                                    "description": "应用容器端口",
                                     "minLength": 2,
                                     "default": "80"
                                 },
@@ -844,9 +844,21 @@ editor.on("change",  function() {
                                 },
                                 "serviceName": {
                                     "type": "string",
-                                    "description": "service名称，可以和应用名称相同",
+                                    "description": "service名称，可以和应用名称相同必须都是小写,'[a-z]([-a-z0-9]*[a-z0-9])?'",
                                     "minLength": 1,
                                     "default": ""
+                                },
+                                "port": {
+                                    "type": "string",
+                                    "description": "service端口",
+                                    "minLength": 2,
+                                    "default": "80"
+                                },
+                                "targetPort": {
+                                    "type": "string",
+                                    "description": "应用容器端口",
+                                    "minLength": 2,
+                                    "default": "80"
                                 }
                             }
                         },
