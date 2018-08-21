@@ -889,6 +889,18 @@ editor.on("change",  function() {
                                     "minLength": 1,
                                     "default": ""
                                 }
+                                "port": {
+                                    "type": "string",
+                                    "description": "service端口",
+                                    "minLength": 2,
+                                    "default": "80"
+                                },
+                                "targetPort": {
+                                    "type": "string",
+                                    "description": "应用容器端口",
+                                    "minLength": 2,
+                                    "default": "8080"
+                                }
                             }
                         },
 
