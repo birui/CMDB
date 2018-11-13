@@ -757,7 +757,7 @@ editor.on("change",  function() {
                                     "type": "string",
                                     "description": "nfs地址(注意：青岛和北京)",
                                     "enum": [
-                                        "15404493b7-udc99.cn-beijing.nas.aliyuncs.com",
+                                        "19f44489d1-lfh99.cn-beijing.nas.aliyuncs.com",
                                         "6522a4a61a-plo44.cn-qingdao.nas.aliyuncs.com"
                                     ],
                                     "default": "15404493b7-udc99.cn-beijing.nas.aliyuncs.com"
@@ -885,7 +885,7 @@ editor.on("change",  function() {
                                 },
                                 "serviceName": {
                                     "type": "string",
-                                    "description": "service名称，可以和应用名称相同必须都是小写,[a-z]([-a-z0-9]*[a-z0-9])",
+                                    "description": "service名称，不能用域名，可与应用名称相同，必须都是小写,[a-z]([-a-z0-9]*[a-z0-9])",
                                     "minLength": 1,
                                     "default": ""
                                 },

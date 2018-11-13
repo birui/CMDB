@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bdd5571d-1775-40d8-8711-e4db9207f0be" name="Default" comment="test">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/templates/nginx_jed/docs/index.html" afterPath="$PROJECT_DIR$/CMDB/templates/nginx_jed/docs/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/views.py" afterPath="$PROJECT_DIR$/CMDB/views.py" />
-    </list>
+    <list default="true" id="bdd5571d-1775-40d8-8711-e4db9207f0be" name="Default" comment="test" />
     <ignored path="coohua_CMDB.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path=".idea/dataSources.local.xml" />
@@ -74,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/CMDB/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="610">
-              <caret line="1769" column="42" selection-start-line="1769" selection-start-column="42" selection-end-line="1769" selection-end-column="42" />
+              <caret line="1658" column="30" selection-start-line="1658" selection-start-column="30" selection-end-line="1658" selection-end-column="30" />
               <folding>
                 <element signature="e#15#29#0" expanded="true" />
                 <marker date="1542074227877" expanded="true" signature="32709:32917" ph="select domai... CMDB_coohua_share_domain" />
@@ -1027,7 +1023,7 @@
     <entry file="file://$PROJECT_DIR$/CMDB/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="610">
-          <caret line="1769" column="42" selection-start-line="1769" selection-start-column="42" selection-end-line="1769" selection-end-column="42" />
+          <caret line="1658" column="30" selection-start-line="1658" selection-start-column="30" selection-end-line="1658" selection-end-column="30" />
           <folding>
             <element signature="e#15#29#0" expanded="true" />
             <marker date="1542074227877" expanded="true" signature="32709:32917" ph="select domai... CMDB_coohua_share_domain" />
