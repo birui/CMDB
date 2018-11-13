@@ -1773,7 +1773,7 @@ def k8s_dockerfile_act(request):
     war_url = 'http://172.16.11.1:8102/'+ war_path
     # print k8sPod_name,war_version,war_url,k8simg_warname
     if war_version:
-        k8s_depoloy.objects.filter(name=k8sPod_name).update(img_version=war_version)
+        k8s_depoloy.objects.filter(name=k8sPod_name).update(img_version=war_version[0])
     else:
         return HttpResponse('img_version is None')
 
@@ -1784,4 +1784,3 @@ def k8s_dockerfile_act(request):
     except subprocess.CalledProcessError as e:
         status2 = e.output
     return HttpResponse(status2)
-
