@@ -1727,7 +1727,7 @@ def new_war(filepath):
     search_path = 'CMDB/scripts/maven' + filepath
     print search_path
     #查找最新war包
-    cmd = 'ls -rt $(find %s  |grep ".war$" )|tail -n 1' % (search_path)
+    cmd = 'ls -rt $(find %s  |grep -E ".war$|.jar$" )|tail -n 1' % (search_path)
     try:
         status2 = subprocess.check_output(cmd, shell=True)
     except subprocess.CalledProcessError as e:
@@ -1773,11 +1773,11 @@ def k8s_dockerfile_act(request):
     war_url = 'http://172.16.11.1:8102/'+ war_path
     # print k8sPod_name,war_version,war_url,k8simg_warname
     if war_version:
-        k8s_depoloy.objects.filter(name=k8sPod_name).update(img_version=war_version[0])
+        k8s_depoloy.objects.filter(name=k8sPod_name).update(img_version=war_version[0])d
     else:
         return HttpResponse('img_version is None')
 
-    cmd = 'CMDB/scripts/deploy-images.sh %s %s %s %s ' % (k8sPod_name,war_version[0],war_url,k8simg_warname)
+    cmd = 'CMDB/scripts/deploy-images.sh %s %s %s' % (k8sPod_name,war_version[0],war_url)
     print cmd
     try:
         status2 = subprocess.check_output(cmd, shell=True)

@@ -106,6 +106,7 @@ class ngx_ip_show(admin.ModelAdmin):
     search_fields = ('domain', 'ip')
 
 class ngx_api_show(admin.ModelAdmin):
+
     #显示字段
     list_display = ('domain','api','num')
     #指定列表过滤器,页面右边
