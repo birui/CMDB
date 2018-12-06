@@ -110,7 +110,7 @@
              <div class="col-lg-1" >
                  <p> 镜像url：</p>
              </div>
-             <div class="col-lg-6">
+             <div class="col-lg-2">
                  <input type="text" class="form-control"  id='devis_lists_text'>
              </div>
         </div>
@@ -193,6 +193,7 @@ $(document).ready(function() {
             _li = '';
         };
 
+
         $('.online-menu li').on('click', function() {
             var modelname = $(this).text();
 
@@ -214,6 +215,23 @@ $(document).ready(function() {
                 $('#devis_lists_text').val(data.war_url)
                 $('#ver').val(data.warname)
             });
+
+             function setCaretPosition(tObj, sPos){
+                if(tObj.setSelectionRange){
+                    setTimeout(function(){
+                        tObj.setSelectionRange(sPos, sPos);
+                        tObj.focus();
+                    }, 0);
+                }else if(tObj.createTextRange){
+                    var rng = tObj.createTextRange();
+                    rng.move('character', sPos);
+                    rng.select();
+                }
+            } 
+            var tObj =document.getElementById("devis_lists_text");
+            var sPos = tObj.value.length;
+            setCaretPosition(tObj, sPos);
+
         });
 
     });
@@ -272,6 +290,7 @@ $(".btn-online-back").click(function() {
 
 
     });
+
 
 });
 </script>
