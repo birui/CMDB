@@ -89,14 +89,32 @@
             </div>
             <!-- /.col-lg-6 -->
         </div>
+
+ <!--        <div class="row" style='margin-top:10px'>
+
+            <div class="col-lg-1" >
+                 <p>包类型：</p>
+            </div>
+
+            <div class="radio col-lg-6" >
+                <label>
+                  <input type="radio" checked="" value="war" id="bagType" name="optionsRadios" data-com.agilebits.onepassword.user-edited="yes">war
+                </label>
+                <label>
+                  <input type="radio" checked="" value="jar" id="bagType" name="optionsRadios" data-com.agilebits.onepassword.user-edited="yes">jar
+                </label>
+            </div>
+        </div> -->
+
         <div class="row devis_lists" style='margin-top:10px'>
-            <div class="col-lg-1">
-                <p> 镜像url：</p>
-            </div>
-            <div class="col-lg-10">
-                <div id='devis_lists_text'></div>
-            </div>
+             <div class="col-lg-1" >
+                 <p> 镜像url：</p>
+             </div>
+             <div class="col-lg-6">
+                 <input type="text" class="form-control"  id='devis_lists_text'>
+             </div>
         </div>
+
         <div class="row" style='margin-top:10px'>
             <div class="col-lg-1">
                 <p> war包名称：</p>
@@ -114,6 +132,7 @@
                 <textarea id="describe" class="form-control" rows="3"></textarea>
             </div>
         </div>
+
         <div class="row" style='margin-top:10px'>
             <div class="col-lg-6">
                 <button type="button" class="btn btn-danger btn-default btn-online-back" data-back=''>提交上线</button>
@@ -181,7 +200,7 @@ $(document).ready(function() {
             // console.log(param);
             $('#dLabel').text(modelname);
             $.get("/k8s_dockerfile/", param, function(data) {
-                console.log(data);
+                // console.log(data);
                 var _hostnameArr = [];
 
                 var _htmlsubdom = '';
@@ -192,11 +211,7 @@ $(document).ready(function() {
                 for (var i = 0; i < data.length; i++) {
                     _hostnameArr.push({});
                 }
-                _htmlsubdom += '<div class="col-md-2,col-lg-10">' +
-                    '<i  data-lname="' + data.war_url + '"></i>' +
-                    '<p id="image-name" value="' + data.war_url + '" >' + data.war_url + '</p></div>';
-
-                $('#devis_lists_text').html(_htmlsubdom);
+                $('#devis_lists_text').val(data.war_url)
                 $('#ver').val(data.warname)
             });
         });
@@ -217,6 +232,7 @@ $(".btn-online-back").click(function() {
     var imagename = $("#image-name").text();
     var warname = $("#ver").val();
     var describe = $("#describe").val();
+    // var bagtype = $("#bagType").val();
     var liplists = '',
         hostnamestr = '';
     $('.i_lip').each(function() {
@@ -226,11 +242,12 @@ $(".btn-online-back").click(function() {
     liplists = liplists.substring(0, liplists.length - 1);
     hostnamestr = hostnamestr.substring(0, hostnamestr.length - 1);
 
-    console.log(modelname);
+    console.log(bagtype);
     var _param = {
         'modelname': modelname,
         'warname': warname,
         'describe': describe
+        // 'bagtype': bagtype
     };
     if (_rollback) { //back
         _param = null;
@@ -238,6 +255,7 @@ $(".btn-online-back").click(function() {
             'modelname': modelname,
             'warname': warname,
             'describe': describe
+            // 'bagtype': bagtype
         };
     }
     $.post("/k8s_dockerfile_act/", _param, function(data) {

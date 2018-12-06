@@ -1723,11 +1723,18 @@ def k8s_deploy_action(request):
 def k8s_img(request):
     return render(request, 'new/k8s_dockerfile.html', {'pagename': '镜像创建'})
 
-def new_war(filepath):
+def new_war(filepath,k8sPod_name):
     search_path = 'CMDB/scripts/maven' + filepath
     print search_path
+    bag_type = k8s_depoloy.objects.filter(name=k8sPod_name).values('bagtype')[0]['bagtype']
+    if bag_type == 2:
+        bag_type = 'jar'
+    else:
+        bag_type = 'war'
+
+    # print 'bagtype====>',bag_type
     #查找最新war包
-    cmd = 'ls -rt $(find %s  |grep -E ".war$|.jar$" )|tail -n 1' % (search_path)
+    cmd = 'ls -rt $(find %s  |grep -E ".%s$" )|tail -n 1' % (search_path,bag_type)
     try:
         status2 = subprocess.check_output(cmd, shell=True)
     except subprocess.CalledProcessError as e:
@@ -1738,7 +1745,7 @@ def k8s_dockerfile(request):
     k8sPod_name = request.GET['name']
     war_path_db = k8s_depoloy.objects.filter(name=k8sPod_name).values('war_path')[0]['war_path']
     warname = k8s_depoloy.objects.filter(name=k8sPod_name).values('war_name')[0]['war_name']
-    war_path_src = new_war(war_path_db)
+    war_path_src = new_war(war_path_db,k8sPod_name)
     e = re.compile(r'maven/')
     war_path = e.split(war_path_src)[1].replace('\r','').replace('\n','').replace('\t','').replace(' ','_')
     # print war_path

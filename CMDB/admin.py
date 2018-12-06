@@ -132,7 +132,7 @@ class playbook_show(admin.ModelAdmin):
 
 class k8s_depoloy_show(admin.ModelAdmin):
     #显示字段
-    list_display = ('name','lead','json_path','img_address','image','img_version','war_path','war_name','remark')
+    list_display = ('name','lead','json_path','img_address','image','img_version','bagtype','war_path','war_name','remark')
     #指定列表过滤器,页面右边
     list_filter = ('name',)
     # 指定要搜索的字段

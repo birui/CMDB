@@ -308,15 +308,20 @@ class supervisor_ip(models.Model):
         return str(self.id)
 
 class k8s_depoloy(models.Model):
+    GENDER_CHOICES=(
+        (1,'war'),
+        (2,'jar'),
+        )
     name = models.CharField(max_length=70)
     lead = models.CharField(max_length=50,blank=True,null=True)
     #ansible参数文件位置
     json_path = models.CharField(max_length=200,default='CMDB/scripts/playbooks/k8s/vars-json/')
-    img_address = models.CharField(max_length=250,default='registry.cn-beijing.aliyuncs.com/coohua_img/')
+    img_address = models.CharField(max_length=250,default='registry-vpc.cn-beijing.aliyuncs.com/coohua_img/')
     #不包含version的镜像名称
     image = models.CharField(max_length=100,blank=True,null=True)
     #镜像版本
     img_version = models.CharField(max_length=20 ,blank=True,null=True)
+    bagtype = models.IntegerField(choices=GENDER_CHOICES,default=1)
     # war包在maven目录路径到版本号上层
     war_path = models.CharField(max_length=200,blank=True,null=True)
     war_name = models.CharField(max_length=20,blank=True,null=True)
