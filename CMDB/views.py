@@ -1769,7 +1769,7 @@ def k8s_dockerfile_act(request):
     except ObjectDoesNotExist:
         msg = "We are out of war_path"
         return HttpResponse(msg)
-    war_path_src = new_war(war_path_db)
+    war_path_src = new_war(war_path_db,k8sPod_name)
     e = re.compile(r'maven/')
     war_path = e.split(war_path_src)[1].replace('\r','').replace('\n','').replace('\t','').replace(' ','_')
     # print war_path
