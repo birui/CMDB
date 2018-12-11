@@ -1,51 +1,49 @@
 # coding=utf-8
-import os, sys
-from django.shortcuts import render, render_to_response
-from django.template import loader, Context
-from django.http import HttpResponse, HttpResponseRedirect, Http404
-from CMDB.models import *
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from django.contrib import auth
-from django.shortcuts import redirect
-from urllib import urlencode
-from urllib import unquote
+import datetime
 import json
+import os
+import random
 import re
+import ssl
+import string
+import subprocess
+import sys
 import time
 import urllib2
-import ssl
-from django.core import serializers
-import urllib2
-from django.http import JsonResponse
-import subprocess
-import zabbix_api
-from django.core.urlresolvers import reverse
+from urllib import unquote, urlencode
+from xmlrpclib import ServerProxy
+
 import simplejson
+from django import forms
+from django.contrib import auth
+from django.core import serializers
+from django.core.files import File
+from django.core.files.storage import FileSystemStorage
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.core.urlresolvers import reverse
+from django.db import connection
+from django.http import (Http404, HttpResponse, HttpResponseRedirect,
+                         JsonResponse)
+from django.shortcuts import redirect, render, render_to_response
+# from somewhere import handle_uploaded_file
+from django.template import Context, RequestContext, loader
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
+from django.views.generic import ListView, View
+
+import zabbix_api
 # from CMDB.backends.server import Server #如果导入不成功touch __init__.py
 from CMDB.backends.backend import Backend
-from CMDB.redis_conn import redis_comm
-from CMDB.redis_rsync.dbsize import redis_dbsize
-from xmlrpclib import ServerProxy
-from CMDB.scripts.playbooks.ansicmd import *
 from CMDB.flushcdn.cdn import *
 from CMDB.flushcdn.qiniucdn import *
+from CMDB.models import *
+from CMDB.redis_conn import redis_comm
+from CMDB.redis_rsync.dbsize import redis_dbsize
+from CMDB.scripts.playbooks.ansicmd import *
 from CMDB.scripts.playbooks.ansiplaybook import *
-from CMDB.scripts.weixin.weixin import *
 from CMDB.scripts.weixin.coohua_domain import *
-from django.views.generic import ListView
-from django.views.generic import View
-from django.core.files import File
-from django import forms
+from CMDB.scripts.weixin.weixin import *
+
 from .forms import *
-# from somewhere import handle_uploaded_file
-from django.template import RequestContext
-from django.views.decorators.csrf import csrf_exempt
-from django.views.decorators.csrf import csrf_protect
-from django.core.files.storage import FileSystemStorage
-from django.db import connection
-import random
-import string
-import datetime
 from .forms import NameForm
 
 sup_backend = Backend()
