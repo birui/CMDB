@@ -8,9 +8,9 @@
 *.ini
 *.tar
 *.txt
-.idea/*
+.idea/
+!.gitignore
 __ pycache __
-.idea/*
 .DS_Store
 !requirements.txt
 settings.py
@@ -23,3 +23,5 @@ media/*
 *_config.py
 CMDB/migrations/*
 CMDB/static/oss/upload.js
+._*
+.*
