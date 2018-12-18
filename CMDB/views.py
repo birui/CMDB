@@ -1760,6 +1760,10 @@ def k8s_dockerfile_act(request):
     error_1 = 'Input is empty'
     k8sPod_name = request.POST['modelname']
     k8simg_warname = request.POST['warname']
+    JDKVersion = request.POST['JDKVersion']
+
+    print JDKVersion
+
     if not k8sPod_name or not k8simg_warname:
         return HttpResponse(error_1)
     try:
@@ -1782,7 +1786,7 @@ def k8s_dockerfile_act(request):
     else:
         return HttpResponse('img_version is None')
 
-    cmd = 'CMDB/scripts/deploy-images.sh %s %s %s %s ' % (k8sPod_name,war_version[0],war_url,k8simg_warname)
+    cmd = 'CMDB/scripts/deploy-images.sh %s %s %s %s %s' % (k8sPod_name,war_version[0],war_url,k8simg_warname,JDKVersion)
     print cmd
     try:
         status2 = subprocess.check_output(cmd, shell=True)

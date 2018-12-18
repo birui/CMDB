@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="bdd5571d-1775-40d8-8711-e4db9207f0be" name="Default" comment="test">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/CMDB/untitled.py" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/templates/new/k8s_dockerfile.html" afterPath="$PROJECT_DIR$/CMDB/templates/new/k8s_dockerfile.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/CMDB/views.py" afterPath="$PROJECT_DIR$/CMDB/views.py" />
     </list>
     <ignored path="coohua_CMDB.iws" />
@@ -30,8 +30,8 @@
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/coohua_CMDB/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="49" column="54" selection-start-line="49" selection-start-column="40" selection-end-line="49" selection-end-column="54" />
+            <state relative-caret-position="665">
+              <caret line="131" column="43" selection-start-line="131" selection-start-column="25" selection-end-line="131" selection-end-column="43" />
               <folding>
                 <element signature="e#35#50#0" expanded="true" />
               </folding>
@@ -82,15 +82,15 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CMDB/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="722">
-              <caret line="1791" column="0" selection-start-line="1791" selection-start-column="0" selection-end-line="1791" selection-end-column="0" />
+            <state relative-caret-position="707">
+              <caret line="1794" column="32" selection-start-line="1794" selection-start-column="32" selection-end-line="1794" selection-end-column="32" />
               <folding>
                 <element signature="e#15#30#0" expanded="true" />
-                <marker date="1544414318569" expanded="true" signature="32562:32770" ph="select domai... CMDB_coohua_share_domain" />
-                <marker date="1544414318569" expanded="true" signature="33083:33295" ph="select domai... CMDB_coohua_share_domain" />
-                <marker date="1544414318569" expanded="true" signature="33562:33794" ph="select domai... CMDB_coohua_share_domain" />
-                <marker date="1544414318569" expanded="true" signature="42803:42992" ph="select model... CMDB_coohua_share_domain" />
-                <marker date="1544414318569" expanded="true" signature="43453:43605" ph="select count... CMDB_coohua_share_domain" />
+                <marker date="1545121918279" expanded="true" signature="32562:32770" ph="select domai... CMDB_coohua_share_domain" />
+                <marker date="1545121918279" expanded="true" signature="33083:33295" ph="select domai... CMDB_coohua_share_domain" />
+                <marker date="1545121918279" expanded="true" signature="33562:33794" ph="select domai... CMDB_coohua_share_domain" />
+                <marker date="1545121918279" expanded="true" signature="42803:42992" ph="select model... CMDB_coohua_share_domain" />
+                <marker date="1545121918279" expanded="true" signature="43453:43605" ph="select count... CMDB_coohua_share_domain" />
               </folding>
             </state>
           </provider>
@@ -963,28 +963,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/coohua_CMDB/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="49" column="54" selection-start-line="49" selection-start-column="40" selection-end-line="49" selection-end-column="54" />
-          <folding>
-            <element signature="e#35#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/CMDB/backends/server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="15" column="60" selection-start-line="15" selection-start-column="60" selection-end-line="15" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/../lib/python2.7/site-packages/django/template/defaulttags.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1013,17 +995,35 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../lib/python2.7/site-packages/django/template/defaulttags.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="66" column="0" selection-start-line="66" selection-start-column="0" selection-end-line="66" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/coohua_CMDB/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="131" column="43" selection-start-line="131" selection-start-column="25" selection-end-line="131" selection-end-column="43" />
+          <folding>
+            <element signature="e#35#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CMDB/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="722">
-          <caret line="1791" column="0" selection-start-line="1791" selection-start-column="0" selection-end-line="1791" selection-end-column="0" />
+        <state relative-caret-position="707">
+          <caret line="1794" column="32" selection-start-line="1794" selection-start-column="32" selection-end-line="1794" selection-end-column="32" />
           <folding>
             <element signature="e#15#30#0" expanded="true" />
-            <marker date="1544414318569" expanded="true" signature="32562:32770" ph="select domai... CMDB_coohua_share_domain" />
-            <marker date="1544414318569" expanded="true" signature="33083:33295" ph="select domai... CMDB_coohua_share_domain" />
-            <marker date="1544414318569" expanded="true" signature="33562:33794" ph="select domai... CMDB_coohua_share_domain" />
-            <marker date="1544414318569" expanded="true" signature="42803:42992" ph="select model... CMDB_coohua_share_domain" />
-            <marker date="1544414318569" expanded="true" signature="43453:43605" ph="select count... CMDB_coohua_share_domain" />
+            <marker date="1545121918279" expanded="true" signature="32562:32770" ph="select domai... CMDB_coohua_share_domain" />
+            <marker date="1545121918279" expanded="true" signature="33083:33295" ph="select domai... CMDB_coohua_share_domain" />
+            <marker date="1545121918279" expanded="true" signature="33562:33794" ph="select domai... CMDB_coohua_share_domain" />
+            <marker date="1545121918279" expanded="true" signature="42803:42992" ph="select model... CMDB_coohua_share_domain" />
+            <marker date="1545121918279" expanded="true" signature="43453:43605" ph="select count... CMDB_coohua_share_domain" />
           </folding>
         </state>
       </provider>

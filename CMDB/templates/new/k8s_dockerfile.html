@@ -1,5 +1,5 @@
 {% extends "new/base.html" %} {% load staticfiles %} {% block css %}
-<!-- <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet"> -->
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet">
 <style type="text/css">
 .breath_light {
     opacity: 1;
@@ -90,21 +90,23 @@
             <!-- /.col-lg-6 -->
         </div>
 
- <!--        <div class="row" style='margin-top:10px'>
+        <div class="row" style='margin-top:10px'>
 
             <div class="col-lg-1" >
-                 <p>包类型：</p>
+                 <p>jdk版本：</p>
             </div>
 
             <div class="radio col-lg-6" >
                 <label>
-                  <input type="radio" checked="" value="war" id="bagType" name="optionsRadios" data-com.agilebits.onepassword.user-edited="yes">war
+                  <input type="radio" name="JDKVersion"  value="1.7" id="JDKVersion" name="optionsRadios" >1.7
                 </label>
                 <label>
-                  <input type="radio" checked="" value="jar" id="bagType" name="optionsRadios" data-com.agilebits.onepassword.user-edited="yes">jar
+                  <input type="radio" name="JDKVersion" value="1.8" id="JDKVersion" name="optionsRadios" checked="">1.8
                 </label>
             </div>
-        </div> -->
+        </div>
+
+
 
         <div class="row devis_lists" style='margin-top:10px'>
              <div class="col-lg-1" >
@@ -250,7 +252,7 @@ $(".btn-online-back").click(function() {
     var imagename = $("#image-name").text();
     var warname = $("#ver").val();
     var describe = $("#describe").val();
-    // var bagtype = $("#bagType").val();
+    var JDKVersion = $('input[type="radio"][name="JDKVersion"]:checked').val(); 
     var liplists = '',
         hostnamestr = '';
     $('.i_lip').each(function() {
@@ -264,16 +266,16 @@ $(".btn-online-back").click(function() {
     var _param = {
         'modelname': modelname,
         'warname': warname,
-        'describe': describe
-        // 'bagtype': bagtype
+        'describe': describe,
+        'JDKVersion': JDKVersion
     };
     if (_rollback) { //back
         _param = null;
         _param = {
             'modelname': modelname,
             'warname': warname,
-            'describe': describe
-            // 'bagtype': bagtype
+            'describe': describe,
+            'JDKVersion': JDKVersion
         };
     }
     $.post("/k8s_dockerfile_act/", _param, function(data) {
@@ -287,11 +289,7 @@ $(".btn-online-back").click(function() {
             $('#result').show(); //改变display: none
             alert("恭喜你上线成功！！！")
         }
-
-
     });
-
-
 });
 </script>
 {% endblock %}
