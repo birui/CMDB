@@ -1761,8 +1761,7 @@ def k8s_dockerfile_act(request):
     k8sPod_name = request.POST['modelname']
     k8simg_warname = request.POST['warname']
     JDKVersion = request.POST['JDKVersion']
-
-    print JDKVersion
+    p_id = request.POST['p_id']
 
     if not k8sPod_name or not k8simg_warname:
         return HttpResponse(error_1)
@@ -1786,7 +1785,7 @@ def k8s_dockerfile_act(request):
     else:
         return HttpResponse('img_version is None')
 
-    cmd = 'CMDB/scripts/deploy-images.sh %s %s %s %s %s' % (k8sPod_name,war_version[0],war_url,k8simg_warname,JDKVersion)
+    cmd = 'CMDB/scripts/deploy-images.sh %s %s %s %s %s %s' % (k8sPod_name,war_version[0],war_url,k8simg_warname,JDKVersion,p_id)
     print cmd
     try:
         status2 = subprocess.check_output(cmd, shell=True)

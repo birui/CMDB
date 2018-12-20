@@ -106,7 +106,14 @@
             </div>
         </div>
 
-
+        <div class="row devis_lists" style='margin-top:10px'>
+             <div class="col-lg-1" >
+                 <p> 应用id：</p>
+             </div>
+             <div class="col-lg-6">
+                 <input type="text" class="form-control"  id='p_id'>
+             </div>
+        </div>
 
         <div class="row devis_lists" style='margin-top:10px'>
              <div class="col-lg-1" >
@@ -253,6 +260,7 @@ $(".btn-online-back").click(function() {
     var warname = $("#ver").val();
     var describe = $("#describe").val();
     var JDKVersion = $('input[type="radio"][name="JDKVersion"]:checked').val(); 
+    var p_id = $("#p_id").val();
     var liplists = '',
         hostnamestr = '';
     $('.i_lip').each(function() {
@@ -267,7 +275,8 @@ $(".btn-online-back").click(function() {
         'modelname': modelname,
         'warname': warname,
         'describe': describe,
-        'JDKVersion': JDKVersion
+        'JDKVersion': JDKVersion,
+        'p_id':p_id
     };
     if (_rollback) { //back
         _param = null;
@@ -275,7 +284,8 @@ $(".btn-online-back").click(function() {
             'modelname': modelname,
             'warname': warname,
             'describe': describe,
-            'JDKVersion': JDKVersion
+            'JDKVersion': JDKVersion,
+            'p_id': p_id
         };
     }
     $.post("/k8s_dockerfile_act/", _param, function(data) {
