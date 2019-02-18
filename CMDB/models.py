@@ -333,3 +333,4 @@ class clear_log(models.Model):
     log_path = models.CharField(max_length=200)
     keep_date = models.IntegerField(blank=True, null=True,default=3)
     recycled_date = models.IntegerField(blank=True, null=True, default=7)
+
