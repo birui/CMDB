@@ -5,8 +5,11 @@ from .models import UserInfo, Role, Permission, Menu
 
 class UserInfoModelForm(ModelForm):
     class Meta:
+        #关联表
         model = UserInfo
+        #表单中使用所有字段
         fields = '__all__'
+        #列表的值
         labels = {
             'username': '用户名',
             'password': '密码',

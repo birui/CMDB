@@ -16,7 +16,7 @@ from django.conf.urls.static import static
 urlpatterns = [
                   # url(r'^ueditor/',include('DjangoUeditor.urls' )),
                   url(r'^rbac/', include('rbac.urls') ),
-                  url(r'^$', homepage),
+                  url(r'^$', index),
                   url(r'^admin/', admin.site.urls),
                   url(r'^hostlist/$', hostlist),
                   url(r'^boot/$', boot),
@@ -132,6 +132,5 @@ urlpatterns = [
                   url(r'^k8s_dockerfile/$', k8s_dockerfile),
                   url(r'^k8s_img/$', k8s_img),
                   url(r'^k8s_dockerfile_act/$', k8s_dockerfile_act),
-                  url(r'^test/$', test),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

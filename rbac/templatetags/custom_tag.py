@@ -1,5 +1,6 @@
 #coding=utf-8
 
+import io
 from django import template
 from django.conf import settings
 import re, os
@@ -162,7 +163,7 @@ def rbac_css():
     :return: 
     """
     css_path = os.path.join('rbac', 'style_script','rbac.css')
-    css = open(css_path,'r',encoding='utf-8').read()
+    css = io.open(css_path,'r',encoding='utf-8').read()
     return mark_safe(css)
 
 
@@ -173,7 +174,7 @@ def rbac_js():
     :return: 
     """
     js_path = os.path.join('rbac', 'style_script', 'rbac.js')
-    js = open(js_path, 'r', encoding='utf-8').read()
+    js = io.open(js_path, 'r', encoding='utf-8').read()
     return mark_safe(js)
 
 
