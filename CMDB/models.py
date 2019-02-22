@@ -4,10 +4,15 @@ from django.db import models
 from DjangoUeditor.models import UEditorField
 from django.conf import settings
 from django import forms
+import rbac.models
 
 class Modelname(models.Model):
+    """
+    按业务划分的服务器组信息
+    """
     name = models.CharField(max_length=70)
     lead = models.CharField(max_length=50)
+    own = models.ManyToManyField(rbac.models.UserInfo, null=True, blank=True)
     remark = models.CharField(max_length=250)
     deploy = models.CharField(max_length=250,default='/app/coohua/publish/deploy/deploy.sh')
     def __unicode__(self):
@@ -38,6 +43,9 @@ class Hosts(models.Model):
         ordering = ['hostname']
 
 class Brothers(models.Model):
+    """
+    业务own,每个人可以对应多个业务
+    """
     name = models.CharField(max_length=20)
     #1研发
     department = models.IntegerField()

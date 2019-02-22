@@ -215,7 +215,7 @@
                     'describe': null
                 };
             }
-            $.post("/config_syn/", _param, function (data) {
+            $.post("/config_manage/config_syn/", _param, function (data) {
 
                 if (_rollback) {//back
                     $('#result_back').html(data);

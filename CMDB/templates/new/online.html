@@ -178,7 +178,7 @@
 {% endblock %} {% block js %}
 <script type="text/javascript">
 $(document).ready(function() {
-    $.get("/get_modelname/", null, function(data) {
+    $.get("/new_online/get_modelname/", null, function(data) {
         var _li = '',
             groupNameArr = [],
             listsArr = [];
@@ -200,7 +200,7 @@ $(document).ready(function() {
             var param = { 'modelname1': modelname };
             console.log(param);
             $('#dLabel').text(modelname);
-            $.get("/ajax_online/", param, function(data) {
+            $.get("/new_online/ajax_online/", param, function(data) {
                 console.log(modelname);
                 var _hostnameArr = [];
 
@@ -236,7 +236,7 @@ $(document).ready(function() {
 
 
     //rollback callback
-    $.get("/get_modelname/", null, function(data) {
+    $.get("/new_online/get_modelname/", null, function(data) {
         var _li = '',
             groupNameArr = [],
             listsArr = [];
@@ -253,7 +253,7 @@ $(document).ready(function() {
         $('.rollback-menu li').on('click', function() {
             var modelname = $(this).text();
             $('#callbackLabel').text(modelname);
-            $.get("/ajax_online/", { 'modelname1': modelname }, function(data) {
+            $.get("/new_online/ajax_online/", { 'modelname1': modelname }, function(data) {
                 var _hostnameArr = [];
 
                 var _htmlsubdom = '';
@@ -320,7 +320,7 @@ $(".btn-online-back").click(function() {
 
     var timer = null;
     timer = setInterval(function() {
-        $.post("/fre_host/", null, function(data) {
+        $.post("/new_online/fre_host/", null, function(data) {
             // console.log(data)
             if (data) {
 
@@ -345,7 +345,7 @@ $(".btn-online-back").click(function() {
 
         });
 
-        $.post("/fre_log/", null, function(data) {
+        $.post("/new_online/fre_log/", null, function(data) {
             // console.log(data)
             if (data) {
 
@@ -382,7 +382,7 @@ $(".btn-online-back").click(function() {
             'describe': null
         };
     }
-    $.post("/online_app/", _param, function(data) {
+    $.post("/new_online/online_app/", _param, function(data) {
 
 
         //alert(data.length)

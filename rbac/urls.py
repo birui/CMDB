@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^menus/new/$', views.menus_new),
     url(r'^menus/edit/(?P<id>\d+)/$', views.menus_edit),
     url(r'^menus/delete/(?P<id>\d+)/$', views.menus_delete),
+    url(r'^menus/menus_data/$', views.menus_data),
 
     url(r'^$', views.index)
 ]

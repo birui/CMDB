@@ -177,7 +177,7 @@
 {% endblock %} {% block js %}
 <script type="text/javascript">
 $(document).ready(function() {
-    $.get("/get_k8s_modelname/", null, function(data) {
+    $.get("/k8s_deploy/get_k8s_modelname/", null, function(data) {
         var _li = '',
             groupNameArr = [],
             listsArr = [];
@@ -199,7 +199,7 @@ $(document).ready(function() {
             var param = { 'modelname1': modelname };
             // console.log(param);
             $('#dLabel').text(modelname);
-            $.get("/ajax_k8s_deploy/", param, function(data) {
+            $.get("/k8s_deploy/ajax_k8s_deploy/", param, function(data) {
                 // console.log(data);
                 var _hostnameArr = [];
 
@@ -225,7 +225,7 @@ $(document).ready(function() {
 
 
     //rollback callback
-    $.get("/get_k8s_modelname/", null, function(data) {
+    $.get("/k8s_deploy/get_k8s_modelname/", null, function(data) {
         var _li = '',
             groupNameArr = [],
             listsArr = [];
@@ -324,7 +324,7 @@ $(".btn-online-back").click(function() {
             'describe': null
         };
     }
-    $.post("/k8s_deploy_action/", _param, function(data) {
+    $.post("/k8s_deploy/k8s_deploy_action/", _param, function(data) {
 
         if (_rollback) { //back
             $('#result_back').html(data);

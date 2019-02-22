@@ -14,7 +14,7 @@
         <input type="button" value="编辑" name="" id='edit-btn' class="btn btn-primary">
 
         <br/>
-        <form action="/updatefile/" method="post">
+        <form action="/playbook_manage/updatefile/" method="post">
 
             <textarea class="form-control textarea" readonly style="width:80%;" rows="40" cols="150" id='filecent'
                       name='filecent'>{{ fileHandler1 }}</textarea>
@@ -65,7 +65,7 @@
             var _model_name = GetQueryString('model_name');
              $.ajax({
              type: "GET",
-             url: "/backup_config",
+             url: "/playbook_manage/backup_config",
              data: {model_name:_model_name},
              dataType: "json",
              success: function(data){
@@ -97,7 +97,7 @@
             var _path = _arr[0];
             var _file_name = _arr[1];
             var _host = window.location.host;
-            window.location.href = 'http://'+_host+'/playbook_update?path='+_path+'&file_name='+_file_name;
+            window.location.href = 'http://'+_host+'/playbook_manage/playbook_update?path='+_path+'&file_name='+_file_name;
 
         });
     </script>

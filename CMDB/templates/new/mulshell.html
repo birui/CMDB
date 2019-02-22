@@ -36,7 +36,7 @@
     <script type="text/javascript">
         $(document).ready(function () {
             function ajaxSelectM() {
-                $.get("/get_modelname/", null, function (data) {
+                $.get("/mulshell/get_modelname/", null, function (data) {
                     var _tr = '', _td = '', groupNameArr = [], listsArr = [];
                     {#                    console.log(data)#}
                     for (var i = 0; i < data.length; i++) {

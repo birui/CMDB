@@ -1,13 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "new/base.html" %}
+{% load staticfiles %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css">
+    <link href="{% static 'cmdb_css/reveal.css' %}" rel="stylesheet">
+{% endblock %}
 
-<a href="/rbac/permissions/new"><button>新增</button></a>
-<table border="1">
+{% block content %}
+
+<a href="/rbac/permissions/new" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>新增</a>
+<table class="table table-striped projects">
     <tr>
         <td>权限</td>
         <td>url</td>
@@ -19,11 +20,17 @@
             <td>{{ permission.title }}</td>
             <td>{{ permission.url }}</td>
             <td>{{ permission.menu }}</td>
-            <td><a href="/rbac/permissions/edit/{{ permission.id }}">编辑</a></td>
-            <td><a href="/rbac/permissions/delete/{{ permission.id }}">删除</a></td>
+            <td>
+                <a href="/rbac/permissions/edit/{{ permission.id }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>编辑</a>
+                <a href="/rbac/permissions/delete/{{ permission.id }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 删除</a>
+            </td>
         </tr>
     {% endfor %}
 </table>
 
-</body>
-</html>
+{% endblock %}
+
+{% block js  %}
+
+
+{% endblock %}

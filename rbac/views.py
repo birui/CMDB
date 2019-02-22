@@ -3,7 +3,9 @@ from django.shortcuts import render, redirect
 from django.core.urlresolvers import reverse
 from .models import UserInfo, Role, Permission, Menu
 from .forms import UserInfoModelForm, RoleModelForm, PermissionModelForm, MenuModelForm
-
+from django.core import serializers
+from django.http import (Http404, HttpResponse, HttpResponseRedirect,
+                         JsonResponse)
 
 def index(request):
     return render(request, 'rbac/index.html')
@@ -12,7 +14,7 @@ def index(request):
 def users(request):
     """查询所有用户信息"""
     user_list = UserInfo.objects.all()
-    return render(request, 'rbac/users.html', {'user_list': user_list})
+    return render(request, 'rbac/users.html', {'user_list': user_list,'pagename': '用户管理'})
 
 
 def users_new(request):
@@ -51,7 +53,7 @@ def users_delete(request, id):
 
 def roles(request):
     role_list = Role.objects.all()
-    return render(request, 'rbac/roles.html', {'role_list': role_list})
+    return render(request, 'rbac/roles.html', {'role_list': role_list,'pagename': '角色管理'})
 
 
 def roles_new(request):
@@ -90,7 +92,7 @@ def roles_delete(request, id):
 
 def permissions(request):
     permission_list = Permission.objects.all()
-    return render(request, 'rbac/permissions.html', {'permission_list': permission_list})
+    return render(request, 'rbac/permissions.html', {'permission_list': permission_list,'pagename': '权限管理'})
 
 
 def permissions_new(request):
@@ -132,7 +134,12 @@ def menus(request):
     menu_list = Menu.objects.all()
     print '=======menus 2====>!'
     print( '=====>', menu_list )
-    return render(request, 'rbac/menus.html', {'menu_list': menu_list})
+    return render(request, 'rbac/menus.html', {'menu_list': menu_list,'pagename': '菜单管理'})
+
+def menus_data(request):
+    menu_list = serializers.serialize("json", Menu.objects.all())
+    print menu_list
+    return HttpResponse(menu_list, content_type='application/json')
 
 def menus_new(request):
     if request.method == "GET":

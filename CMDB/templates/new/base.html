@@ -1,3 +1,5 @@
+{% load custom_tag %}
+{% load static %}
 <!DOCTYPE html> {% load staticfiles %}
 <html lang="en">
 
@@ -16,6 +18,15 @@
     <link href="{% static 'admin/vendors/nprogress/nprogress.css' %}" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="{% static 'admin/build/css/custom.min.css' %}" rel="stylesheet"> {% block css %} {% endblock %}
+    <style>
+        {% rbac_css %}
+    </style>
+    <script src="{% static 'jquery-3.2.1.js' %}"></script>
+    <script>
+        $(function () {
+            {% rbac_js %}
+        })
+    </script>
 </head>
 
 <body class="nav-md">
@@ -34,7 +45,7 @@
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
-                            <h2>John Doe</h2>
+                            <h2>{% rbac_username request %}</h2>
                         </div>
                     </div>
                     <!-- /menu profile quick info -->
@@ -46,47 +57,12 @@
                             <ul class="nav side-menu">
                                 <li><a href="/new_report/"><i class="fa fa-home"></i> Dashboard <span class="fa"></span></a>
                                 </li>
-                                <li><a><i class="fa fa-edit"></i> 资产中心 <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="/new_hosts/">服务器列表</a></li>
-                                        <li><a href="/new_domain/">域名列表</a></li>
-                                        <li><a href="/new_modelname/">模块列表</a></li>
-                                    </ul>
-                                </li>
-                                <li><a><i class="fa fa-desktop"></i> 配置中心 <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="/config_manage/">负载均衡</a></li>
-                                        <li><a href="/playbook_manage/">playbook管理</a></li>
-                                    </ul>
-                                </li>
-                                <li><a><i class="fa fa-refresh"></i> 服务更新 <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="/new_online/">代码更新</a></li>
-                                        <li><a href="/new_supervisor/">服务管理</a></li>
-                                        <li><a href="/k8s_img/">镜像创建</a></li>
-                                        <li><a href="/jed/">k8s tomcat创建</a></li>
-                                        <li><a href="/nginx_jed/">k8s nginx创建</a></li>
-                                        <li><a href="/k8s_deploy/">k8s部署</a></li>
-                                    </ul>
-                                </li>
-                                <li><a><i class="fa fa-magic"></i> 批量任务 <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="/mulfile/">文件分发</a></li>
-                                        <li><a href="/mulcomm/">批量命令</a></li>
-                                        <li><a href="/mulshell/">批量脚本</a></li>
-                                        <li><a href="icons.html">历史记录</a></li>
-                                    </ul>
-                                </li>
-                                <li><a><i class="fa fa-bar-chart-o"></i> 监控中心 <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu">
-                                        <li><a href="/new_items/">资源使用率</a></li>
-                                        <li><a href="/dbsize/">redis同步</a></li>
-                                        <li><a href="/mysql_rsy/">mysql同步</a></li>
-                                    </ul>
-                                </li>
+                            <!-- 通过自定义模板动态渲染菜单 -->
+                         {% rbac_menu request %}
                             </ul>
+
                         </div>
-                        <div class="menu_section">
+<!--                         <div class="menu_section">
                             <h3>用户中心</h3>
                             <ul class="nav side-menu">
                                 <li><a><i class="fa fa-users"></i> 用户管理 <span class="fa fa-chevron-down"></span></a>
@@ -101,7 +77,7 @@
                                 <li><a href="javascript:void(0)"><i class="fa fa-laptop"></i> Landing Page <span
                                     class="label label-success pull-right">Coming Soon</span></a></li>
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- /sidebar menu -->
                     <!-- /menu footer buttons -->
@@ -132,7 +108,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="{% static 'admin/images/img.jpg' %}" alt="">John Doe
+                                <img src="{% static 'admin/images/img.jpg' %}" alt=""> {% rbac_username request %}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
@@ -144,74 +120,10 @@
                                     </a>
                                     </li>
                                     <li><a href="javascript:;">Help</a></li>
-                                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                                    <li><a href="/login/"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                                 </ul>
                             </li>
-                            <!--             <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    <li>
-                      <a>
-                        <span class="image"><img src="{% static 'admin/images/img.jpg' %}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="{% static 'admin/images/img.jpg' %}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="{% static 'admin/images/img.jpg' %}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="{% static 'admin/images/img.jpg' %}" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="text-center">
-                        <a>
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  <!-- </ul>
-                </li> 
-                -->
+
                             <li><a href="/admin/" target="_blank" style="padding-top:15px"><i style="font-size: 30px;"
                                                                                           class="fa fa-cog"></i></a>
                             </li>

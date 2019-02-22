@@ -87,7 +87,7 @@
     "bScrollCollapse": true,
     "iDisplayLength":50,
     "ajax": {
-      "url": "/playbook_data/",
+      "url": "/playbook_manage/playbook_data/",
       "type": "POST",
       "dataSrc": ""
     },
@@ -104,7 +104,7 @@ $('#table_id').on('click','.fa-edit',function(){
     var _path = _tr.find('td:eq(1)').text();
     var _file_name = _tr.find('td:eq(0)').text();
     var _host = window.location.host;
-    window.location.href = 'http://'+_host+'/playbookfile?path='+_path+'&file_name='+_file_name;
+    window.location.href = 'http://'+_host+'/playbook_manage/playbookfile?path='+_path+'&file_name='+_file_name;
     //window.location.href = 'http://www.baidu.com';
 });
 
@@ -113,7 +113,7 @@ $('#table_id').on('click','.fa-external-link-square',function(){
     var _path = _tr.find('td:eq(1)').text();
     var _file_name = _tr.find('td:eq(0)').text();
     var _host = window.location.host;
-    window.location.href = 'http://'+_host+'/playbook_update?path='+_path+'&file_name='+_file_name;
+    window.location.href = 'http://'+_host+'/playbook_manage/playbook_update?path='+_path+'&file_name='+_file_name;
 
     // $("#hostname2").html( "哈哈哈");
     // $('#myModal2').modal('show');

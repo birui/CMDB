@@ -14,7 +14,7 @@
         <input type="button" value="编辑" name="" id='edit-btn' class="btn btn-primary">
 
         <br/>
-        <form action="/updatefile/" method="post">
+        <form action="/config_manage/updatefile/" method="post">
 
             <textarea class="form-control textarea" readonly style="width:80%;" rows="40" cols="150" id='filecent'
                       name='filecent'>{{ fileHandler1 }}</textarea>
@@ -65,7 +65,7 @@
             var _model_name = GetQueryString('model_name');
              $.ajax({
              type: "GET",
-             url: "/backup_config",
+             url: "/config_manage/backup_config",
              data: {model_name:_model_name},
              dataType: "json",
              success: function(data){

@@ -990,7 +990,7 @@ editor.on("change",  function() {
                 K8sTemplate = JSON.stringify($output.value);
 
                 console.log(K8sTemplate);
-                $.post("/ajax_jed/", { 'K8sTemplate': K8sTemplate }, function(ret) {
+                $.post("/nginx_jed/ajax_jed/", { 'K8sTemplate': K8sTemplate }, function(ret) {
 
                 })
 
@@ -1014,7 +1014,7 @@ editor.on("change",  function() {
                 k8sPod_name = K8sTemplate_1.global.name;
                 console.log(k8sPod_name);
 
-                $.post("/k8s_playbook_run/", { 'k8sPod_name': k8sPod_name }, function(ret) {
+                $.post("/nginx_jed/k8s_playbook_run/", { 'k8sPod_name': k8sPod_name }, function(ret) {
                     $('#playbook').html(ret)
                 })
                 // reload();

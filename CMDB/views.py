@@ -78,7 +78,7 @@ def new_domain(request):
 
 
 def new_items(request):
-    return render_to_response('new/items_list.html')
+    return render(request,'new/items_list.html')
 
 def supervisor_server(request):
     return render_to_response('new/supervisor.html')
@@ -103,12 +103,12 @@ def new_supervisor(request):
     except Exception, e:
 
         default_err = {'err': {'statename': 'error', 'description': 'error', 'name': 'error'},}
-        return render_to_response('new/supervisor.html', {
+        return render(request,'new/supervisor.html', {
             'servers_list': default_err,
         })
     else:
         # 将所有机器的supervisor控制的程序列表传给模板，字典格式
-        return render_to_response('new/supervisor.html', {
+        return render(request,'new/supervisor.html', {
             'servers_list': sup_backend.server_list
         })
         # print type(sup_backend.server_list)
@@ -278,8 +278,15 @@ def mulshell(request):
 
 
 def get_modelname(request):
+    """
+    根据用户拥有的model列出相应的主机列表
+    :param request:
+    :return:
+    """
     hostlist = []
-    modelname = Modelname.objects.all()
+    login_user = request.session['user_name']
+    modelname = Modelname.objects.all().filter(own__username=login_user)
+    # modelname = Modelname.objects.get(own__username=login_user)
 
     for i in modelname:
         hostname_list = {}
@@ -299,7 +306,7 @@ def get_modelname(request):
 
             hostlist.append(hostname_list)  # 组合成字典
 
-    print hostlist
+    # print hostlist,'==========usename==========>>',request.session['user_name'],'===modelname=>',modelname
     return HttpResponse(json.dumps(hostlist), content_type='application/json')
 
 
@@ -703,7 +710,7 @@ def updatefile(request):
     f.write(filecent)
     f.flush()
     f.close()
-    return HttpResponseRedirect('/openFile?path=%s&model_name=%s' % (num, g_model_name))
+    return HttpResponseRedirect('/config_manage/openFile?path=%s&model_name=%s' % (num, g_model_name))
 
 
 def getopen():
@@ -1791,14 +1798,20 @@ def k8s_dockerfile_act(request):
         status2 = e.output
     return HttpResponse(status2)
 
-#========测试角色管理==========#
+#========用户名每次登陆都调用中间件确认权限==========#
 def login(request):
+    """
+    用户登陆后将查询的结果返还给中间件存入session
+    :param request:
+    :return:
+    """
     if request.method == "GET":
         return render(request, "login.html")
     else:
         username = request.POST.get('username')
         password = request.POST.get('password')
         user_obj = rbac.models.UserInfo.objects.filter(username=username, password=password).first()
+        print '++++++>',user_obj
         if not user_obj:
             return render(request, "login.html", {'error': '用户名或密码错误！'})
         else:
@@ -1806,6 +1819,6 @@ def login(request):
             return redirect('/new_report/')
 
 def index(request):
+    return render(request, 'new/base.html')
 
-    return render(request, 'index2.html')
 

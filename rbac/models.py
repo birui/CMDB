@@ -8,6 +8,7 @@ class Menu(models.Model):
     """
     title = models.CharField(max_length=32, unique=True)
     parent = models.ForeignKey("Menu", null=True, blank=True)
+    icon = models.CharField(max_length=50, null=True, blank=True)
     # 定义菜单间的自引用关系
     # 权限url 在 菜单下；菜单可以有父级菜单；还要支持用户创建菜单，因此需要定义parent字段（parent_id）
     # blank=True 意味着在后台管理中填写可以为空，根菜单没有父级菜单

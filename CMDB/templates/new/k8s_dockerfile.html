@@ -185,7 +185,7 @@
 {% endblock %} {% block js %}
 <script type="text/javascript">
 $(document).ready(function() {
-    $.get("/get_k8s_modelname/", null, function(data) {
+    $.get("/k8s_img/get_k8s_modelname/", null, function(data) {
         var _li = '',
             groupNameArr = [],
             listsArr = [];
@@ -209,7 +209,7 @@ $(document).ready(function() {
             var param = { 'name': modelname };
             // console.log(param);
             $('#dLabel').text(modelname);
-            $.get("/k8s_dockerfile/", param, function(data) {
+            $.get("/k8s_img/k8s_dockerfile/", param, function(data) {
                 // console.log(data);
                 var _hostnameArr = [];
 
@@ -288,7 +288,7 @@ $(".btn-online-back").click(function() {
             'p_id': p_id
         };
     }
-    $.post("/k8s_dockerfile_act/", _param, function(data) {
+    $.post("/k8s_img/k8s_dockerfile_act/", _param, function(data) {
 
         if (_rollback) { //back
             $('#result_back').html(data);

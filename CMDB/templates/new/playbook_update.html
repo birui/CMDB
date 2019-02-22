@@ -142,7 +142,7 @@
                     'playbook_path': _path,
                     'file_name':_file_name,
                 };
-            $.post("/playbook_run/", _param, function (data) {
+            $.post("/playbook_manage/playbook_run/", _param, function (data) {
 
                 $('#result').html(data);
                 $('#result').show(); //改变display: none

@@ -10,17 +10,10 @@ register = template.Library()
 
 
 def get_structure_data(request):
-    """处理菜单结构"""
+    """从session获取菜单结构"""
     menu = request.session[settings.SESSION_MENU_KEY]
     all_menu = menu[settings.ALL_MENU_KEY]
     permission_url = menu[settings.PERMISSION_MENU_KEY]
-
-    # all_menu = [
-    #     {'id': 1, 'title': '订单管理', 'parent_id': None},
-    #     {'id': 2, 'title': '库存管理', 'parent_id': None},
-    #     {'id': 3, 'title': '生产管理', 'parent_id': None},
-    #     {'id': 4, 'title': '生产调查', 'parent_id': None}
-    # ]
 
     # 定制数据结构
     all_menu_dict = {}
@@ -28,25 +21,8 @@ def get_structure_data(request):
         item['status'] = False
         item['open'] = False
         item['children'] = []
+        # print('----icon----->',item['icon'])
         all_menu_dict[item['id']] = item
-
-    # all_menu_dict = {
-    #     1: {'id': 1, 'title': '订单管理', 'parent_id': None, 'status': False, 'open': False, 'children': []},
-    #     2: {'id': 2, 'title': '库存管理', 'parent_id': None, 'status': False, 'open': False, 'children': []},
-    #     3: {'id': 3, 'title': '生产管理', 'parent_id': None, 'status': False, 'open': False, 'children': []},
-    #     4: {'id': 4, 'title': '生产调查', 'parent_id': None, 'status': False, 'open': False, 'children': []}
-    # }
-
-    # permission_url = [
-    #     {'title': '查看订单', 'url': '/order', 'menu_id': 1},
-    #     {'title': '查看库存清单', 'url': '/stock/detail', 'menu_id': 2},
-    #     {'title': '查看生产订单', 'url': '/produce/detail', 'menu_id': 3},
-    #     {'title': '产出管理', 'url': '/survey/produce', 'menu_id': 4},
-    #     {'title': '工时管理', 'url': '/survey/labor', 'menu_id': 4},
-    #     {'title': '入库', 'url': '/stock/in', 'menu_id': 2},
-    #     {'title': '排单', 'url': '/produce/new', 'menu_id': 3}
-    # ]
-
     request_rul = request.path_info
 
     for url in permission_url:
@@ -90,36 +66,19 @@ def get_structure_data(request):
 def get_menu_html(menu_data):
     """显示：菜单 + [子菜单] + 权限(url)"""
     option_str = """
-          <div class='rbac-menu-item'>
-                <div class='rbac-menu-header'>
-                <span class='glyphicon glyphicon-folder-{status}'>
-                {menu_title}</div>
-                <div class='rbac-menu-body {display}'>{sub_menu}</div>
-            </div>
+            <li><a><i class="{icon}"></i> {menu_title} <span class="fa fa-chevron-down"></span></a>
+               <ul class="nav child_menu">
+                {sub_menu}
+                </ul>
+            </li>
     """
 
     url_str = """
-        <a href="{permission_url}" class="{active}">{permission_title}</a>
+       <li> <a href="{permission_url}" class="{active}">{permission_title} </a> </li>
     """
-
-    """
-     menu_data = [
-        {'id': 1, 'title': '订单管理', 'parent_id': None, 'status': True, 'open': False,
-         'children': [{'title': '查看订单', 'url': '/order', 'menu_id': 1, 'status': True, 'open': False}]},
-        {'id': 2, 'title': '库存管理', 'parent_id': None, 'status': True, 'open': True,
-         'children': [{'title': '查看库存清单', 'url': '/stock/detail', 'menu_id': 2, 'status': True, 'open': False},
-                      {'title': '入库', 'url': '/stock/in', 'menu_id': 2, 'status': True, 'open': True}]},
-        {'id': 3, 'title': '生产管理', 'parent_id': None, 'status': True, 'open': False,
-         'children': [{'title': '查看生产订单', 'url': '/produce/detail', 'menu_id': 3, 'status': True, 'open': False},
-                      {'title': '排单', 'url': '/produce/new', 'menu_id': 3, 'status': True, 'open': False}]},
-        {'id': 4, 'title': '生产调查', 'parent_id': None, 'status': True, 'open': False,
-         'children': [{'title': '产出管理', 'url': '/survey/produce', 'menu_id': 4, 'status': True, 'open': False},
-                      {'title': '工时管理', 'url': '/survey/labor', 'menu_id': 4, 'status': True, 'open': False}]}
-    ]
-    """
-
     menu_html = ''
     for item in menu_data:
+
         if not item['status']: # 如果用户权限不在某个菜单下，即item['status']=False, 不显示
             continue
         else:
@@ -128,12 +87,15 @@ def get_menu_html(menu_data):
                                             active="rbac-active" if item['open'] else "",
                                             permission_title=item['title'])
             else:
+                #通过递归获取次级目录列表
                 if item.get('children'):
                     sub_menu = get_menu_html(item['children'])
+                    icon = item['icon']
                 else:
                     sub_menu = ""
-
+                    icon = ""
                 menu_html += option_str.format(menu_title=item['title'],
+                                               icon=icon,
                                                sub_menu=sub_menu,
                                                display="" if item['open'] else "rbac-hide",
                                                status="open" if item['open'] else "close")
@@ -177,5 +139,13 @@ def rbac_js():
     js = io.open(js_path, 'r', encoding='utf-8').read()
     return mark_safe(js)
 
-
-
+@register.simple_tag
+def rbac_username(request):
+    """
+    获取用户名,用于base页面显示
+    :param request:
+    :return:
+    """
+    username = request.session['user_name']
+    # print '----------------------->', username
+    return mark_safe(username)
