@@ -24,6 +24,10 @@
         <td>磁盘健康</td>
         <td>状态</td>
         <td>机架</td>
+        <td>品牌</td>
+        <td>服务</td>
+        <td>备注</td>
+
         <td colspan="2">操作</td>
     </tr>
     {% for idc in idc_list %}
@@ -42,6 +46,9 @@
             <td>{{ idc.disk_health }}</td>
             <td>{{ idc.status }}</td>
             <td>{{ idc.rack }}</td>
+            <td>{{ idc.brand }}</td>
+            <td>{{ idc.services }}</td>
+            <td>{{ idc.remark }}</td>
             <td>
                 <a href="/idc/edit/{{ idc.id }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>编辑</a>
                 <a href="/idc/delete/{{ idc.id }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>删除</a>
