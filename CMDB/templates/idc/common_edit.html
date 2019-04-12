@@ -1,0 +1,27 @@
+{% extends "new/base.html" %}
+{% load staticfiles %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css">
+    <link href="{% static 'cmdb_css/reveal.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<h2>{{ title }}</h2>
+
+<div class="x_content">
+<form method="post" class="form-horizontal form-label-left">
+    {% csrf_token %}
+    {{ model_form.as_p }}
+    <button type="submit" class="btn btn-success" >提交</button>
+
+</form>
+
+ </div>
+
+{% endblock %}
+
+{% block js  %}
+
+
+{% endblock %}

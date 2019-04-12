@@ -9,6 +9,7 @@ import rbac.models
 class Modelname(models.Model):
     """
     按业务划分的服务器组信息
+    每个项目的own对应的是用户
     """
     name = models.CharField(max_length=70)
     lead = models.CharField(max_length=50)
@@ -341,4 +342,41 @@ class clear_log(models.Model):
     log_path = models.CharField(max_length=200)
     keep_date = models.IntegerField(blank=True, null=True,default=3)
     recycled_date = models.IntegerField(blank=True, null=True, default=7)
+
+class idc_hosts(models.Model):
+    """
+    线下IDC信息汇总表:
+    label        机身标签
+    hostname      主机名
+    light_ip      光口ip
+    lan_ip        内网ip
+    manage_ip     远程管理ip
+    outer_ip      外网ip
+    tmp_ip        临时ip
+    os             系统
+    cpu            cpu
+    mem            内存
+    disk           磁盘
+    disk_health    磁盘健康
+    status         机器状态，是否可以
+    rack           机架信息
+    """
+    lable = models.CharField(max_length=100)
+    hostname = models.CharField(max_length=100)
+    light_ip = models.GenericIPAddressField(blank=True, null=True)
+    lan_ip= models.GenericIPAddressField(blank=True, null=True)
+    manage_ip = models.GenericIPAddressField(blank=True, null=True)
+    outer_ip = models.GenericIPAddressField(blank=True, null=True)
+    tmp_ip = models.GenericIPAddressField(blank=True, null=True)
+    os = models.CharField(blank=True,max_length=50)
+    cpu = models.IntegerField(blank=True,null=True,default=0)
+    mem = models.IntegerField(blank=True,null=True,default=0)
+    disk = models.CharField(blank=True,max_length=200)
+    disk_health = models.CharField(blank=True,max_length=20)
+    status = models.CharField(blank=True,max_length=20)
+    rack  = models.CharField(blank=True,max_length=20)
+    remark = models.CharField(max_length=250, blank=True, null=True)
+    def __unicode__(self):
+        return self.lable
+
 

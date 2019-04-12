@@ -153,4 +153,9 @@ urlpatterns = [
                   url(r'^playbook_manage/playbook_update/$', playbook_update),
                   url(r'^playbook_manage/playbook_run/$', playbook_run),
 
+                  url(r'^idc/$', idc),
+                  url(r'^idc/new/$', idc_new),
+                  url(r'^idc/edit/(?P<id>\d+)/$', idc_edit),
+                  url(r'^idc/delete/(?P<id>\d+)/$', idc_delete),
+
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

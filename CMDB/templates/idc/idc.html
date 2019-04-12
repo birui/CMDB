@@ -1,0 +1,58 @@
+{% extends "new/base.html" %}
+{% load staticfiles %}
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.11/css/dataTables.bootstrap.min.css">
+    <link href="{% static 'cmdb_css/reveal.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+
+<a href="/idc/new" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>新增</a>
+<table class="table table-striped projects">
+    <tr>
+        <td>标签</td>
+        <td>主机名</td>
+        <td>光口ip</td>
+        <td>内网ip</td>
+        <td>临时ip</td>
+        <td>远程管理ip</td>
+        <td>外网ip</td>
+        <td>系统</td>
+        <td>cpu</td>
+        <td>内存</td>
+        <td>磁盘</td>
+        <td>磁盘健康</td>
+        <td>状态</td>
+        <td>机架</td>
+        <td colspan="2">操作</td>
+    </tr>
+    {% for idc in idc_list %}
+        <tr>
+            <td>{{ idc.lable }}</td>
+            <td>{{ idc.hostname }}</td>
+            <td>{{ idc.light_ip }}</td>
+            <td>{{ idc.lan_ip }}</td>
+            <td>{{ idc.tmp_ip }}</td>
+            <td>{{ idc.manage_ip }}</td>
+            <td>{{ idc.outer_ip }}</td>
+            <td>{{ idc.os }}</td>
+            <td>{{ idc.cpu }}</td>
+            <td>{{ idc.mem }}</td>
+            <td>{{ idc.disk }}</td>
+            <td>{{ idc.disk_health }}</td>
+            <td>{{ idc.status }}</td>
+            <td>{{ idc.rack }}</td>
+            <td>
+                <a href="/idc/edit/{{ user.id }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>编辑</a>
+                <a href="/idc/delete/{{ user.id }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>删除</a>
+            </td>
+        </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
+
+{% block js  %}
+
+
+{% endblock %}
