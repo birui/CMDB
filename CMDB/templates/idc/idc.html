@@ -43,8 +43,8 @@
             <td>{{ idc.status }}</td>
             <td>{{ idc.rack }}</td>
             <td>
-                <a href="/idc/edit/{{ user.id }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>编辑</a>
-                <a href="/idc/delete/{{ user.id }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>删除</a>
+                <a href="/idc/edit/{{ idc.id }}" class="btn btn-info btn-xs"><i class="fa fa-pencil"></i>编辑</a>
+                <a href="/idc/delete/{{ idc.id }}" class="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i>删除</a>
             </td>
         </tr>
     {% endfor %}
