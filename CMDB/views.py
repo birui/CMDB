@@ -1837,7 +1837,7 @@ def idc_new(request):
         model_form = idchostsModelForm(request.POST)
         if model_form.is_valid():
             model_form.save()
-            return redirect(reverse(users))
+            return redirect(reverse(idc))
         else:
             return render(request, 'idc/common_edit.html',{'model_form': model_form, 'title': '新增用户'})
 
@@ -1851,7 +1851,7 @@ def idc_edit(request,id):
         model_form = idchostsModelForm(request.POST, instance=user_obj)
         if model_form.is_valid():
             model_form.save()
-            return redirect(reverse(users))
+            return redirect(reverse(idc))
         else:
             return render(request, 'idc/common_edit.html', {'model_form': model_form, 'title': '编辑用户'})
 
@@ -1859,5 +1859,5 @@ def idc_edit(request,id):
 def idc_delete(request, id):
     user_obj = idc_hosts.objects.filter(id=id).first()
     user_obj.delete()
-    return redirect(reverse(users))
+    return redirect(reverse(idc))
 
