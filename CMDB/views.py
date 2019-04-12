@@ -1825,35 +1825,35 @@ def index(request):
 def idc(request):
     """查询所有用户信息"""
     idc_list = idc_hosts.objects.all()
-    return render(request, 'idc/idc.html', {'idc_list': idc_list,'pagename': '用户管理'})
+    return render(request, 'idc/idc.html', {'idc_list': idc_list,'pagename': 'IDC资产管理'})
 
 
 def idc_new(request):
     if request.method =="GET":
         # 传入ModelForm对象
         model_form = idchostsModelForm()
-        return render(request, 'idc/common_edit.html', {'model_form': model_form, 'title': '新增用户'})
+        return render(request, 'idc/common_edit.html', {'model_form': model_form, 'title': '新增资产'})
     else:
         model_form = idchostsModelForm(request.POST)
         if model_form.is_valid():
             model_form.save()
             return redirect(reverse(idc))
         else:
-            return render(request, 'idc/common_edit.html',{'model_form': model_form, 'title': '新增用户'})
+            return render(request, 'idc/common_edit.html',{'model_form': model_form, 'title': '新增资产'})
 
 
 def idc_edit(request,id):
     user_obj = idc_hosts.objects.filter(id=id).first()
     if request.method == 'GET':
         model_form = idchostsModelForm(instance=user_obj)
-        return render(request, 'idc/common_edit.html', {'model_form': model_form, 'title': '编辑用户'})
+        return render(request, 'idc/common_edit.html', {'model_form': model_form, 'title': '编辑资产'})
     else:
         model_form = idchostsModelForm(request.POST, instance=user_obj)
         if model_form.is_valid():
             model_form.save()
             return redirect(reverse(idc))
         else:
-            return render(request, 'idc/common_edit.html', {'model_form': model_form, 'title': '编辑用户'})
+            return render(request, 'idc/common_edit.html', {'model_form': model_form, 'title': '编辑资产'})
 
 
 def idc_delete(request, id):

@@ -360,6 +360,9 @@ class idc_hosts(models.Model):
     disk_health    磁盘健康
     status         机器状态，是否可以
     rack           机架信息
+    brand          品牌
+    services       服务
+    remark         备注
     """
     lable = models.CharField(max_length=100)
     hostname = models.CharField(max_length=100)
@@ -375,6 +378,8 @@ class idc_hosts(models.Model):
     disk_health = models.CharField(blank=True,max_length=20)
     status = models.CharField(blank=True,max_length=20)
     rack  = models.CharField(blank=True,max_length=20)
+    brand = models.CharField(blank=True, max_length=20)
+    services = models.CharField(blank=True, max_length=50)
     remark = models.CharField(max_length=200, blank=True, null=True)
     def __unicode__(self):
         return self.lable
