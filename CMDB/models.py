@@ -358,7 +358,7 @@ class idc_hosts(models.Model):
     mem            内存
     disk           磁盘
     disk_health    磁盘健康
-    status         机器状态，是否可以
+    status         机器状态，是否在运行
     rack           机架信息
     brand          品牌
     services       服务

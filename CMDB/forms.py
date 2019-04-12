@@ -22,8 +22,8 @@ class idchostsModelForm(ModelForm):
         fields = '__all__'
         #列表的值
         labels = {
-            "label": "机身标签",
-            "hostname": "主机名",
+            "lable": "机身标签",
+            "hostname":"主机名",
             "light_ip": "光口ip",
             "lan_ip": "内网ip",
             "manage_ip": "远程管理ip",
@@ -34,6 +34,9 @@ class idchostsModelForm(ModelForm):
             "mem": "内存",
             "disk": "磁盘",
             "disk_health": "磁盘健康",
-            "status": "机器状态，是否可以",
+            "status": "机器状态",
             "rack": "机架信息",
+            "brand": "品牌",
+            "services": "服务",
+            "remark": "备注",
         }
