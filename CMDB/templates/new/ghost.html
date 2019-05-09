@@ -1,0 +1,131 @@
+{% extends "new/base.html" %} {% load staticfiles %} {% block css %}
+<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet">
+<style type="text/css">
+</style>
+{% endblock %} {% block content %}
+<ul class="nav nav-tabs" role="tablist" id='myTabs'>
+    <li role="presentation" class="active"><a href="#online" aria-controls="online" role="tab" data-toggle="tab">ghost</a></li>
+    <!-- <li role="presentation"><a href="#rollback" aria-controls="rollback" role="tab" data-toggle="tab">回滚</a></li> -->
+</ul>
+<div class="tab-content">
+    <!-- 上线部分 -->
+    <div role="tabpanel" class="tab-pane active" id="online">
+
+        <div class="row devis_lists" style='margin-top:10px'>
+             <div class="col-lg-1" >
+                 <p> 实例url：</p>
+             </div>
+             <div class="col-lg-6">
+                 <input type="text" class="form-control"  id='dburl'>
+             </div>
+        </div>
+
+        <div class="row devis_lists" style='margin-top:10px'>
+             <div class="col-lg-1" >
+                 <p> 数据库名：</p>
+             </div>
+             <div class="col-lg-6">
+                 <input type="text" class="form-control"  id='dbname'>
+             </div>
+        </div>
+
+        <div class="row" style='margin-top:10px'>
+            <div class="col-lg-1">
+                <p> 表名：</p>
+            </div>
+            <div class="col-lg-6">
+                <input type="text" class="form-control" aria-label="..." id="tablename">
+            </div>
+        </div>
+
+        <div class="row devis_lists" style='margin-top:10px'>
+             <div class="col-lg-1" >
+                 <p> 特权用户名：</p>
+             </div>
+             <div class="col-lg-6">
+                 <input type="text" class="form-control"  id='username'>
+             </div>
+        </div>
+
+        <div class="row devis_lists" style='margin-top:10px'>
+             <div class="col-lg-1" >
+                 <p> 密码：</p>
+             </div>
+             <div class="col-lg-6">
+                 <input type="text" class="form-control"  id='password'>
+             </div>
+        </div>
+
+
+        <!-- 描述 -->
+        <div class="row" style='margin-top:10px'>
+            <div class="col-lg-1">
+                <p> alter：</p>
+            </div>
+            <div class="col-lg-6">
+                <textarea id="altersql" class="form-control" rows="3"></textarea>
+            </div>
+        </div>
+
+        <div class="row" style='margin-top:10px'>
+            <div class="col-lg-6">
+                <button type="button" class="btn btn-danger btn-default btn-online-back" data-back=''>提交上线</button>
+            </div>
+        </div>
+        <div class="row" style='margin-top:100px'></div>
+        <div class="col-lg-6 ">
+
+            <textarea id="result" style="width: 900px ;height: 900px;border: 0 none; outline-style: none; display: none">
+            </textarea>
+
+       </div>
+    </div>
+
+</div>
+{% endblock %} {% block js %}
+<script type="text/javascript">
+
+$(".btn-online-back").click(function() {
+    $('#result').show();
+    
+    var dburl = $("#dburl").val();
+    var dbname = $("#dbname").val();
+    var tablename= $("#tablename").val();
+    var username = $("#username").val();
+    var password = $("#password").val();
+    var altersql = $("#altersql").val();
+    // console.log(bagtype);
+    var _param = {
+        'dburl': dburl,
+        'dbname': dbname,
+        'tablename': tablename,
+        'username': username,
+        'password':password,
+        'altersql':altersql
+    };
+    $.post("/ghost/ghost_act/", _param, function(data) {
+        // $('#result').html(data);
+        // $('#result').show(); 
+    });
+    var ws = new WebSocket('ws://127.0.0.1:8000/ws/path?subscribe-broadcast&publish-broadcast&echo');
+
+    ws.onopen = function () {
+        // Web Socket 已连接上，使用 send() 方法发送数据
+        console.log('WebSocket open');
+        ws.send('###########################run############################################################################');
+        var str = $("#result").val() + 'sql执行中.........' + "\n"
+        $("#result").val(str);
+    };
+
+    ws.onmessage = function (evt) {
+        var received_msg = evt.data;
+        console.log('message' + received_msg);
+        var str = $("#result").val()+ received_msg + "\n"
+        $("#result").val(str);
+    };
+
+$('#result').show(); 
+
+});
+</script>
+{% endblock %}

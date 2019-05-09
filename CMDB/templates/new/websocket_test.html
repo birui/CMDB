@@ -1,0 +1,74 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://www.coohua.com/xinwenzhuan/js/libs/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/ws4redis.js' %}"></script>
+
+</head>
+<body>
+
+<button onclick="WebSocketTest()">test</button>
+
+<textarea rows="150" cols="130" id="kk">
+我是一个文本框:
+
+</textarea>
+
+</body>
+
+
+<script>
+
+    $(document).ready(function() {
+
+        $.get("/path/", function() {})
+
+{#        alert(1);#}
+
+        if ("WebSocket" in window) {
+{#            alert("您的浏览器支持 WebSocket!");#}
+            var str = $("#kk").val() + '您的浏览器支持 WebSocket!' + "\n"
+            $("#kk").val(str);
+
+
+            // 打开一个 web socket
+           var ws = new WebSocket('ws://127.0.0.1:8000/ws/path?subscribe-broadcast&publish-broadcast&echo');
+
+            ws.onopen = function () {
+                // Web Socket 已连接上，使用 send() 方法发送数据
+                console.log('WebSocket open');
+                ws.send('##########run############');
+{#                alert("数据发送中...");#}
+                var str = $("#kk").val() + '数据发送中......' + "\n"
+                $("#kk").val(str);
+            };
+
+            ws.onmessage = function (evt) {
+                var received_msg = evt.data;
+                console.log('message' + received_msg);
+                var str = $("#kk").val()+ received_msg + "\n"
+                $("#kk").val(str);
+{#                alert("数据已接收...");#}
+{#                alert("数据:" + received_msg);#}
+{#                ws.close()#}
+            };
+
+            ws.onclose = function (e) {
+                // 关闭 websocket
+                console.log('close:' + e);
+{#                alert("连接已关闭...");#}
+            };
+        }
+        else {
+            // 浏览器不支持 WebSocket
+            alert("您的浏览器不支持 WebSocket!");
+        }
+
+    })
+
+
+</script>
+</html>

@@ -1821,7 +1821,7 @@ def login(request):
 def index(request):
     return render(request, 'new/base.html')
 
-#=========线下机房统计
+#=========线下机房统计======
 def idc(request):
     """查询所有用户信息"""
     idc_list = idc_hosts.objects.all()
@@ -1860,4 +1860,71 @@ def idc_delete(request, id):
     user_obj = idc_hosts.objects.filter(id=id).first()
     user_obj.delete()
     return redirect(reverse(idc))
+
+
+#=========websocket test====
+def test_path(request):
+    return render(request, 'new/websocket_test.html')
+
+from ws4redis.publisher import RedisPublisher
+from ws4redis.redis_store import RedisMessage
+def path(request):
+    print'hahaha ---------->1'
+    redis_publisher = RedisPublisher(facility='path', broadcast=True)
+    # message = RedisMessage('Hello World 哈哈')
+    # redis_publisher.publish_message(message)
+
+    cmd = "for i in {1..10}; do sleep 2 ; echo $i ;done"
+
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    for line in iter(p.stdout.readline, b''):
+        # print line,
+        message = RedisMessage(line.rstrip())
+        redis_publisher.publish_message(message)
+    p.stdout.close()
+    p.wait()
+    return HttpResponse()
+
+#===================end==========
+def ghost(request):
+    return render(request, 'new/ghost.html')
+def ghost_act(request):
+    redis_publisher = RedisPublisher(facility='path', broadcast=True)
+
+    dburl = request.POST['dburl']
+    dbname = request.POST['dbname']
+    tablename = request.POST['tablename']
+    username = request.POST['username']
+    password = request.POST['password']
+    altersql = request.POST['altersql']
+    # print dburl,dbname,tablename,username,password,altersql
+
+    cmd = """
+    gh-ost \
+    --aliyun-rds="true" \
+    --assume-master-host="%s" \
+    --assume-rbr \
+    --initially-drop-old-table \
+    --initially-drop-ghost-table \
+    --initially-drop-socket-file \
+    --ok-to-drop-table \
+    --host="%s" \
+    --port=3306 \
+    --user="%s" \
+    --password="%s" \
+    --database="%s" \
+    --table="%s" \
+    --verbose \
+    --alter="%s" \
+    --allow-on-master \
+    --execute
+    """ %(dburl,dburl,username,password,dbname,tablename,altersql)
+
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    for line in iter(p.stdout.readline, b''):
+        message = RedisMessage(line.rstrip())
+        redis_publisher.publish_message(message)
+    p.stdout.close()
+    p.wait()
+    return HttpResponse()
 

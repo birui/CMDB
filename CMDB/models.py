@@ -346,7 +346,7 @@ class clear_log(models.Model):
 class idc_hosts(models.Model):
     """
     线下IDC信息汇总表:
-    label        机身标签
+    lable        机身标签
     hostname      主机名
     light_ip      光口ip
     lan_ip        内网ip

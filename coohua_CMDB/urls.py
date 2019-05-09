@@ -157,5 +157,11 @@ urlpatterns = [
                   url(r'^idc/new/$', idc_new),
                   url(r'^idc/edit/(?P<id>\d+)/$', idc_edit),
                   url(r'^idc/delete/(?P<id>\d+)/$', idc_delete),
+                #websocket test
+                  url(r'^path', path),
+                  url(r'^test_path/$', test_path),
+                #ghost
+                  url(r'^ghost/ghost/$',ghost),
+                  url(r'^ghost/ghost_act/$',ghost_act),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
