@@ -1897,7 +1897,7 @@ def ghost_act(request):
     username = request.POST['username']
     password = request.POST['password']
     altersql = request.POST['altersql']
-    # print dburl,dbname,tablename,username,password,altersql
+    print dburl,dbname,tablename,username,password,altersql
 
     cmd = """
     gh-ost \
@@ -1919,6 +1919,8 @@ def ghost_act(request):
     --allow-on-master \
     --execute
     """ %(dburl,dburl,username,password,dbname,tablename,altersql)
+
+    print cmd
 
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     for line in iter(p.stdout.readline, b''):
