@@ -107,7 +107,7 @@ $(".btn-online-back").click(function() {
         // $('#result').html(data);
         // $('#result').show(); 
     });
-    var ws = new WebSocket('ws://127.0.0.1:8000/ws/path?subscribe-broadcast&publish-broadcast&echo');
+    var ws = new WebSocket('ws://' + location.host + '/ws/path?subscribe-broadcast&publish-broadcast&echo');
 
     ws.onopen = function () {
         // Web Socket 已连接上，使用 send() 方法发送数据

@@ -1899,28 +1899,30 @@ def ghost_act(request):
     altersql = request.POST['altersql']
     print dburl,dbname,tablename,username,password,altersql
 
-    cmd = """
-    gh-ost \
-    --aliyun-rds="true" \
-    --assume-master-host="%s" \
-    --assume-rbr \
-    --initially-drop-old-table \
-    --initially-drop-ghost-table \
-    --initially-drop-socket-file \
-    --ok-to-drop-table \
-    --host="%s" \
-    --port=3306 \
-    --user="%s" \
-    --password="%s" \
-    --database="%s" \
-    --table="%s" \
-    --verbose \
-    --alter="%s" \
-    --allow-on-master \
-    --execute
-    """ %(dburl,dburl,username,password,dbname,tablename,altersql)
+    cmd = "for i in {1..10}; do sleep 2 ; echo $i ;done"
 
-    print cmd
+    # cmd = """
+    # gh-ost \
+    # --aliyun-rds="true" \
+    # --assume-master-host="%s" \
+    # --assume-rbr \
+    # --initially-drop-old-table \
+    # --initially-drop-ghost-table \
+    # --initially-drop-socket-file \
+    # --ok-to-drop-table \
+    # --host="%s" \
+    # --port=3306 \
+    # --user="%s" \
+    # --password="%s" \
+    # --database="%s" \
+    # --table="%s" \
+    # --verbose \
+    # --alter="%s" \
+    # --allow-on-master \
+    # --execute
+    # """ %(dburl,dburl,username,password,dbname,tablename,altersql)
+    #
+    # print cmd
 
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
     for line in iter(p.stdout.readline, b''):
