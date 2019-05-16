@@ -130,10 +130,10 @@ def permissions_delete(request, id):
 
 
 def menus(request):
-    print '=======menus 1====>!'
+    # print '=======menus 1====>!'
     menu_list = Menu.objects.all()
-    print '=======menus 2====>!'
-    print( '=====>', menu_list )
+    # print '=======menus 2====>!'
+    # print( '=====>', menu_list )
     return render(request, 'rbac/menus.html', {'menu_list': menu_list,'pagename': '菜单管理'})
 
 def menus_data(request):

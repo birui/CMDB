@@ -1889,8 +1889,9 @@ def path(request):
 def ghost(request):
     return render(request, 'new/ghost.html')
 def ghost_act(request):
-    redis_publisher = RedisPublisher(facility='path', broadcast=True)
 
+    print '===================>ghost_act'
+    redis_publisher = RedisPublisher(facility='path', broadcast=True)
     dburl = request.POST['dburl']
     dbname = request.POST['dbname']
     tablename = request.POST['tablename']

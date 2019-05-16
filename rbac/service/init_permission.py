@@ -43,4 +43,4 @@ def init_permission(request, user_obj):
         settings.PERMISSION_MENU_KEY: permission_menu_list,
     }
     request.session['user_name'] = user_obj.username
-    print('request.session[settings.SESSION_PERMISSION_URL_KEY] ------------------- ', request.session[settings.SESSION_PERMISSION_URL_KEY],'=====>',request.session['user_name'] )
+    # print('request.session[settings.SESSION_PERMISSION_URL_KEY] ------------------- ', request.session[settings.SESSION_PERMISSION_URL_KEY],'=====>',request.session['user_name'] )
