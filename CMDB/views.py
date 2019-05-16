@@ -1811,7 +1811,7 @@ def login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user_obj = rbac.models.UserInfo.objects.filter(username=username, password=password).first()
-        print '++++++>',user_obj
+        # print '++++++>',user_obj
         if not user_obj:
             return render(request, "login.html", {'error': '用户名或密码错误！'})
         else:
@@ -1889,8 +1889,8 @@ def path(request):
 def ghost(request):
     return render(request, 'new/ghost.html')
 def ghost_act(request):
-
     print '===================>ghost_act'
+
     redis_publisher = RedisPublisher(facility='path', broadcast=True)
     dburl = request.POST['dburl']
     dbname = request.POST['dbname']

@@ -138,7 +138,7 @@ def menus(request):
 
 def menus_data(request):
     menu_list = serializers.serialize("json", Menu.objects.all())
-    print menu_list
+    # print menu_list
     return HttpResponse(menu_list, content_type='application/json')
 
 def menus_new(request):

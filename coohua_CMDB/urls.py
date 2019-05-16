@@ -161,7 +161,7 @@ urlpatterns = [
                   url(r'^path', path),
                   url(r'^test_path/$', test_path),
                 #ghost
-                  url(r'^ghost/ghost/$',ghost),
+                  url(r'^ghost/$',ghost),
                   url(r'^ghost/ghost_act/$',ghost_act),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
