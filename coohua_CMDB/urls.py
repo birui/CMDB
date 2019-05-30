@@ -163,5 +163,8 @@ urlpatterns = [
                 #ghost
                   url(r'^ghost/$',ghost),
                   url(r'^ghost/ghost_act/$',ghost_act),
+                #nginx_tmp
+                  url(r'^nginx_tmp/$',nginx_tmp),
+                  url(r'^nginx_tmp/upload_sslfile/$',upload_sslfile),
 
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,0 +1,129 @@
+{% extends "new/base.html" %}
+{% load staticfiles %}
+{% block css %}
+    <link href="{% static 'admin/vendors/bootstrap/dist/css/bootstrap-multiselect.css' %}" rel="stylesheet">
+    <!-- <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css" rel="stylesheet"> -->
+    <link href="{% static 'admin/vendors/dropzone/dist/min/dropzone.min.css' %}" rel="stylesheet">
+    <link href="{% static 'admin/build/css/custom.min.css' %}" rel="stylesheet">
+
+
+{% endblock %}
+
+{% block content %}
+<div class="tab-content">
+
+        <div class="row devis_lists" style='margin-top:10px'>
+             <div class="col-lg-1" >
+                 <p> 域名：</p>
+             </div>
+             <div class="col-lg-6">
+                 <input type="text" class="form-control"  id='hostname'>
+             </div>
+        </div>
+
+        <div class="row devis_lists" style='margin-top:10px'>
+             <div class="col-lg-1" >
+                 <p>key文件：</p>
+             </div>
+             <div class="col-lg-6">
+             	 <form enctype="multipart/form-data">
+                      <input type="file" name="keyfile" id='keyfile' />
+                 </form>
+             </div>
+        </div>
+
+        <div class="row devis_lists" style='margin-top:10px'>
+             <div class="col-lg-1" >
+                 <p>crt文件：</p>
+             </div>
+             <div class="col-lg-6">
+             	 <form enctype="multipart/form-data">
+                      <input type="file" name="crtfile" id='crtfile' />
+                 </form>
+             </div>
+        </div>
+
+       <div class="row" style='margin-top:10px'>
+            <div class="col-lg-6">
+                <button type="button" class="btn btn-danger btn-default btn-online-back" data-back=''>提交</button>
+            </div>
+       </div>
+
+       <div class="col-lg-6 ">
+            <textarea id="result" style="width: 900px ;height: 900px;border: 0 none; outline-style: none; display: none">
+            </textarea>
+       </div>
+
+</div>
+
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'admin/vendors/bootstrap/dist/js/bootstrap-multiselect.js' %}"></script>
+    <script src="{% static 'admin/vendors/dropzone/dist/min/dropzone.min.js' %}"></script>
+    <script src="{% static 'admin/build/js/custom.min.js' %}"></script>
+
+
+    <script type="text/javascript">
+    	$(".btn-online-back").click(function() {
+
+		    var hostname = $("#hostname").val();
+		    var key_files = $("#keyfile").prop('files');
+		    var crt_files = $("#crtfile").prop('files');
+		    var data = new FormData();
+		    data.append('hostname',hostname);
+		    data.append('keyfile',key_files[0]);
+		    data.append('crtfile',crt_files[0]);
+		    console.log(data);
+
+	      $.ajax({
+		      url: '/nginx_tmp/upload_sslfile/',
+		      type: 'POST',
+		      data: data,
+		      cache: false,
+		      processData: false,
+		      contentType: false
+		  });
+
+
+    var ws = new WebSocket('ws://' + location.host + '/ws/nginx?subscribe-broadcast&publish-broadcast&echo');
+
+    ws.onopen = function () {
+        // Web Socket 已连接上，使用 send() 方法发送数据
+        console.log('WebSocket open');
+        ws.send('###########################run############################################################################');
+        var str = $("#result").val() + '程序执行中.........' + "\n"
+        $("#result").val(str);
+    };
+
+    ws.onmessage = function (e) {
+        var received_msg = e.data;
+        console.log('message' + received_msg);
+        var str = $("#result").val()+ received_msg + "\n"
+        $("#result").val(str);
+    };
+
+    ws.onerror = function(e) {
+        console.error(e);
+    };
+
+    ws.onclose = function (e) {
+        // 关闭 websocket
+        console.log('close:' + e);
+    };
+
+    $('#result').show(); 
+
+		});
+        
+    </script>
+
+{% endblock %}
+
+
+
+
+
+
+
+

@@ -1889,8 +1889,6 @@ def path(request):
 def ghost(request):
     return render(request, 'new/ghost.html')
 def ghost_act(request):
-    print '===================>ghost_act'
-
     redis_publisher = RedisPublisher(facility='path', broadcast=True)
     dburl = request.POST['dburl']
     dbname = request.POST['dbname']
@@ -1898,7 +1896,7 @@ def ghost_act(request):
     username = request.POST['username']
     password = request.POST['password']
     altersql = request.POST['altersql']
-    print dburl,dbname,tablename,username,password,altersql
+    # print dburl,dbname,tablename,username,password,altersql
 
     # cmd = "for i in {1..10}; do sleep 2 ; echo $i ;done"
 
@@ -1925,7 +1923,7 @@ def ghost_act(request):
 
     print cmd
 
-    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
     for line in iter(p.stdout.readline, b''):
         message = RedisMessage(line.rstrip())
         redis_publisher.publish_message(message)
@@ -1933,3 +1931,62 @@ def ghost_act(request):
     p.wait()
     return HttpResponse()
 
+def nginx_tmp(request):
+    return render(request, 'new/nginx_tmp.html')
+
+def upload_sslfile(request):
+    redis_publisher = RedisPublisher(facility='nginx', broadcast=True)
+
+    def upload_f(myFile,filename):
+        if not myFile:
+            return HttpResponse("no files for upload!")
+        destination = open(os.path.join("CMDB/scripts/playbooks/xwzshare/roles/nginx/files/ssl/", filename),
+                           'wb+')  # 打开特定的文件进行二进制的写操作
+        if myFile.multiple_chunks() == False:  # 判断文件是否可以用chunks方法(大于2.5M可用)
+            for readfile in myFile.read():  # 小文件用read方法
+                destination.write(readfile)
+        else:
+            for chunk in myFile.chunks():  # 大文件分块写入
+                destination.write(chunk)
+        destination.close()
+
+    def makejson(domain):
+        nginx_json = """
+        {
+            "global":{
+                "name":"%s"
+            }
+        }
+        """ %(domain)
+        # print nginx_json
+        f_json_path = 'CMDB/scripts/playbooks/xwzshare/vars-json/%s.json' %(domain)
+        f_json = file(f_json_path, 'w+')
+        f_json.write(nginx_json)
+        f_json.flush()
+        f_json.close()
+
+    if request.method == "POST":  # 请求方法为POST时，进行处理
+        keyFile = request.FILES.get("keyfile", None)  # 获取上传的文件，如果没有文件，则默认为None
+        crtFile = request.FILES.get("crtfile", None)
+        hostname = request.POST['hostname']
+
+        print '==============> %s' %(hostname)
+        key_name = '%s.key' %(hostname)
+        crt_name = '%s.crt' % (hostname)
+
+        upload_f(keyFile,key_name)
+        upload_f(crtFile,crt_name)
+        makejson(hostname)
+
+    playbook_path = 'CMDB/scripts/playbooks/xwzshare/site.yml'
+    cmd = 'ansible-playbook %s --extra-vars "@CMDB/scripts/playbooks/xwzshare/vars-json/%s.json"' % (
+        playbook_path, hostname)
+
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+    for line in iter(p.stdout.readline, b''):
+        message = RedisMessage(line.rstrip())
+        redis_publisher.publish_message(message)
+    p.stdout.close()
+    p.wait()
+    return HttpResponse()
+    # return redirect(reverse(nginx_tmp))
