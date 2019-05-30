@@ -68,51 +68,73 @@
     	$(".btn-online-back").click(function() {
 
 		    var hostname = $("#hostname").val();
+		    var key_files_name = $("#keyfile").val();
+		    var crt_files_name = $("#crtfile").val();
+
 		    var key_files = $("#keyfile").prop('files');
 		    var crt_files = $("#crtfile").prop('files');
-		    var data = new FormData();
-		    data.append('hostname',hostname);
-		    data.append('keyfile',key_files[0]);
-		    data.append('crtfile',crt_files[0]);
-		    console.log(data);
 
-	      $.ajax({
-		      url: '/nginx_tmp/upload_sslfile/',
-		      type: 'POST',
-		      data: data,
-		      cache: false,
-		      processData: false,
-		      contentType: false
-		  });
+		    var key_pattern = /^.*.key$/;
+		    var crt_pattern = /^.*.crt$/;
+
+		    if (hostname == '') {
+		    	alert('域名不可以为空！')
+		    }else{
+
+			    if (!key_pattern.test(key_files_name)) {
+			    	alert(key_files_name + "文件错误，请检查！key文件必须是.key为扩展名")
+			    }else{
+			    	if (!crt_pattern.test(crt_files_name)) {
+			    		alert(crt_files_name + "文件错误，请检查！crt文件必须以.crt为扩展名")
+			    	}else{
+			    		var data = new FormData();
+					    data.append('hostname',hostname);
+					    data.append('keyfile',key_files[0]);
+					    data.append('crtfile',crt_files[0]);
+					    console.log(data);
+
+				      $.ajax({
+					      url: '/nginx_tmp/upload_sslfile/',
+					      type: 'POST',
+					      data: data,
+					      cache: false,
+					      processData: false,
+					      contentType: false
+					  });
 
 
-    var ws = new WebSocket('ws://' + location.host + '/ws/nginx?subscribe-broadcast&publish-broadcast&echo');
+					     var ws = new WebSocket('ws://' + location.host + '/ws/nginx?subscribe-broadcast&publish-broadcast&echo');
 
-    ws.onopen = function () {
-        // Web Socket 已连接上，使用 send() 方法发送数据
-        console.log('WebSocket open');
-        ws.send('###########################run############################################################################');
-        var str = $("#result").val() + '程序执行中.........' + "\n"
-        $("#result").val(str);
-    };
+					    ws.onopen = function () {
+					        // Web Socket 已连接上，使用 send() 方法发送数据
+					        console.log('WebSocket open');
+					        ws.send('###########################run############################################################################');
+					        var str = $("#result").val() + '程序执行中.........' + "\n"
+					        $("#result").val(str);
+					    };
 
-    ws.onmessage = function (e) {
-        var received_msg = e.data;
-        console.log('message' + received_msg);
-        var str = $("#result").val()+ received_msg + "\n"
-        $("#result").val(str);
-    };
+					    ws.onmessage = function (e) {
+					        var received_msg = e.data;
+					        console.log('message' + received_msg);
+					        var str = $("#result").val()+ received_msg + "\n"
+					        $("#result").val(str);
+					    };
 
-    ws.onerror = function(e) {
-        console.error(e);
-    };
+					    ws.onerror = function(e) {
+					        console.error(e);
+					    };
 
-    ws.onclose = function (e) {
-        // 关闭 websocket
-        console.log('close:' + e);
-    };
+					    ws.onclose = function (e) {
+					        // 关闭 websocket
+					        console.log('close:' + e);
+					    };
 
-    $('#result').show(); 
+					    $('#result').show(); 
+
+			    	}
+
+			    }
+			}
 
 		});
         

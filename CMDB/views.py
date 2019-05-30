@@ -1935,9 +1935,18 @@ def nginx_tmp(request):
     return render(request, 'new/nginx_tmp.html')
 
 def upload_sslfile(request):
+    """
+    此功能为方便商业部门自主配置nginx https分享链接
+    往websock发送数据
+    # message = RedisMessage('Hello World! ')
+    # redis_publisher.publish_message(message)
+    :param request:
+    :return:
+    """
     redis_publisher = RedisPublisher(facility='nginx', broadcast=True)
 
     def upload_f(myFile,filename):
+
         if not myFile:
             return HttpResponse("no files for upload!")
         destination = open(os.path.join("CMDB/scripts/playbooks/xwzshare/roles/nginx/files/ssl/", filename),
@@ -1949,6 +1958,7 @@ def upload_sslfile(request):
             for chunk in myFile.chunks():  # 大文件分块写入
                 destination.write(chunk)
         destination.close()
+
 
     def makejson(domain):
         nginx_json = """
@@ -1970,7 +1980,7 @@ def upload_sslfile(request):
         crtFile = request.FILES.get("crtfile", None)
         hostname = request.POST['hostname']
 
-        print '==============> %s' %(hostname)
+        # print '==============> %s' %(hostname)
         key_name = '%s.key' %(hostname)
         crt_name = '%s.crt' % (hostname)
 
@@ -1988,5 +1998,5 @@ def upload_sslfile(request):
         redis_publisher.publish_message(message)
     p.stdout.close()
     p.wait()
-    return HttpResponse()
+    return HttpResponse("执行成功!")
     # return redirect(reverse(nginx_tmp))
