@@ -101,10 +101,11 @@
 //edit
 $('#table_id').on('click','.fa-edit',function(){
     var _tr = $(this).parents('tr');
+    var _name = _tr.find('td:eq(0)').text();
     var _path = _tr.find('td:eq(2)').text();
     var _model_name = _tr.find('td:eq(1)').text();
     var _host = window.location.host;
-    window.location.href = 'http://'+_host+'/config_manage/openFile?path='+_path+'&model_name='+_model_name;
+    window.location.href = 'http://'+_host+'/config_manage/openFile?path='+_path+'&model_name='+_model_name+'&name='+_name;
     //window.location.href = 'http://www.baidu.com';
 });
 
@@ -113,7 +114,7 @@ $('#table_id').on('click','.fa-external-link-square',function(){
     var _model = _tr.find('td:eq(1)').text();
     var _name = _tr.find('td:eq(0)').text();
     var _host = window.location.host;
-    window.location.href = 'http://'+_host+'/config_manage/config_update?path='+_model+'&name='+_name;
+    window.location.href = 'http://'+_host+'/config_manage/config_update?modal_name='+_model+'&name='+_name;
 
     // $("#hostname2").html( "哈哈哈");
     // $('#myModal2').modal('show');

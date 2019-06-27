@@ -135,6 +135,7 @@ def config_manage(request):
 
 def config_data(request):
     configname = serializers.serialize("json", config.objects.all())
+    # print configname
     return HttpResponse(configname, content_type='application/json')
 
 

@@ -23,7 +23,7 @@
             <br/>
 
             <input type="submit" value="提交" name="" id="submit-btn" class="btn btn-success">
-            <!-- <input type="button" value="执行" name="play-btn" id='play-btn' class="btn btn-primary"> -->
+            <input type="button" value="执行" name="play-btn" id='play-btn' class="btn btn-primary">
             <input type="submit" value="取消" name="" class="btn btn-default">
 
         </form>
@@ -60,6 +60,13 @@
             if(r!=null)return  unescape(r[2]); return '';
         }
 
+        var _name = GetQueryString('name');
+        var _model_name = GetQueryString('model_name');
+
+        console.log(_name,_model_name);
+
+
+
         //同步配置文件
         $('#syn-btn').on('click',function(){
             var _model_name = GetQueryString('model_name');
@@ -76,14 +83,14 @@
 
         //执行playbook
 
-        // $('#play-btn').on('click',function(){
-        //     var _arr = pathFn();
-        //     var _path = _arr[0];
-        //     var _model_name = _arr[1];
-        //     var _host = window.location.host;
-        //     window.location.href = 'http://'+_host+'/config_update?path='+_path+'&model_name='+_model_name;
+        $('#play-btn').on('click',function(){
+            // var _arr = pathFn();
+            // var _path = _arr[0];
+            // var _model_name = _arr[1];
+            var _host = window.location.host;
+            window.location.href = 'http://'+_host+'/config_manage/config_update?model_name='+_model_name+'&name='+_name;
 
-        // });
+        });
     </script>
 
 {% endblock %}
