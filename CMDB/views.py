@@ -675,9 +675,11 @@ class test_view(View):
 def openFile(request):
     path = request.GET.get('path')
     model_name = request.GET.get('model_name')
+    name = request.GET.get('name')
     g_model_name = request.session.get('g_model_name')
     g_model_name = model_name
     request.session['g_model_name'] = g_model_name
+    request.session['name'] = name
 
     num = request.session.get('num')
     num = path
@@ -703,15 +705,24 @@ def openFile(request):
 
 
 def updatefile(request):
+    """
+    获取openFile设置的session key
+    :param request:
+    :return:
+    """
     num = request.session.get('num')
     g_model_name = request.session.get('g_model_name')
+    name = request.session.get('name')
 
     filecent = request.POST['filecent']
+
+    # print name
+
     f = file(num, 'w+')
     f.write(filecent)
     f.flush()
     f.close()
-    return HttpResponseRedirect('/config_manage/openFile?path=%s&model_name=%s' % (num, g_model_name))
+    return HttpResponseRedirect('/config_manage/openFile?path=%s&model_name=%s&name=%s' % (num, g_model_name, name))
 
 
 def getopen():
