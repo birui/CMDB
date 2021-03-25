@@ -51,7 +51,7 @@ python-dateutil==2.6.0
 python-whois==0.6.3
 pytz==2016.10
 PyVirtualDisplay==0.2.1
-PyYAML==3.11
+PyYAML==5.4
 qiniu==7.2.2
 qrcode==5.3
 redis==2.10.5
