@@ -2,7 +2,7 @@ aliyun-python-sdk-core==2.1.0
 aliyun-python-sdk-ecs==2.1.1
 aliyun-python-sdk-rds==2.0.3
 amqp==1.4.9
-ansible==2.1.0.0
+ansible==2.9.20
 anyjson==0.3.3
 beautifulsoup4==4.5.1
 billiard==3.3.0.23
