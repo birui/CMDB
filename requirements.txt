@@ -6,7 +6,7 @@ ansible==2.1.0.0
 anyjson==0.3.3
 beautifulsoup4==4.5.1
 billiard==3.3.0.23
-celery==3.1.25
+celery==5.2.2
 celery-with-redis==3.0
 cffi==1.6.0
 chardet==3.0.2
