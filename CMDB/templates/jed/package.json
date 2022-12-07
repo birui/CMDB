@@ -43,7 +43,7 @@
     "grunt-contrib-connect": "~1.0.0",
     "grunt-contrib-jshint": "~1.0.0",
     "grunt-contrib-uglify": "~1.0.0",
-    "grunt-contrib-watch": "~1.0.0",
+    "grunt-contrib-watch": "~1.1.0",
     "grunt-run": "^0.7.0",
     "mocha": "^2.5.3",
     "selenium-webdriver": "^2.53.3"
